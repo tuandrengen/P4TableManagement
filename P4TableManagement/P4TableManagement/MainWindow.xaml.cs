@@ -23,8 +23,6 @@ namespace P4TableManagement
         public MainWindow()
         {
             InitializeComponent();
-            Console.WriteLine("Test123 test 123");
-            Console.WriteLine("test234 234");
         }
     }
 }
