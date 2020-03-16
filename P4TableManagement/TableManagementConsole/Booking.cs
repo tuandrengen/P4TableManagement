@@ -6,6 +6,5 @@ namespace TableManagementConsole
 {
     class Booking
     {
-        string navn;
     }
 }
