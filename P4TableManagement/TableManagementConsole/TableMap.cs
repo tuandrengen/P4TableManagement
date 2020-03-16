@@ -6,5 +6,6 @@ namespace TableManagementConsole
 {
     class TableMap
     {
+        List<MapSection> mapSections = new List<MapSection>();
     }
 }

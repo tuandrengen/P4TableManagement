@@ -6,5 +6,7 @@ namespace TableManagementConsole
 {
     class MapSection
     {
+        public int size { get; set; }
+        private int sectionID { get; }
     }
 }
