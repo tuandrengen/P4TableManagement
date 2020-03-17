@@ -4,7 +4,15 @@ using System.Text;
 
 namespace TableManagementConsole
 {
-    class Administrator
+    class Administrator : Employee
     {
+        private int _clearanceCode;
+
+	public int clearanceCode
+	{
+		get { return _clearanceCode;}
+		set { _clearanceCode = value;}
+	}
+
     }
 }

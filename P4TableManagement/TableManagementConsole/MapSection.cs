@@ -6,7 +6,21 @@ namespace TableManagementConsole
 {
     class MapSection
     {
-        public int size { get; set; }
-        private int sectionID { get; }
+       private int _size;
+
+	public int size
+	{
+		get { return _size;}
+		set { _size = value;}
+	}
+		private int _sectionID;
+
+	public int sectionID
+	{
+		get { return _sectionID;}
+		set { _sectionID = value;}
+	}
+
+
     }
 }

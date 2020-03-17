@@ -20,7 +20,16 @@ namespace TableManagementConsole
 			get { return _tableNumber;}
 			set { _tableNumber = value;}
 		}
-		List<string> parameter = new List<string>();
+
+		private string _parameter;
+
+		public int 
+		{
+			get { return myVar;}
+			set { myVar = value;}
+		}
+
+
 
     }
 }
