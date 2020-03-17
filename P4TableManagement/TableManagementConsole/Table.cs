@@ -4,11 +4,23 @@ using System.Text;
 
 namespace TableManagementConsole
 {
-    class Table : MapElement
+    class Table
     {
-        public int seats { get; set; }
-        private int _tableNumber { get; }
-        List<string> parameter = new List<string>();
-        public string tableState { get; set; }
+        private int _seats;
+
+		public int seats
+		{
+			get { return _seats;}
+			set { _seats = value;}
+		}
+		private int _tableNumber;
+
+		public int tableNumber
+		{
+			get { return _tableNumber;}
+			set { _tableNumber = value;}
+		}
+		List<string> parameter = new List<string>();
+
     }
 }
