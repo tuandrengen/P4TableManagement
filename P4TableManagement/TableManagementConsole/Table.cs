@@ -6,5 +6,30 @@ namespace TableManagementConsole
 {
     class Table
     {
+        private int _seats;
+
+		public int seats
+		{
+			get { return _seats;}
+			set { _seats = value;}
+		}
+		private int _tableNumber;
+
+		public int tableNumber
+		{
+			get { return _tableNumber;}
+			set { _tableNumber = value;}
+		}
+
+		private string _parameter;
+
+		public int 
+		{
+			get { return myVar;}
+			set { myVar = value;}
+		}
+
+
+
     }
 }

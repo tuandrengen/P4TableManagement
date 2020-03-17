@@ -4,7 +4,11 @@ using System.Text;
 
 namespace TableManagementConsole
 {
-    class DecorationElement
+    class DecorationElement : MapElement
     {
+        private int sizeOfZone;
+        private string name; 
+
+
     }
 }
