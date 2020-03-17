@@ -22,7 +22,7 @@ namespace TableManagementConsole
 			set { _name = value;}
 		}
 
-		public Log()
+		public void Log()
         {
             throw NotImplementedException();
         }

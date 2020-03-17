@@ -29,12 +29,12 @@ namespace TableManagementConsole
 			set { _comment = value;}
 		}
 
-		public ManualReservation()
+		public void ManualReservation()
 		{
 			throw NotImplementedException();
 		}
 
-		public AutomaticReservation()
+		public void AutomaticReservation()
 		{
 			throw NotImplementedException();
 		}
