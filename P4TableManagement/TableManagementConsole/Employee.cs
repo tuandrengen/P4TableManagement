@@ -6,5 +6,9 @@ namespace TableManagementConsole
 {
     class Employee
     {
+        public Log()
+        {
+            throw NotImplementedException();
+        }
     }
 }

@@ -6,5 +6,6 @@ namespace TableManagementConsole
 {
     class MapElement
     {
+        private
     }
 }

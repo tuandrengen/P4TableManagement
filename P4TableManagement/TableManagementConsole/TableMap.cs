@@ -6,5 +6,11 @@ namespace TableManagementConsole
 {
     class TableMap
     {
+        List<MapSection> tableMap = new List<MapSection>();
+
+        public bool Active()
+        {
+            throw NotImplementedException();
+        }
     }
 }

@@ -6,5 +6,7 @@ namespace TableManagementConsole
 {
     class MapSection
     {
+        private int size;
+        private int id; 
     }
 }
