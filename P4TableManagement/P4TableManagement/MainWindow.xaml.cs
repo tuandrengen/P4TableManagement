@@ -22,7 +22,7 @@ namespace P4TableManagement
     {
         public MainWindow()
         {
-           
+            InitializeComponent();
         }
     }
 }
