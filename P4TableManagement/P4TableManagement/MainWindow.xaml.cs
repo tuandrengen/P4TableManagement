@@ -22,27 +22,7 @@ namespace P4TableManagement
     {
         public MainWindow()
         {
-            InitializeComponent();
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-            Console.WriteLine("Test123 test 123");
-<<<<<<< HEAD
-=======
-            Console.WriteLine("test234 234");
->>>>>>> e0b616f... +test234
-=======
->>>>>>> 0c4ec2c... asdasd
-=======
-            Console.WriteLine("Test123 test 123");
->>>>>>> da8bbe7... +consolewriteline
-=======
-            Console.WriteLine("Test123 test 123");
-            Console.WriteLine("test234 234");
->>>>>>> e0b616f... +test234
-=======
->>>>>>> 0c4ec2c... asdasd
+           
         }
     }
 }

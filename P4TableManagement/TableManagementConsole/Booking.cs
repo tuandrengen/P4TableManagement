@@ -6,6 +6,8 @@ namespace TableManagementConsole
 {
     class Booking
     {
-        string navn;
+        int id;
+        int timeStart;
+        int timeEnd;
     }
 }
