@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,7 +22,7 @@ namespace P4TableManagement
     {
         public MainWindow()
         {
-            InitializeComponent();
+           
         }
     }
 }

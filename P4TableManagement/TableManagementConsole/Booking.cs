@@ -6,5 +6,8 @@ namespace TableManagementConsole
 {
     class Booking
     {
+        int id;
+        int timeStart;
+        int timeEnd;
     }
 }
