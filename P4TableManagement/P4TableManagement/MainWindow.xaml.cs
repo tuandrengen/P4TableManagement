@@ -24,6 +24,7 @@ namespace P4TableManagement
         {
             InitializeComponent();
 <<<<<<< HEAD
+<<<<<<< HEAD
             Console.WriteLine("Test123 test 123");
 <<<<<<< HEAD
 =======
@@ -31,6 +32,9 @@ namespace P4TableManagement
 >>>>>>> e0b616f... +test234
 =======
 >>>>>>> 0c4ec2c... asdasd
+=======
+            Console.WriteLine("Test123 test 123");
+>>>>>>> da8bbe7... +consolewriteline
         }
     }
 }
