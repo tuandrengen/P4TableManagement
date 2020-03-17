@@ -9,5 +9,6 @@ namespace TableManagementConsole
         int id;
         int timeStart;
         int timeEnd;
+        bool isGap;
     }
 }
