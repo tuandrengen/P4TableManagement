@@ -4,7 +4,8 @@ using System.Text;
 
 namespace TableManagementConsole
 {
-    class WalkIn
+    class WalkIn : Booking
     {
+        public WalkIn(int numberOfGuest, bool isGap) : base(numberOfGuest, DateTime.Now, isGap) { }
     }
 }

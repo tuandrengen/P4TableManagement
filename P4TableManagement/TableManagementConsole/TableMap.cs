@@ -10,7 +10,7 @@ namespace TableManagementConsole
 
         public bool Active()
         {
-            throw NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

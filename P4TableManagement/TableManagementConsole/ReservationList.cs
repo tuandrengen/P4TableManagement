@@ -10,27 +10,27 @@ namespace TableManagementConsole
 
         public void sortReservations()
         {
-            throw NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void addReservations()
         {
-             throw NotImplementedException();
+             throw new NotImplementedException();
         }
 
         public void filterReservations()
         {
-             throw NotImplementedException();
+             throw new NotImplementedException();
         }
 
         public void deleteReservations()
         {
-             throw NotImplementedException();
+             throw new NotImplementedException();
         }
 
         public void editReservations()
         {
-             throw NotImplementedException();
+             throw new NotImplementedException();
         }
 
     }

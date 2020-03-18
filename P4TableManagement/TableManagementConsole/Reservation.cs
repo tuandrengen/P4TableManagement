@@ -6,12 +6,13 @@ namespace TableManagementConsole
 {
     class Reservation : Booking
     {
-        private int _name;
+        private string _name;
 		private int _phoneNumber;
 		private string _comment;
 		public List<string> parameter = new List<string>();
 
-		public int name 
+        // her er properties
+		public string name 
 		{
 			get { return _name;}
 			set { _name = value;}
@@ -29,7 +30,31 @@ namespace TableManagementConsole
 			set { _comment = value;}
 		}
 
-		public void ManualReservation()
+        //her er alle constructors
+		public Reservation(string name, DateTime timeStart, bool isGap, int numberOfGuest, int phoneNumber) : base(numberOfGuest, timeStart, isGap)
+		{
+			this.name = name;
+			this.phoneNumber = phoneNumber;
+		}
+
+		public Reservation(string name, DateTime timeStart, bool isGap, int numberOfGuest, int phoneNumber, List<string> parameter) : this(name, timeStart, isGap, numberOfGuest, phoneNumber)
+		{
+			this.parameter.AddRange(parameter);
+		}
+
+        public Reservation(string name, DateTime timeStart, bool isGap, int numberOfGuest, int phoneNumber, string comment) : this(name, timeStart, isGap, numberOfGuest, phoneNumber)
+        {
+            this.comment = comment;
+        }
+
+        public Reservation(string name, DateTime timeStart, bool isGap, int numberOfGuest, int phoneNumber, List<string> parameter, string comment) : this(name, timeStart, isGap, numberOfGuest, phoneNumber)
+        {
+            this.parameter.AddRange(parameter);
+            this.comment = comment;
+        }
+
+        //her starter metoder ~~(* o * ~）
+        public void ManualReservation()
 		{
 			throw new NotImplementedException();
 		}
@@ -38,9 +63,6 @@ namespace TableManagementConsole
 		{
 			throw new NotImplementedException();
 		}
-
-
-
 
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TableManagementConsole
 {
-    class Table
+    class Table : MapElement
     {
         private int _seats;
 		private int _tableNumber;
@@ -12,6 +12,7 @@ namespace TableManagementConsole
 		private int _bookingID;
 		public List<string> parameter = new List<string>();
 
+        //properties
 		public int seats
 		{
 			get { return _seats;}
@@ -36,7 +37,13 @@ namespace TableManagementConsole
 			set { _bookingID = value;}
 		}
 
-
+        //constructor
+		public Table(int width, int height, int placementX, int placementY, int seats, int tableNumber, List<string> parameter) : base(width, height, placementX, placementY)
+		{
+            this.seats = seats;
+            this.tableNumber = tableNumber;
+            this.parameter.AddRange(parameter);
+        }
 
     }
 }
