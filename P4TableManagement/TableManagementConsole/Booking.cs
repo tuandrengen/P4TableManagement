@@ -13,6 +13,7 @@ namespace TableManagementConsole
 		private DateTime _timeEnd;
 		private bool _isGap;
 
+        //properties
 	    public int id
 	    {
 		    get { return _id;}
@@ -43,11 +44,12 @@ namespace TableManagementConsole
 			set { _isGap = value;}
 		}
 
-
-
-
-
-
-
+		// Constructor
+        public Booking(int numberOfGuests, DateTime timeStart, bool is_gap)
+        {
+			this.numberOfGuests = numberOfGuests;
+			this.timeStart = timeStart;
+			isGap = is_gap;
+        }
     }
 }
