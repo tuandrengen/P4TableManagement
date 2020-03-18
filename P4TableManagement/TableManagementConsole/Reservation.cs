@@ -31,12 +31,12 @@ namespace TableManagementConsole
 
 		public void ManualReservation()
 		{
-			throw NotImplementedException();
+			throw new NotImplementedException();
 		}
 
 		public void AutomaticReservation()
 		{
-			throw NotImplementedException();
+			throw new NotImplementedException();
 		}
 
 
