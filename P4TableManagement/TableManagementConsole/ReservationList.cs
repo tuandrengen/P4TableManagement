@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Office
+using Microsoft.Office.Interop.Excel;
 using _Excel = Microsoft.Office.Interop.Excel;
 
 namespace TableManagementConsole
 {
-    class ReservationList
+    partial class ReservationList
     {
         public List<Reservation> listReservation = new List<Reservation>();
         
@@ -23,8 +23,7 @@ namespace TableManagementConsole
             throw new NotImplementedException();
         }
 
-        string path = " ";
-        _Application excel = new _Excel.Application();
+
 
         //indtager data fra databasen, laver daten om til objekter(reservations) og putter dem i en liste
         public void PopulateReservationList()
