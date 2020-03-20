@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TableManagementConsole
 {
-    abstract class Booking
+    class Booking
     {
         private int _id;
 		private int _numberOfGuests;
@@ -51,11 +51,5 @@ namespace TableManagementConsole
 			isGap = is_gap;
         }
 
-        // Metoder
-
-		public abstract T AddBooking<T>();
-        public abstract T EditBooking<T>();
-        public abstract void DeleteBooking();
-        public abstract void AssignBooking();
     }
 }

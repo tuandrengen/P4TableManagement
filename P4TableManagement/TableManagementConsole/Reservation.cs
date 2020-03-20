@@ -53,20 +53,5 @@ namespace TableManagementConsole
             this.comment = comment;
         }
 
-        //her starter metoder ~~(* o * ~）
-        
-
-
-
-        public void ManualReservation()
-		{
-			throw new NotImplementedException();
-		}
-
-		public void AutomaticReservation()
-		{
-			throw new NotImplementedException();
-		}
-
     }
 }
