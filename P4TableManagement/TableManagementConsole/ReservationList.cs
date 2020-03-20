@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.Office.Interop.Excel;
+using System.Threading.Tasks;
+using Microsoft.Office
 using _Excel = Microsoft.Office.Interop.Excel;
 
 namespace TableManagementConsole
@@ -23,6 +24,8 @@ namespace TableManagementConsole
         }
 
         string path = " ";
+        _Application excel = new _Excel.Application();
+
         //indtager data fra databasen, laver daten om til objekter(reservations) og putter dem i en liste
         public void PopulateReservationList()
         {
