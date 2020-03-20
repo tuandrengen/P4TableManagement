@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TableManagementConsole
 {
-    class MapElement
+    public class MapElement
     {
         private int _width;
         private int _height;

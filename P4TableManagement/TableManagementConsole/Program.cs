@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TableManagementConsole
 {
@@ -6,7 +7,22 @@ namespace TableManagementConsole
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+			Table table = new Table();
+
+            table.CreateLargeTable();
+            table.CreateSmallTable();
+
+            PrintList(table.tableList);
         }
-    }
+
+        public static void PrintList(List<Table> l)
+        {
+            foreach (Table item in l)
+            {
+                Console.WriteLine(item.ID);
+                Console.WriteLine(item.ID);
+            }
+        }
+
+	}
 }

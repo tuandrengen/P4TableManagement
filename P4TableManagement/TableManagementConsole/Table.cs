@@ -4,55 +4,60 @@ using System.Text;
 
 namespace TableManagementConsole
 {
-    class Table : MapElement
+    public class Table
     {
-        private int _seats;
-		private int _tableNumber;
-		private string _state;
-		private int _bookingID;
-		public List<string> parameter = new List<string>();
+		public int width { get; set; }
+		public int height { get; set; }
+		public int seats { get; set; }
+		public int tableNumber { get; private set; }
 
-        //properties
-		public int seats
+		private static int _tableID = 0;
+
+		public int ID
 		{
-			get { return _seats;}
-			set { _seats = value;}
+			get { return _tableID; }
+			set { _tableID = value; }
 		}
+        
+		List<string> parameters = new List<string>();
+
+
+		public List<Table> tableList = new List<Table>();
+
+		//constructor
+		//public Table(int width, int height, int placementX, int placementY, int seats, int tableNumber, List<string> parameter) : base(width, height, placementX, placementY)
+		//{
+		//          this.seats = seats;
+		//          this.tableNumber = tableNumber;
+		//          this.parameter.AddRange(parameter);
+		//      } Kommet i kommentar grundet: Mange af parameterne skal ikke sættes her, f.eks. tableNumber burde bare få tildelt et nummer automatisk og ikke manuelt.
 		
-		public int tableNumber
+		public Table()
 		{
-			get { return _tableNumber;}
-			set { _tableNumber = value;}
-		}
-
-		public string state
-		{
-			get { return _state;}
-			set { _state = value;}
-		}
-
-		public int bookingID
-		{
-			get { return _bookingID;}
-			set { _bookingID = value;}
-		}
-
-        //constructor
-		public Table(int width, int height, int placementX, int placementY, int seats, int tableNumber, List<string> parameter) : base(width, height, placementX, placementY)
-		{
-            this.seats = seats;
-            this.tableNumber = tableNumber;
-            this.parameter.AddRange(parameter);
+            ID++;
+            _tableID = ID;
         }
+		
 
-		public Table AddTable()
+		public void CreateSmallTable()
 		{
-			throw new NotImplementedException();
+			tableList.Add(new SmallTable());
 		}
 
-		public void DeleteTable()
+		public void CreateLargeTable()
 		{
-			throw new NotImplementedException();
+			tableList.Add(new LargeTable());
+		}
+
+		public void DeleteTableFromList(Table table)
+		{
+			foreach (Table item in this.tableList)
+			{
+				if (item.tableNumber == table.tableNumber)
+				{
+					this.tableList.Remove(item);
+				}
+			}
 		}
 
 		public void AssignTable()
