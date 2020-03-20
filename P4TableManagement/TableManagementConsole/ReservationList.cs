@@ -32,6 +32,5 @@ namespace TableManagementConsole
         {
              throw new NotImplementedException();
         }
-
     }
 }
