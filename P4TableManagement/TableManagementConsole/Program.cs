@@ -7,20 +7,25 @@ namespace TableManagementConsole
     {
         static void Main(string[] args)
         {
-			Table table = new Table();
 
+            Table table = new Table();
+
+            table.CreateSmallTable();
             table.CreateLargeTable();
             table.CreateSmallTable();
+            table.CreateLargeTable();
 
-            PrintList(table.tableList);
+            PrintList(Table.tableList);
+            Table.DeleteTableFromList(3);
+            PrintList(Table.tableList);
+
         }
 
         public static void PrintList(List<Table> l)
         {
             foreach (Table item in l)
             {
-                Console.WriteLine(item.ID);
-                Console.WriteLine(item.ID);
+                Console.WriteLine("Højde: {0}, ID: {1}",item.seats, item.ID);            
             }
         }
 

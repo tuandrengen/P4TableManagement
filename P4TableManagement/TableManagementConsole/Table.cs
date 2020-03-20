@@ -13,16 +13,12 @@ namespace TableManagementConsole
 
 		private static int _tableID = 0;
 
-		public int ID
-		{
-			get { return _tableID; }
-			set { _tableID = value; }
-		}
-        
+		public int ID { get; set; }
+
 		List<string> parameters = new List<string>();
 
 
-		public List<Table> tableList = new List<Table>();
+		public static List<Table> tableList = new List<Table>();
 
 		//constructor
 		//public Table(int width, int height, int placementX, int placementY, int seats, int tableNumber, List<string> parameter) : base(width, height, placementX, placementY)
@@ -34,28 +30,29 @@ namespace TableManagementConsole
 		
 		public Table()
 		{
-            ID++;
-            _tableID = ID;
-        }
-		
+			this.ID = System.Threading.Interlocked.Increment(ref _tableID);
+		}
 
+
+		// Vent på UI, bliver kaldt med en knap (static)
 		public void CreateSmallTable()
 		{
 			tableList.Add(new SmallTable());
 		}
 
+		// same as above
 		public void CreateLargeTable()
 		{
 			tableList.Add(new LargeTable());
 		}
 
-		public void DeleteTableFromList(Table table)
+		public static void DeleteTableFromList(int Id)
 		{
-			foreach (Table item in this.tableList)
+			foreach (Table item in tableList)
 			{
-				if (item.tableNumber == table.tableNumber)
+				if (item.ID == Id)
 				{
-					this.tableList.Remove(item);
+					tableList.Remove(item);
 				}
 			}
 		}

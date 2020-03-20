@@ -6,6 +6,10 @@ namespace TableManagementConsole
 {
     public class SmallTable : Table
     {
+
+
+
+
         public SmallTable() : base()
         {
             width = 1;
