@@ -4,9 +4,8 @@ using System.Text;
 
 namespace TableManagementConsole
 {
-    class Booking
+    abstract class Booking
     {
-
         private int _id;
 		private int _numberOfGuests;
 		private DateTime _timeStart;
@@ -51,5 +50,12 @@ namespace TableManagementConsole
 			this.timeStart = timeStart;
 			isGap = is_gap;
         }
+
+        // Metoder
+
+		public abstract T AddBooking<T>();
+        public abstract T EditBooking<T>();
+        public abstract void DeleteBooking();
+        public abstract void AssignBooking();
     }
 }

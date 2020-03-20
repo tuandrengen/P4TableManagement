@@ -54,6 +54,10 @@ namespace TableManagementConsole
         }
 
         //her starter metoder ~~(* o * ~）
+        
+
+
+
         public void ManualReservation()
 		{
 			throw new NotImplementedException();
