@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace TableManagementConsole
@@ -30,7 +31,7 @@ namespace TableManagementConsole
 		
 		public Table()
 		{
-			this.ID = System.Threading.Interlocked.Increment(ref _tableID);
+			this.ID = System.Threading.Interlocked.Increment(ref _tableID); // https://stackoverflow.com/questions/8813435/incrementing-a-unique-id-number-in-the-constructor
 		}
 
 
@@ -48,7 +49,7 @@ namespace TableManagementConsole
 
 		public static void DeleteTableFromList(int Id)
 		{
-			foreach (Table item in tableList)
+			foreach (Table item in tableList.ToList()) // https://stackoverflow.com/questions/604831/collection-was-modified-enumeration-operation-may-not-execute
 			{
 				if (item.ID == Id)
 				{
