@@ -5,12 +5,14 @@ using System.Text;
 
 namespace TableManagementConsole
 {
-    public class Table
+    public abstract class Table
     {
 		public int width { get; set; }
 		public int height { get; set; }
 		public int seats { get; set; }
 		public int tableNumber { get; private set; }
+		public int bookingID { get; set; }
+		public string state { get; set; }
 
 		private static int _tableID = 0;
 
@@ -31,25 +33,17 @@ namespace TableManagementConsole
 		
 		public Table()
 		{
-			this.ID = System.Threading.Interlocked.Increment(ref _tableID); // https://stackoverflow.com/questions/8813435/incrementing-a-unique-id-number-in-the-constructor
-		}
-
-
-		// Vent på UI, bliver kaldt med en knap (static)
-		public void CreateSmallTable()
-		{
-			tableList.Add(new SmallTable());
-		}
-
-		// same as above
-		public void CreateLargeTable()
-		{
-			tableList.Add(new LargeTable());
+			// Read this link for more information about auto-incrementing a value.
+			// https://stackoverflow.com/questions/8813435/incrementing-a-unique-id-number-in-the-constructor
+			ID = System.Threading.Interlocked.Increment(ref _tableID);
+			state = "Available";
 		}
 
 		public static void DeleteTableFromList(int Id)
 		{
-			foreach (Table item in tableList.ToList()) // https://stackoverflow.com/questions/604831/collection-was-modified-enumeration-operation-may-not-execute
+			// .ToList and Linq library
+			// https://stackoverflow.com/questions/604831/collection-was-modified-enumeration-operation-may-not-execute
+			foreach (Table item in tableList.ToList())
 			{
 				if (item.ID == Id)
 				{
@@ -58,41 +52,48 @@ namespace TableManagementConsole
 			}
 		}
 
-		public void AssignTable()
+		public void AssignTable(Booking booking)
 		{
+			// Need booking
+			// BookingID = booking.ID;
 			throw new NotImplementedException();
 		}
 
 		public void UnassignTable()
 		{
+			bookingID = default;
 			throw new NotImplementedException();
 		}
 
 		public void TableStateOccupied()
 		{
+			state = "Occupied";
 			throw new NotImplementedException();
 		}
 
 		public void TableStateAvailable()
 		{
+			state = "Available";
 			throw new NotImplementedException();
 		}
 		public void TableStatePaid()
 		{
+			state = "Paid";
 			throw new NotImplementedException();
 		}
 
 		public void TableStateReserved()
 		{
+			state = "reserved";
 			throw new NotImplementedException();
 		}
 
-		public void CombineTables()
+		public static void CombineTables(Table one, Table two)
 		{
 			throw new NotImplementedException();
 		}
 
-		public void SeparateTables()
+		public static void SeparateTables(Table one, Table two)
 		{
 			throw new NotImplementedException();
 		}
