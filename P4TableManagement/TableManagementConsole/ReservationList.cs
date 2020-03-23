@@ -26,9 +26,11 @@ namespace TableManagementConsole
 
 
         //indtager data fra databasen, laver daten om til objekter(reservations) og putter dem i en liste
-        public void PopulateReservationList()
+        public void PopulateReservationList(string path, int sheet)
         {
-             
+            //Excel ReservationList = new Excel(path, sheet);
+            //List<string> res = ReservationList.ReadCell();
+            //res.ForEach(Console.WriteLine);
         }
 
         //sletter reservationer
