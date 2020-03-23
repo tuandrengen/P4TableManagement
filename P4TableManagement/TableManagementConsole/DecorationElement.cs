@@ -33,6 +33,7 @@ namespace TableManagementConsole
         public static List<DecorationElement> decorationElementList = new List<DecorationElement>();
 
         //constructor
+        // Fjern evt. X og Y koordinat, ikke relevant her...
 		public DecorationElement(string name, int zoneWidth, int zoneHeight, int width, int height, int placementX, int placementY) : base(width, height, placementX, placementY)
 		{
             this.name = name;
