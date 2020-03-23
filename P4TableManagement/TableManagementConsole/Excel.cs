@@ -34,16 +34,19 @@ namespace TableManagementConsole
             int numberOfRow = range.Rows.Count;
             int numberOfCol = range.Columns.Count;
 
-            for (int row = 1; row < numberOfRow; row++)
+
+            for (int row = 1; row <= numberOfRow; row++)
             {
                 _Excel.Range line = ws.Rows[row];
 
-                foreach (var item in line.Cells)
+                for (int col = 1; col <= numberOfCol; col++)
                 {
-                    res += item.ToString();
+                    _Excel.Range aCell = (ws.Cells[row, col] as _Excel.Range);
+                    res += aCell.Value2.ToString() + " ";
                 }
 
                 result.Add(res);
+                res = "";
             }
 
             return result;
