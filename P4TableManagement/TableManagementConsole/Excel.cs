@@ -30,10 +30,11 @@ namespace TableManagementConsole
         {
             i++;
             j++;
+            _Excel.Range range = (ws.Cells[i, j] as _Excel.Range);
 
-            if ((_Excel.Range)ws.Cells[i, j].Value2 != null)
+            if (range.Value2 != null)
             {
-                return (_Excel.Range)ws.Cells[i, j].Value2;
+                return range.Value2.ToString();
 
             }
             else
