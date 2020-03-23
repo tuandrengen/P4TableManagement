@@ -7,8 +7,9 @@ namespace TableManagementConsole
     {
         static void Main(string[] args)
         {
-            ReservationList list = new ReservationList();
-            list.PopulateReservationList(@"C:\Users\T-Phamz\Desktop\test\test.xlsx", 1);
+            Excel test = new Excel(@"C:\Users\T-Phamz\Desktop\test\test.xlsx", 1);
+            List<string> res = test.ReadCell();
+            res.ForEach(Console.WriteLine);
         }
     }
 }
