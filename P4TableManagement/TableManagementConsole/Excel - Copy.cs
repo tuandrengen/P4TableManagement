@@ -11,8 +11,5 @@ namespace readfilefromexcel
 {
     class Program
     {
-        static void Main(string[] args)
-        {
-        }
     }
 }
