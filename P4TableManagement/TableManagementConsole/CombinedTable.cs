@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Text;
 
 namespace TableManagementConsole
@@ -14,14 +15,14 @@ namespace TableManagementConsole
 
         public CombinedTable(T1 tableOne, T1 tableTwo) : base()
         {
-            combinedTables.Add(tableOne);
             combinedTables.Add(tableTwo);
+            combinedTables.Add(tableOne);
 
             width = tableOne.width + tableTwo.width;
             height = tableOne.height + tableTwo.height;
             seats = tableOne.seats + tableTwo.seats;
-            // implement algorithm for tablenumber
-            tableNumber = tableOne.tableNumber;
+            // Lambda expression that returns the lowest tablenumber of the combinedTables list.
+            tableNumber = combinedTables.Min(x => x.tableNumber);
         }
 
         public int Compare(Table firstTable, Table secondTable)
