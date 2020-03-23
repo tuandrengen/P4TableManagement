@@ -25,12 +25,12 @@ namespace TableManagementConsole
             wb = excel.Workbooks.Open(path, 0, true, 5, "", "", true, _Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
             ws = (Worksheet)wb.Worksheets[sheet];
         }
-        
+
         //method
         //creates a list of reservation based on excel sheet
         public List<Reservation> ReadCell()
         {
-            
+
             List<Reservation> result = new List<Reservation>();
             _Excel.Range range = ws.UsedRange;
 
@@ -40,7 +40,7 @@ namespace TableManagementConsole
             for (int row = 1; row <= numberOfRow; row++)
             {
                 _Excel.Range numberOfGuest = (ws.Cells[row, 1] as _Excel.Range);
-                _Excel.Range timeStart = (ws.Cells[row, 3] as _Excel.Range); 
+                _Excel.Range timeStart = (ws.Cells[row, 3] as _Excel.Range);
                 _Excel.Range name = (ws.Cells[row, 2] as _Excel.Range);
                 _Excel.Range phoneNumber = (ws.Cells[row, 4] as _Excel.Range);
                 _Excel.Range parameter = (ws.Cells[row, 5] as _Excel.Range);
@@ -55,7 +55,7 @@ namespace TableManagementConsole
                 string parameterString = parameter.Value2.ToString();
                 List<string> parameters = parameterString.Split(',').ToList();
 
-                
+
                 //adds the data from the excel to a list of reservations
                 result.Add(new Reservation(name.Value2.ToString(), datetime, bool.Parse(isGap.Value2.ToString()), (int)numberOfGuest.Value2, (int)phoneNumber.Value2, parameters, comment.Value2.ToString()));
             }
