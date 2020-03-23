@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 
 namespace TableManagementConsole
 {
-    public abstract class Table
+    public abstract class Table : IComparable<Table>
     {
 		public int width { get; set; }
 		public int height { get; set; }
 		public int seats { get; set; }
-		//Changed from private set; to protected set; 
-		//as sub classes should be able to set this value as well
+		// tableNumber has been changed from private set; to protected set; 
+		// as sub classes should be able to set this value as well
 		public int tableNumber { get; set; }
 		public int bookingID { get; set; }
 		public string state { get; set; }
@@ -22,7 +23,7 @@ namespace TableManagementConsole
 
 		List<string> parameters = new List<string>();
 
-
+		// public static List<Table> availableTables = new List<Table>();
 		public static List<Table> tableList = new List<Table>();
 
 		//constructor
@@ -41,63 +42,58 @@ namespace TableManagementConsole
 			state = "Available";
 		}
 
-		public static void DeleteTableFromList(int Id)
+		public static void DeleteTableFromList(int id)
 		{
 			// .ToList and Linq library
 			// https://stackoverflow.com/questions/604831/collection-was-modified-enumeration-operation-may-not-execute
 			foreach (Table item in tableList.ToList())
 			{
-				if (item.ID == Id)
+				if (item.ID == id)
 				{
 					tableList.Remove(item);
 				}
 			}
 		}
 
-		//public void AssignTable(Booking booking)
-		//{
-		//	// Need booking
-		//	// BookingID = booking.ID;
-		//	throw new NotImplementedException();
-		//}
+		// Assign booking to table
+		// Need Booking.
+		public void AssignTable(Booking booking)
+		{
+			bookingID = booking.id;
+		}
 
 		public void UnassignTable()
 		{
 			bookingID = default;
-			throw new NotImplementedException();
 		}
 
-		public void TableStateOccupied()
+		public static List<Table> GetTableList(Predicate<Table> searchCriteria)
 		{
-			state = "Occupied";
-			throw new NotImplementedException();
+			List<Table> newList = tableList.FindAll(searchCriteria);
+
+			return newList;
 		}
 
-		public void TableStateAvailable()
+		public static Table CombineTables(Table one, Table two)
 		{
-			state = "Available";
-			throw new NotImplementedException();
-		}
-		public void TableStatePaid()
-		{
-			state = "Paid";
-			throw new NotImplementedException();
-		}
-
-		public void TableStateReserved()
-		{
-			state = "reserved";
-			throw new NotImplementedException();
+			foreach (Table table in tableList.ToList())
+			{
+				if (table.tableNumber == one.tableNumber || table.tableNumber == two.tableNumber)
+				{
+					tableList.Remove(table);
+				}
+			}
+			return new CombinedTable<Table>(one, two);
 		}
 
-		public static void CombineTables(Table one, Table two)
+		public static void SeparateTables(Table one)
 		{
 			throw new NotImplementedException();
 		}
 
-		public static void SeparateTables(Table one, Table two)
+		public int CompareTo([AllowNull] Table other)
 		{
-			throw new NotImplementedException();
+			return ID.CompareTo(other.ID);
 		}
 	}
 }
