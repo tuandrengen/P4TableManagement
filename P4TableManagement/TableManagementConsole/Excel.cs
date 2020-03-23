@@ -31,9 +31,9 @@ namespace TableManagementConsole
             i++;
             j++;
 
-            if (ws.Cells[i, j].Value != null)
+            if ((_Excel.Range)ws.Cells[i, j].Value2 != null)
             {
-                return ws.Cells[i, j].Value;
+                return (_Excel.Range)ws.Cells[i, j].Value2;
 
             }
             else

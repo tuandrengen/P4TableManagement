@@ -6,7 +6,9 @@ namespace TableManagementConsole
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Excel test = new Excel("A:\a.xlsx", 1);
+            int res = test.ReadCell(0 , 0);
+            Console.WriteLine(res);
         }
     }
 }
