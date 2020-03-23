@@ -12,7 +12,6 @@ namespace TableManagementConsole
 
     class Excel
     {
-
         string path = " ";
         _Application excel = new _Excel.Application();
         Workbook wb;
@@ -23,26 +22,31 @@ namespace TableManagementConsole
         {
             this.path = path;
             wb = excel.Workbooks.Open(path, 0, true, 5, "", "", true, _Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
-            ws = (Microsoft.Office.Interop.Excel.Worksheet)wb.Worksheets[sheet];
+            ws = (Worksheet)wb.Worksheets[sheet];
         }
 
-        public string ReadCell(int i, int j)
+        public List<string> ReadCell()
         {
-            i++;
-            j++;
-            _Excel.Range range = (ws.Cells[i, j] as _Excel.Range);
+            List<string> result = new List<string>();
+            _Excel.Range range = ws.UsedRange;
+            string res = "";
 
-            if (range.Value2 != null)
+            int numberOfRow = range.Rows.Count;
+            int numberOfCol = range.Columns.Count;
+
+            for (int row = 1; row < numberOfRow; row++)
             {
-                return range.Value2.ToString();
+                _Excel.Range line = ws.Rows[row];
 
-            }
-            else
-            {
-                return " ";
+                foreach (var item in line.Cells)
+                {
+                    res += item.ToString();
+                }
+
+                result.Add(res);
             }
 
-          
+            return result;
         }
     }
 
