@@ -22,7 +22,7 @@ namespace TableManagementConsole
         public Excel(string path, int sheet)
         {
             this.path = path;
-            wb = excel.Workbooks.Open(path);
+            wb = excel.Workbooks.Open(path, 0, true, 5, "", "", true, _Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
             ws = (Microsoft.Office.Interop.Excel.Worksheet)wb.Worksheets[sheet];
         }
 
