@@ -20,6 +20,7 @@ namespace TableManagementConsole
             width = tableOne.width + tableTwo.width;
             height = tableOne.height + tableTwo.height;
             seats = tableOne.seats + tableTwo.seats;
+            // implement algorithm for tablenumber
             tableNumber = tableOne.tableNumber;
         }
 
