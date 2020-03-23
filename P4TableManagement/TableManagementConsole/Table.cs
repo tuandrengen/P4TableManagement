@@ -10,7 +10,9 @@ namespace TableManagementConsole
 		public int width { get; set; }
 		public int height { get; set; }
 		public int seats { get; set; }
-		public int tableNumber { get; private set; }
+		//Changed from private set; to protected set; 
+		//as sub classes should be able to set this value as well
+		public int tableNumber { get; set; }
 		public int bookingID { get; set; }
 		public string state { get; set; }
 
@@ -52,12 +54,12 @@ namespace TableManagementConsole
 			}
 		}
 
-		public void AssignTable(Booking booking)
-		{
-			// Need booking
-			// BookingID = booking.ID;
-			throw new NotImplementedException();
-		}
+		//public void AssignTable(Booking booking)
+		//{
+		//	// Need booking
+		//	// BookingID = booking.ID;
+		//	throw new NotImplementedException();
+		//}
 
 		public void UnassignTable()
 		{
