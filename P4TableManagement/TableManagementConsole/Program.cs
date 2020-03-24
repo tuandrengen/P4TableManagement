@@ -117,15 +117,15 @@ namespace TableManagementConsole
 
         // Delegate to set state of table.
         // Move to Table.cs later.
-        public delegate void State(Table table, string state);
-        static State stateHandler = SetState;
+        // public delegate void State(Table table, string state);
+        // static State stateHandler = SetState;
 
         // Method used by statHandler event.
         // Move to Table.cs later.
-        public static void SetState(Table table, string state)
-        {
-            table.state = state;
-        }
+        // public static void SetState(Table table, string state)
+        // {
+        //     table.state = state;
+        // }
 
         /*
          * TODO:
