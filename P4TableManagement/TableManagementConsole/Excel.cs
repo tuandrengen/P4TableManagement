@@ -66,7 +66,7 @@ namespace TableManagementConsole
         public void WriteToCell(string[] list)
         {
             int row = ws.UsedRange.Rows.Count;
-            int nextrow = row + 1;
+            int nextrow = row++;
 
             (ws.Cells[nextrow, 1] as _Excel.Range).Value2 = list[0];
             (ws.Cells[nextrow, 2] as _Excel.Range).Value2 = list[1];
