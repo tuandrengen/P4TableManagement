@@ -23,6 +23,21 @@ namespace P4TableManagement
         public MainWindow()
         {
             InitializeComponent();
+
+            // We initialize the Rows and Columns (and two colors)
+            MapTest.Rows = 25;
+            MapTest.Columns = 25;
+
+            SolidColorBrush Color1 = new SolidColorBrush(Colors.YellowGreen);
+            SolidColorBrush Color2 = new SolidColorBrush(Colors.White);
+
+            // Populate the map with REEEctangles and adds a color to them
+            for (int i = 0; i <= 625; i++)
+            {
+                MapTest.Children.Add(new Rectangle { Fill = Color1 });
+                MapTest.Children.Add(new Rectangle { Fill = Color2});
+            }
+
         }
     }
 }

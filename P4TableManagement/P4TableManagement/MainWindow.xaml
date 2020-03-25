@@ -6,7 +6,17 @@
         xmlns:local="clr-namespace:P4TableManagement"
         mc:Ignorable="d"
         Title="Table Management System" Height="720" Width="1080">
-    <Grid>
-        
-    </Grid>
+
+    <UniformGrid x:Name="MapTest">
+        <!--<Rectangle Fill="Black"></Rectangle>
+        <Rectangle Fill="Red"></Rectangle>
+        <Rectangle Fill="Black"></Rectangle>
+        <Rectangle Fill="Red"></Rectangle>
+        <Rectangle Fill="Black"></Rectangle>
+        <Rectangle Fill="Red"></Rectangle>
+        <Rectangle Fill="Black"></Rectangle>
+        <Rectangle Fill="Red"></Rectangle>
+        <Rectangle Fill="Black"></Rectangle>-->
+    </UniformGrid>
+     
 </Window>
