@@ -63,29 +63,28 @@ namespace TableManagementConsole
 			Console.WriteLine($"Table #{ tableNumber } has been unassigned!");
 		}
 
-		public void PaidTable()
+		public void PayTable()
 		{
 			state = "Paid";
 			Console.WriteLine($"Table #{ tableNumber } has been paid! Booking ID: { bookingID }");
 		}
 
-		public void ReservedTable(Booking booking)
+		public void ReserveTable(Booking booking)
 		{
 			bookingID = booking.id;
 			state = "Reserved";
 			Console.WriteLine($"Table #{ tableNumber } has been reserved! Booking ID: { bookingID }");
 		}
 
-		public static List<Table> GetTableList(Predicate<Table> searchCriteria)
+		public static List<Table> GetTableList(Predicate<Table> searchCriteria, List<Table> tableList)
 		{
 			List<Table> newList = tableList.FindAll(searchCriteria);
-
 			return newList;
 		}
 
 		// Combines this object of a table with another table by deleting the two
 		// tables from the tableList and then returning the new CombinedTable.
-		public Table CombineTables(Table other)
+		public Table CombineTables(Table other, List<Table> tableList)
 		{
 			foreach (Table table in tableList.ToList())
 			{
@@ -99,7 +98,7 @@ namespace TableManagementConsole
 
 		// Separates table by adding the two tables that were combined at first,
 		// and adding them back to tableList.
-		public static void SeparateTables(CombinedTable<Table> inputTable)
+		public static void SeparateTables(CombinedTable<Table> inputTable, List<Table> tableList)
 		{
 			foreach (Table table in inputTable.combinedTables)
 			{
