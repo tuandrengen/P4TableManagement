@@ -23,7 +23,7 @@ namespace TableManagementConsole
         public Excel(string path, int sheet)
         {
             this.path = path;
-            wb = excel.Workbooks.Open(path, 0, true, 5, "", "", true, _Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
+            wb = excel.Workbooks.Open(path, 0, false, 5, "", "", true, _Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
             ws = (Worksheet)wb.Worksheets[sheet];
         }
 
@@ -63,11 +63,17 @@ namespace TableManagementConsole
             return result;
         }
 
-        public void WriteToCell(int i, int j, string s)
+        public void WriteToCell(string[] list)
         {
-            i++;
-            j++;
-            (ws.Cells[i, j] as _Excel.Range).Value2 = s;
+            int row = ws.UsedRange.Rows.Count;
+            int nextrow = row + 1;
+
+            (ws.Cells[nextrow, 1] as _Excel.Range).Value2 = list[0];
+            (ws.Cells[nextrow, 2] as _Excel.Range).Value2 = list[1];
+            (ws.Cells[nextrow, 3] as _Excel.Range).Value2 = list[2];
+            (ws.Cells[nextrow, 4] as _Excel.Range).Value2 = list[3];
+
+            Save();
 
         }
 
@@ -79,15 +85,20 @@ namespace TableManagementConsole
         public void SaveAs(string path)
         {
             wb.SaveAs(path);
+            
         }
 
         public void Close()
+        {
+            wb.Close();
+        }
+
+        public void Quit()
         {
             wb.Close(false);
 
             // Now quit the application.
             excel.Quit();
-            
 
             // Call the garbage collector to collect and wait for finalizers to finish.
             GC.Collect();

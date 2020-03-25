@@ -8,13 +8,26 @@ using _Excel = Microsoft.Office.Interop.Excel;
 namespace TableManagementConsole
 {
     partial class ReservationList
+        // mangler metoder som skaber ny sheet for hver dag
+        // og en metode som skaber en ny workbook for hver måned
     {
         public List<Reservation> listReservation = new List<Reservation>();
         
         //manuelt indtastning af data ind i database
-        public void CreateReservation()
+        public void CreateReservation(string path, int sheet)
         {
-            throw new NotImplementedException();
+            Excel excel = new Excel(path, sheet);
+
+            Console.WriteLine("Enter string: ");
+            string s = Console.ReadLine();
+            string[] seperator = { "p, ", ", " };
+            //Int32 count = 4;
+
+            string[] list = s.Split(seperator, 4, StringSplitOptions.None);
+
+            excel.WriteToCell(list);
+
+            excel.Quit();
         }
 
         //læser fra en anden database(online bestilling) og inputter ind i vorse database(excel)
@@ -22,7 +35,6 @@ namespace TableManagementConsole
         {
             throw new NotImplementedException();
         }
-
 
 
         //indtager data fra databasen, laver daten om til objekter(reservations) og putter dem i en liste
@@ -35,7 +47,7 @@ namespace TableManagementConsole
                 Console.WriteLine($"{reservation.numberOfGuests}p, {reservation.name},  {reservation.phoneNumber}, {reservation.timeStart.ToString("HH:mm")} , {string.Join(", ", reservation.parameter)} , {reservation.comment}");
             }
 
-            test.Close();
+            test.Quit();
         }
 
         //sletter reservationer
