@@ -21,5 +21,35 @@ namespace TableManagementConsole
 			get { return _sectionID; }
 			set { _sectionID = value; }
 		}
-    }
+
+		public void CreateMapSection()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void DeleteMapSection()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void EditMapSection()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void ChangeVisibility()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void UpdateMapSection() // ???
+		{
+			throw new NotImplementedException();
+		}
+
+		public void ResetMapSection()
+		{
+			throw new NotImplementedException();
+		}
+	}
 }

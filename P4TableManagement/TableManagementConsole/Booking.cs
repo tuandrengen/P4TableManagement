@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TableManagementConsole
 {
-    class Booking
+    public class Booking
     {
 
         private int _id;

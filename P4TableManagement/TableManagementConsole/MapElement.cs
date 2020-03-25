@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TableManagementConsole
 {
-    class MapElement
+    public class MapElement
     {
         private int _width;
         private int _height;
@@ -42,6 +42,21 @@ namespace TableManagementConsole
             this.height = height;
             this.placementX = placementX;
             this.placementY = placementY;
-        } 
+        }
+
+        public void CreateMapElement()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddMapElement()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteMapElement()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
