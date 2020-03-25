@@ -87,6 +87,7 @@ namespace TableManagementConsole
 
             // Now quit the application.
             excel.Quit();
+            
 
             // Call the garbage collector to collect and wait for finalizers to finish.
             GC.Collect();

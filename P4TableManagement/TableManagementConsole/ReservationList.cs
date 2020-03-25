@@ -35,7 +35,7 @@ namespace TableManagementConsole
                 Console.WriteLine($"{reservation.numberOfGuests}p, {reservation.name},  {reservation.phoneNumber}, {reservation.timeStart.ToString("HH:mm")} , {string.Join(", ", reservation.parameter)} , {reservation.comment}");
             }
 
-            //test.Close();
+            test.Close();
         }
 
         //sletter reservationer
