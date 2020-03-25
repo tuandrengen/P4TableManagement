@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Office.Interop.Excel;
@@ -59,8 +60,43 @@ namespace TableManagementConsole
                 //adds the data from the excel to a list of reservations
                 result.Add(new Reservation(name.Value2.ToString(), datetime, bool.Parse(isGap.Value2.ToString()), (int)numberOfGuest.Value2, (int)phoneNumber.Value2, parameters, comment.Value2.ToString()));
             }
-
             return result;
+        }
+
+        public void WriteToCell(int i, int j, string s)
+        {
+            i++;
+            j++;
+            (ws.Cells[i, j] as _Excel.Range).Value2 = s;
+
+        }
+
+        public void Save()
+        {
+            wb.Save();
+        }
+
+        public void SaveAs(string path)
+        {
+            wb.SaveAs(path);
+        }
+
+        public void Close()
+        {
+            wb.Close(false);
+
+            // Now quit the application.
+            excel.Quit();
+
+            // Call the garbage collector to collect and wait for finalizers to finish.
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+
+            // Release the COM objects that have been instantiated.
+            Marshal.FinalReleaseComObject(wb);
+            Marshal.FinalReleaseComObject(ws);
+            //Marshal.FinalReleaseComObject(workrange);
+            Marshal.FinalReleaseComObject(excel);
         }
     }
 

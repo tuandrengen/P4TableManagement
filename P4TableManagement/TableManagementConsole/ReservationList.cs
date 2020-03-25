@@ -32,8 +32,10 @@ namespace TableManagementConsole
             List<Reservation> list = test.ReadCell();
             foreach (var reservation in list)
             {
-                Console.WriteLine($"{reservation.name}, {reservation.numberOfGuests}, {reservation.phoneNumber}, {reservation.timeStart.ToString("HH:mm")}, {reservation.comment}, {string.Join(", ", reservation.parameter)}");
+                Console.WriteLine($"{reservation.numberOfGuests}p, {reservation.name},  {reservation.phoneNumber}, {reservation.timeStart.ToString("HH:mm")} , {string.Join(", ", reservation.parameter)} , {reservation.comment}");
             }
+
+            //test.Close();
         }
 
         //sletter reservationer
