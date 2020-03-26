@@ -51,6 +51,12 @@ namespace TableManagementConsole
 		// Need Booking.
 		public void AssignTable(Booking booking)
 		{
+			if(this.state == "Occupied")
+			{
+				// Error message on screen.
+				// throw new Exception("Error: Cannot assign an occupied table!");
+				return;
+			}
 			bookingID = booking.id;
 			state = "Occupied";
 			Console.WriteLine($"Table #{ tableNumber } has been assigned! Booking ID: { bookingID }");

@@ -360,5 +360,18 @@ namespace UnitTesting
 
             CollectionAssert.AreEqual(expected, actual);
         }
+
+        [TestMethod]
+        public void AssignTable_AssignAssignedTable_Booking2DoesNotOverwriteBooking1OnTable1()
+        {
+            Table table1 = new SmallTable() { tableNumber = 37 };
+            Booking booking1 = new Booking(2, DateTime.Parse("12:00"), false) { id = 12 };
+            Booking booking2 = new Booking(2, DateTime.Parse("12:00"), false) { id = 13 };
+
+            table1.AssignTable(booking1);
+            table1.AssignTable(booking2);
+
+            Assert.AreEqual(table1.bookingID, 12);
+        }
     }
 }
