@@ -8,6 +8,7 @@ namespace TableManagementConsole
         static void Main(string[] args)
         {
             ReservationList list = new ReservationList();
+            list.DeleteReservations(@"C:\Users\T-Phamz\Desktop\test\test.xlsx", 1, 8);
         }
     }
 }

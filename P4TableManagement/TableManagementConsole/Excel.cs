@@ -106,6 +106,11 @@ namespace TableManagementConsole
 
         }
 
+        public void Delete(int row)
+        {
+            ((_Excel.Range)ws.Rows[row]).Delete(XlDeleteShiftDirection.xlShiftUp);
+            Save();
+        }
 
         public void Save()
         {
@@ -140,6 +145,7 @@ namespace TableManagementConsole
             //Marshal.FinalReleaseComObject(workrange);
             Marshal.FinalReleaseComObject(excel);
         }
+
     }
 
 }

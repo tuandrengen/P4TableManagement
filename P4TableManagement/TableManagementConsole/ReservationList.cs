@@ -52,8 +52,8 @@ namespace TableManagementConsole
         //indtager data fra databasen, laver daten om til objekter(reservations) og putter dem i en liste
         public void PopulateReservationList(string path, int sheet)
         {
-            Excel test = new Excel(path, sheet);
-            List<Reservation> list = test.ReadCell();
+            Excel excel = new Excel(path, sheet);
+            List<Reservation> list = excel.ReadCell();
 
             //printer listen skal fjernes senere
             foreach (var reservation in list)
@@ -61,13 +61,15 @@ namespace TableManagementConsole
                 Console.WriteLine($"{reservation.numberOfGuests}p, {reservation.name},  {reservation.phoneNumber}, {reservation.timeStart.ToString("HH:mm")} , {string.Join(", ", reservation.parameter)} , {reservation.comment}");
             }
 
-            test.Quit();
+            excel.Quit();
         }
 
         //sletter reservationer
-        public void DeleteReservations()
+        public void DeleteReservations(string path, int sheet, int row)
         {
-             throw new NotImplementedException();
+            Excel excel = new Excel(path, sheet);
+            excel.Delete(row);
+            excel.Quit();
         }
 
         //ændre data hos en allerede eksisterende
