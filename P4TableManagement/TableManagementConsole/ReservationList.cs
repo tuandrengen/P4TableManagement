@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Office.Interop.Excel;
@@ -26,7 +27,7 @@ namespace TableManagementConsole
 
             string[] list = s.Split(seperator, 4, StringSplitOptions.None);
 
-            excel.WriteToCell(list);
+            excel.WriteToRow(list);
 
             excel.Quit();
         }
@@ -55,6 +56,7 @@ namespace TableManagementConsole
             Excel excel = new Excel(path, sheet);
             List<Reservation> list = excel.ReadCell();
 
+            list = SortReservations(list);
             //printer listen skal fjernes senere
             foreach (var reservation in list)
             {
@@ -73,16 +75,23 @@ namespace TableManagementConsole
         }
 
         //ændre data hos en allerede eksisterende
-        public void EditReservations()
+        public void EditReservations(string path, int sheet, int row, int column)
         {
-             throw new NotImplementedException();
+            //i GUI kan man vaelge en reservation dvs. en bestemt row i excel, 
+            //ind i edit s[ vaelge man 
+            Excel excel = new Excel(path, sheet);
+            string input = Console.ReadLine();
+            excel.WriteToCell(row, column, input);
+            excel.Quit();
         }
 
         // sortere reservationer
-        public void SortReservations()
+        public List<Reservation> SortReservations(List<Reservation> list)
         {
-            throw new NotImplementedException();
+            List<Reservation> sortedlist = list.OrderBy(res => res.timeStart).ThenBy(res => res.numberOfGuests).ToList();
+            return sortedlist;
         }
+
 
         // Filtrer reservationer
         public void FilterReservations()

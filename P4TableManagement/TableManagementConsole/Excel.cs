@@ -64,7 +64,7 @@ namespace TableManagementConsole
             return result;
         }
 
-        public void WriteToCell(string[] list)
+        public void WriteToRow(string[] list)
         {
             int row = ws.UsedRange.Rows.Count;
             int nextrow = ++row;
@@ -79,7 +79,12 @@ namespace TableManagementConsole
             (ws.Cells[nextrow, 6] as _Excel.Range).Value2 = "en kommentar";
             (ws.Cells[nextrow, 7] as _Excel.Range).Value2 = true;
 
+            Save();
+        }
 
+        public void WriteToCell(int row, int column, string input)
+        {
+            (ws.Cells[row, column] as _Excel.Range).Value2 = input;
             Save();
         }
 
