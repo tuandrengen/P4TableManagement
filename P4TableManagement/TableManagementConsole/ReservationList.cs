@@ -14,6 +14,7 @@ namespace TableManagementConsole
         public List<Reservation> listReservation = new List<Reservation>();
         
         //manuelt indtastning af data ind i database
+        //skriver ikke parameter og kommentar ind. 
         public void CreateReservation(string path, int sheet)
         {
             Excel excel = new Excel(path, sheet);

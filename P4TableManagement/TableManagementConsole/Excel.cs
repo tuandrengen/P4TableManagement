@@ -74,6 +74,12 @@ namespace TableManagementConsole
             (ws.Cells[nextrow, 3] as _Excel.Range).Value2 = list[2];
             (ws.Cells[nextrow, 4] as _Excel.Range).Value2 = list[3];
 
+            //for parameter, kommentar og Gap
+            (ws.Cells[nextrow, 5] as _Excel.Range).Value2 = "parameter 1, parameter 2";
+            (ws.Cells[nextrow, 6] as _Excel.Range).Value2 = "en kommentar";
+            (ws.Cells[nextrow, 7] as _Excel.Range).Value2 = true;
+
+
             Save();
         }
 
