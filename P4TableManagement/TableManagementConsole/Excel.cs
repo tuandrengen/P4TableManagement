@@ -41,8 +41,8 @@ namespace TableManagementConsole
             for (int row = 1; row <= numberOfRow; row++)
             {
                 _Excel.Range numberOfGuest = (ws.Cells[row, 1] as _Excel.Range);
-                _Excel.Range timeStart = (ws.Cells[row, 3] as _Excel.Range);
                 _Excel.Range name = (ws.Cells[row, 2] as _Excel.Range);
+                _Excel.Range timeStart = (ws.Cells[row, 3] as _Excel.Range);
                 _Excel.Range phoneNumber = (ws.Cells[row, 4] as _Excel.Range);
                 _Excel.Range parameter = (ws.Cells[row, 5] as _Excel.Range);
                 _Excel.Range comment = (ws.Cells[row, 6] as _Excel.Range);
@@ -51,6 +51,7 @@ namespace TableManagementConsole
                 //convert excel value to datetime type
                 double date = timeStart.Value2;
                 DateTime datetime = DateTime.FromOADate(date);
+
 
                 //converterer lang string fra excel til list<string> som parameter.....
                 string parameterString = parameter.Value2.ToString();
@@ -66,7 +67,7 @@ namespace TableManagementConsole
         public void WriteToCell(string[] list)
         {
             int row = ws.UsedRange.Rows.Count;
-            int nextrow = row++;
+            int nextrow = ++row;
 
             (ws.Cells[nextrow, 1] as _Excel.Range).Value2 = list[0];
             (ws.Cells[nextrow, 2] as _Excel.Range).Value2 = list[1];
@@ -74,8 +75,31 @@ namespace TableManagementConsole
             (ws.Cells[nextrow, 4] as _Excel.Range).Value2 = list[3];
 
             Save();
+        }
+
+        public void ImportReservationList(List<Reservation> list)
+        {
+            int row = ws.UsedRange.Rows.Count;
+            int nextrow = ++row;
+
+            foreach (var item in list)
+            {
+                (ws.Cells[nextrow, 1] as _Excel.Range).Value2 = item.numberOfGuests;
+                (ws.Cells[nextrow, 2] as _Excel.Range).Value2 = item.name;
+                (ws.Cells[nextrow, 3] as _Excel.Range).Value2 = item.timeStart;
+                (ws.Cells[nextrow, 4] as _Excel.Range).Value2 = item.phoneNumber;
+                //sources parameter = list<string> ==> string (excel)
+                string parameters = string.Join(", ", item.parameter);
+                (ws.Cells[nextrow, 5] as _Excel.Range).Value2 = parameters;
+                (ws.Cells[nextrow, 6] as _Excel.Range).Value2 = item.comment;
+                (ws.Cells[nextrow, 7] as _Excel.Range).Value2 = item.isGap.ToString();
+                nextrow++;
+
+                Save();
+            }
 
         }
+
 
         public void Save()
         {

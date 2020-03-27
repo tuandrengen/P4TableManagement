@@ -31,9 +31,20 @@ namespace TableManagementConsole
         }
 
         //læser fra en anden database(online bestilling) og inputter ind i vorse database(excel)
-        public void AutomaticCreateReservation()
+        public void AutomaticCreateReservation(string sourcepath, int sourcesheet, string targetpath, int targetsheet)
         {
-            throw new NotImplementedException();
+            //MISSING lav en metode som tjekker om en reservation fra source allerede er i target
+            Excel source = new Excel(sourcepath, sourcesheet);
+            Excel target = new Excel(targetpath, targetsheet);
+
+            //Read from another database (excel)
+            List<Reservation> sourcelist = source.ReadCell();
+            source.Quit();
+
+            //write to reservation's database (excel)
+            target.ImportReservationList(sourcelist);
+
+            target.Quit();
         }
 
 
@@ -42,6 +53,8 @@ namespace TableManagementConsole
         {
             Excel test = new Excel(path, sheet);
             List<Reservation> list = test.ReadCell();
+
+            //printer listen skal fjernes senere
             foreach (var reservation in list)
             {
                 Console.WriteLine($"{reservation.numberOfGuests}p, {reservation.name},  {reservation.phoneNumber}, {reservation.timeStart.ToString("HH:mm")} , {string.Join(", ", reservation.parameter)} , {reservation.comment}");

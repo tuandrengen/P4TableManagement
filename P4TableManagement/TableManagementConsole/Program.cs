@@ -8,14 +8,13 @@ namespace TableManagementConsole
         static void Main(string[] args)
         {
             ReservationList list = new ReservationList();
-            //Excel excel = new Excel(@"C:\Users\T-Phamz\Desktop\test\test.xlsx", 1);
-            //excel.WriteToCell(4, 2, "Kim");
-            //excel.Save();
-            //excel.Close();
-            //list.PopulateReservationList(@"C:\Users\T-Phamz\Desktop\test\test.xlsx", 1);
-            //excel.Quit();
+            Excel excel = new Excel(@"C:\Users\T-Phamz\Desktop\test\test.xlsx", 1);
             list.CreateReservation(@"C:\Users\T-Phamz\Desktop\test\test.xlsx", 1);
-            
+            list.PopulateReservationList(@"C:\Users\T-Phamz\Desktop\test\test.xlsx", 1);
+
+            //list.AutomaticCreateReservation(@"C:\Users\T-Phamz\Desktop\test\sourcetest.xlsx", 1, @"C:\Users\T-Phamz\Desktop\test\test.xlsx", 1);
+            //list.PopulateReservationList(@"C:\Users\T-Phamz\Desktop\test\test.xlsx", 1);
+
 
         }
     }
