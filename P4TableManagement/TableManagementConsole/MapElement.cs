@@ -4,36 +4,15 @@ using System.Text;
 
 namespace TableManagementConsole
 {
-    public class MapElement
+    public abstract class MapElement
     {
-        private int _width;
-        private int _height;
-        private int _placementX;
-        private int _placementY;
-
         //properties
-        public int width
-        {
-            get { return _width; }
-            set { _width = value; }
-        }
+        public int width { get; set; }
+        public int height { get; set; }
+        public int placementX { get; set; }
+        public int placementY { get; set; }
 
-        public int height 
-        { 
-            get { return _height; } 
-            set { _height = value; } 
-        }
-
-        public int placementX 
-        {
-            get { return _placementX; } 
-            set { _placementX = value; } 
-        }
-        public int placementY 
-        { 
-            get { return _placementY; } 
-            set { _placementY = value; } 
-        }
+        static List<MapElement> mapElementList = new List<MapElement>();
 
         //constructor
         public MapElement(int width, int height, int placementX, int placementY)
@@ -44,19 +23,28 @@ namespace TableManagementConsole
             this.placementY = placementY;
         }
 
-        public void CreateMapElement()
+        public void GetAllMapElements(List<Table> tableList, List<DecorationElement> deList)
         {
-            throw new NotImplementedException();
+            mapElementList.Clear();
+            mapElementList.TrimExcess();
+            foreach (Table table in tableList)
+            {
+                mapElementList.Add(table);
+            }
+            foreach (DecorationElement de in deList)
+            {
+                mapElementList.Add(de);
+            }
         }
 
-        public void AddMapElement()
+        public void AddMapElementToList(List<MapElement> meList)
         {
-            throw new NotImplementedException();
+            meList.Add(this);
         }
 
-        public void DeleteMapElement()
+        public void DeleteMapElementFromList(List<MapElement> meList)
         {
-            throw new NotImplementedException();
+            meList.Remove(this);
         }
     }
 }

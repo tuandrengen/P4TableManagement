@@ -6,10 +6,8 @@ using System.Text;
 
 namespace TableManagementConsole
 {
-    public abstract class Table : IComparable<Table>
+    public abstract class Table : MapElement, IComparable<Table>
     {
-		public int width { get; set; }
-		public int height { get; set; }
 		public int seats { get; set; }
 		// tableNumber has been changed from private set; to protected set; 
 		// as sub classes should be able to set this value as well
@@ -26,7 +24,7 @@ namespace TableManagementConsole
 		// public static List<Table> availableTables = new List<Table>();
 		public static List<Table> tableList = new List<Table>();
 
-		public Table()
+		public Table(int width, int height, int placementX, int placementY) : base(width, height, placementX, placementY)
 		{
 			// Read this link for more information about auto-incrementing a value.
 			// https://stackoverflow.com/questions/8813435/incrementing-a-unique-id-number-in-the-constructor
@@ -34,17 +32,23 @@ namespace TableManagementConsole
 			state = "Available";
 		}
 
-		public static void DeleteTableFromList(int id)
+		public void AddTableToList(List<Table> tableList)
 		{
-			// .ToList and Linq library
-			// https://stackoverflow.com/questions/604831/collection-was-modified-enumeration-operation-may-not-execute
-			foreach (Table item in tableList.ToList())
-			{
-				if (item.ID == id)
-				{
-					tableList.Remove(item);
-				}
-			}
+			tableList.Add(this);
+		}
+
+		public void DeleteTableFromList(List<Table> tableList)
+		{
+			tableList.Remove(this);
+			//// .ToList and Linq library
+			//// https://stackoverflow.com/questions/604831/collection-was-modified-enumeration-operation-may-not-execute
+			//foreach (Table table in tableList.ToList())
+			//{
+			//	if (table.ID == id)
+			//	{
+			//		tableList.Remove(item);
+			//	}
+			//}
 		}
 
 		// Assign booking to table

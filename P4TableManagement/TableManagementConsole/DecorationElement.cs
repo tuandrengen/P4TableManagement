@@ -7,28 +7,10 @@ namespace TableManagementConsole
 {
     public class DecorationElement : MapElement
     {
-        private int _zoneWidth;
-        private int _zoneHeight;
-        private string _name;
 
-        //properties
-		public int zoneWidth
-		{
-			get { return _zoneWidth; }
-			set { _zoneWidth = value; }
-		}
-
-        public int zoneHeight
-        {
-            get { return _zoneHeight; }
-            set { _zoneHeight = value; }
-        }
-
-        public string name
-		{
-			get { return _name; }
-			set { _name = value; }
-		}
+        public int zoneWidth { get; set; }
+        public int zoneHeight { get; set; }
+        public string name { get; set; }
 
         public static List<DecorationElement> decorationElementList = new List<DecorationElement>();
 
@@ -42,39 +24,37 @@ namespace TableManagementConsole
 		}
 
         // We create a new DecorationElement and adds it to the overall list (redundant parameters?)
-        public void CreateDecorationElement(DecorationElement newDE)
+        public void CreateDecorationElement(List<DecorationElement> deList)
         {
-            bool listValid = false;
-
-            // Kontrolstruktur der tjekker om elementet allerede eksisterer i listen
-            foreach (var item in decorationElementList)
+            if(deList.Count != 0)
             {
-                Console.WriteLine($"Vi tjekker dette item {item.name}");
-                if (item.name == newDE.name)
+                // Kontrolstruktur der tjekker om elementet allerede eksisterer i listen
+                foreach (DecorationElement de in deList.ToList())
                 {
-                    // De to elementer er ens og derfor kan den ikke sættes ind i listen.
-                    // Man kunne prompte brugeren til at ændre navnet på newDE
-                    Console.WriteLine($"ERROR - Der eksisterer allerede et {item.name}");
-                    Console.WriteLine();
-                    listValid = false;
-                    break;
+                    // Console.WriteLine($"Vi tjekker dette item {de.name}");
+                    if (name == de.name)
+                    {
+                        // De to elementer er ens og derfor kan den ikke sættes ind i listen.
+                        // Man kunne prompte brugeren til at ændre navnet på newDE
+                        // Console.WriteLine($"ERROR - Der eksisterer allerede et {de.name}");
+                        // throw new Exception("Cannot create a Decoration Element with the same name of another!");
+                        break;
+                    }
+                    else
+                    {
+                        deList.Add(this);
+                    }
                 }
-                else
-                {
-                    listValid = true;
-                }
-                Console.WriteLine();
             }
-            if (listValid)
+            else
             {
-                Console.WriteLine("Der eksisterer ikke en lignende, så vi tilføjer");
-                decorationElementList.Add(newDE);
+                deList.Add(this);
             }
         }
 
-        public void DeleteDecorationElement(DecorationElement DE)
+        public void DeleteDecorationElement(List<DecorationElement> deList)
         {
-            decorationElementList.Remove(DE);
+            deList.Remove(this);
         }
     }
 }

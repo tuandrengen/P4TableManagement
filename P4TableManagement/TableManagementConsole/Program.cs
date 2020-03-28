@@ -8,7 +8,7 @@ namespace TableManagementConsole
     {
         static void Main(string[] args)
         {
-            
+
         }
 
         // Method that prints all tables in a list.

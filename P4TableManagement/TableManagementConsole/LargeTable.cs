@@ -6,10 +6,8 @@ namespace TableManagementConsole
 {
     public class LargeTable : Table
     {
-        public LargeTable() : base()
+        public LargeTable() : base(2, 1, 0, 0)
         {
-            width = 2;
-            height = 1;
             seats = 4;
         }
     }
