@@ -4,32 +4,31 @@ using System.Text;
 
 namespace TableManagementConsole
 {
-    class MapSection
+    public class MapSection
     {
-		private int _size;
-		private int _sectionID;
+		public int size { get; set; }
+		public int sectionID { get; set; }
+		public string visibility { get; set; }
 
-		//properties 
-		public int size
+		private static int _mapSectionID = 0;
+
+		public MapSection()
 		{
-			get { return _size; }
-			set { _size = value; }
-		}
-		
-		public int sectionID
-		{
-			get { return _sectionID; }
-			set { _sectionID = value; }
+			sectionID = System.Threading.Interlocked.Increment(ref _mapSectionID);
+			this.visibility = "Inactive";
+			AddMapSectionToTableMap();
 		}
 
-		public void CreateMapSection()
+		public void AddMapSectionToTableMap()
 		{
-			throw new NotImplementedException();
+			// Directly adds to TableMap.tableMap list.
+			TableMap.tableMap.Add(this); 
 		}
 
 		public void DeleteMapSection()
 		{
-			throw new NotImplementedException();
+			// Directly removes from TableMap.tableMap list.
+			TableMap.tableMap.Remove(this); 
 		}
 
 		public void EditMapSection()
@@ -39,7 +38,14 @@ namespace TableManagementConsole
 
 		public void ChangeVisibility()
 		{
-			throw new NotImplementedException();
+			if (visibility == "Active")
+			{
+				visibility = "Inactive";
+			}
+			else
+			{
+				visibility = "Active";
+			}
 		}
 
 		public void UpdateMapSection() // ???

@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TableManagementConsole;
 
 
-namespace P4TableManagement
+namespace UnitTesting
 {
     [TestClass]
     public class DecorationElementTests

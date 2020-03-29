@@ -4,9 +4,9 @@ using System.Text;
 
 namespace TableManagementConsole
 {
-    class TableMap
+    public class TableMap
     {
-        List<MapSection> tableMap = new List<MapSection>();
+        public static List<MapSection> tableMap = new List<MapSection>();
 
         public bool Active()
         {

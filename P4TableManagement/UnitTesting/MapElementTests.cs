@@ -10,20 +10,20 @@ namespace UnitTesting
     public class MapElementTests
     {
         [TestMethod]
-        public void GetAllMapElements_AddAllMapElementsToList_1()
+        public void GetAllMapElements_AddAllMapElementsToList_3MapElements2Tables1DecorationElement()
         {
             List<Table> tableList = new List<Table>();
             List<DecorationElement> deList = new List<DecorationElement>();
-            //List<MapElement> meList = new List<MapElement>();
-            Table table1 = new SmallTable();
-            Table table2 = new LargeTable();
 
-            DecorationElement de1 = new DecorationElement("Bar", 2, 2, 2, 2, 2, 2);
+            tableList.Add(new SmallTable());
+            tableList.Add(new LargeTable());
 
-            smallTable.AddMapElementToList(meList);
+            deList.Add(new DecorationElement("Bar", 2, 2, 2, 2, 2, 2));
 
-            var expected = 1;
-            var actual = meList.Count;
+            MapElement.GetAllMapElements(tableList, deList);
+
+            var expected = 3;
+            var actual = MapElement.mapElementList.Count;
 
             Assert.AreEqual(expected, actual);
         }

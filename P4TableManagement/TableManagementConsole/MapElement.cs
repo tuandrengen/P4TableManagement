@@ -12,7 +12,7 @@ namespace TableManagementConsole
         public int placementX { get; set; }
         public int placementY { get; set; }
 
-        static List<MapElement> mapElementList = new List<MapElement>();
+        public static List<MapElement> mapElementList = new List<MapElement>();
 
         //constructor
         public MapElement(int width, int height, int placementX, int placementY)
@@ -23,7 +23,7 @@ namespace TableManagementConsole
             this.placementY = placementY;
         }
 
-        public void GetAllMapElements(List<Table> tableList, List<DecorationElement> deList)
+        public static void GetAllMapElements(List<Table> tableList, List<DecorationElement> deList)
         {
             mapElementList.Clear();
             mapElementList.TrimExcess();
