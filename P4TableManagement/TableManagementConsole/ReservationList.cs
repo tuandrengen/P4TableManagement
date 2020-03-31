@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -57,6 +58,8 @@ namespace TableManagementConsole
             List<Reservation> list = excel.ReadCell();
 
             list = SortReservations(list);
+
+            list = FilterByRangeTimeStart(list, "18:30", "17:00");
             //printer listen skal fjernes senere
             foreach (var reservation in list)
             {
@@ -94,10 +97,50 @@ namespace TableManagementConsole
 
 
         // Filtrer reservationer
-        public void FilterReservations()
+        public List<Reservation> FilterBySpecificNumberOfGuests(List<Reservation> list, int i)
         {
-             throw new NotImplementedException();
+            List<Reservation> filteredList = list.Where(x => x.numberOfGuests == i).ToList();
+            return filteredList; 
         }
 
+        public List<Reservation> FilterByRangeNumberOfGuests(List<Reservation> list, int max, int min)
+        {
+            List<Reservation> filteredList = list.Where(x => x.numberOfGuests <= max).Where(x => x.numberOfGuests >= min).ToList();
+            return filteredList;
+        }
+
+        public List<Reservation> FilterBySpecificTimeStart(List<Reservation> list, string timestart)
+        {
+            List<Reservation> filteredList = list.Where(x => x.timeStart.ToString("HH:mm") == s).ToList();
+            return filteredList;
+        }
+
+        public List<Reservation> FilterByRangeTimeStart(List<Reservation> list, string max, string min)
+        {
+            //List<Reservation> filteredList = list.Where(x => x.timeStart.ToString("HH:mm") == max).Where(x => x.timeStart.ToString("HH:mm") >= min).ToList();
+            //List<Reservation> filteredList =
+
+            //s1.CompareTo(s2)
+            //List < Reservation > filteredList = list.Where(x => max.CompareTo(x.timeStart.ToString("HH:mm")) == 0 || max.CompareTo(x.timeStart.ToString("HH:mm")) == -1)
+            //                                        .Where(x => min.CompareTo(x.timeStart.ToString("HH:mm")) == 0 || min.CompareTo(x.timeStart.ToString("HH:mm")) == 1)
+            //                                        .ToList();
+
+
+
+            return filteredList;
+        }
+
+        public List<Reservation> FilterBySpecificParameter(List<Reservation> list, string parameter)
+        {
+            
+            
+            List<Reservation> filteredList = list.Where(x => x. == parameter).ToList();
+
+            return filteredList;
+        }
+
+
+        //"dd.M.yyyy H:mm:ss"
     }
+    // numberofGuests (range and specific), timedate(range, specific), parameter (one or more specific)
 }
