@@ -12,29 +12,25 @@ namespace TableManagementConsole
 
 		private static int _mapSectionID = 0;
 
+		public static List<MapSection> mapSections = new List<MapSection>();
+
 		public MapSection()
 		{
 			sectionID = System.Threading.Interlocked.Increment(ref _mapSectionID);
 			this.visibility = "Inactive";
-			AddMapSectionToTableMap();
+			AddMapSectionToList();
 		}
 
-		public void AddMapSectionToTableMap()
+		public void AddMapSectionToList()
 		{
-			// Directly adds to TableMap.tableMap list.
-			TableMap.tableMap.Add(this); 
+			// Directly adds to mapSections list.
+			mapSections.Add(this);
 		}
 
-		public void DeleteMapSection()
-		{
-			// Directly removes from TableMap.tableMap list.
-			TableMap.tableMap.Remove(this); 
-		}
-
-		public void EditMapSection()
-		{
-			throw new NotImplementedException();
-		}
+		//public void EditMapSection()
+		//{
+		//	throw new NotImplementedException();
+		//}
 
 		public void ChangeVisibility()
 		{
@@ -48,14 +44,14 @@ namespace TableManagementConsole
 			}
 		}
 
-		public void UpdateMapSection() // ???
-		{
-			throw new NotImplementedException();
-		}
+		//public void UpdateMapSection() // ???
+		//{
+		//	throw new NotImplementedException();
+		//}
 
-		public void ResetMapSection()
-		{
-			throw new NotImplementedException();
-		}
+		//public void ResetMapSection()
+		//{
+		//	throw new NotImplementedException();
+		//}
 	}
 }
