@@ -61,7 +61,7 @@ namespace TableManagementConsole
             list = SortReservations(list);
 
             List<string> parameterlist = new List<string>{ "2 højstole",  "ved vand"};
-            list = FilterByMoreParameters(list, parameterlist);
+            list = FilterByisgap(list, true);
 
             //printer listen skal fjernes senere
             foreach (var reservation in list)
@@ -150,7 +150,10 @@ namespace TableManagementConsole
             return filteredList;
         }
 
-        //"dd.M.yyyy H:mm:ss"
+        public List<Reservation> FilterByisgap(List<Reservation> list, bool isgap)
+        {
+            List<Reservation> filteredList = list.Where(x => x.isGap == isgap).ToList();
+            return filteredList;
+        }
     }
-    // numberofGuests (range and specific), timedate(range, specific), parameter (one or more specific)
 }
