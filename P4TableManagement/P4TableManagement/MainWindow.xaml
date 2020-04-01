@@ -19,4 +19,6 @@
         <Rectangle Fill="Black"></Rectangle>-->
     </UniformGrid>
      
-</Window>
+</Window> 
+    <!--How to go about creating a chess game
+    https://stackoverflow.com/questions/20560519/wpf-controls-needed-to-build-chess-application/20563181-->
