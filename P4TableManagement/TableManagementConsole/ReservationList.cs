@@ -60,8 +60,8 @@ namespace TableManagementConsole
 
             list = SortReservations(list);
 
-            //List<string> parameterlist = new List<string>{ "2 højstole",  "ved vand"};
-            //list = FilterByMoreParameters(list, parameterlist);
+            List<string> parameterlist = new List<string>{ "2 højstole",  "ved vand"};
+            list = FilterByMoreParameters(list, parameterlist);
 
             //printer listen skal fjernes senere
             foreach (var reservation in list)
@@ -140,40 +140,12 @@ namespace TableManagementConsole
 
         public List<Reservation> FilterByMoreParameters(List<Reservation> list, List<string> parameters)
         {
-            //    public class ItemCategoryBO
-            //{
-            //    public string ItemCategory { get; set; }
-            //    public string Title { get; set; }
-            //}
-
-            //public class ItemBO
-            //{
-            //    public int ItemId { get; set; }
-            //    public string Title { get; set; }
-            //    public string ItemCategory { get; set; }
-            //}
-
-            //List<ItemBO> items = list
-            //List<ItemCategoryBO> categories = parameters
-
-
-            //List<ItemBO> result = items.Where(item => categories.Any(category => category.ItemCategory.equals(item.ItemCategory))).ToList();
-
-
-            List<Reservation> filteredlist = list.Where(x => parameters.Any(p => p.Equals(x.parameter))).ToList();
-
-
-
-            //string moreparameter = Console.ReadLine();
-
-            //parameter = Console.ReadLine(); 
-
-            //do
-            //{
-            //    List<Reservation> filteredList = list.Where(x => x.parameter.Contains(parameter)).ToList();
-
-            //} while (moreparameter == "y");
-
+            List<Reservation> filteredList = new List<Reservation>();
+            //List<Reservation> filteredlist = list.Where(x => parameters.Any(p => p.Equals(x.parameter))).ToList();
+            foreach (string item in parameters)
+            {
+                filteredList = list.Where(x => x.parameter.Contains(item)).ToList();
+            }
 
             return filteredList;
         }
