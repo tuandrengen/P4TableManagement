@@ -9,7 +9,7 @@ using _Excel = Microsoft.Office.Interop.Excel;
 
 namespace TableManagementConsole
 {
-    partial class ReservationList
+    public class ReservationList
         // mangler metoder som skaber ny sheet for hver dag
         // og en metode som skaber en ny workbook for hver måned
     {
@@ -24,6 +24,7 @@ namespace TableManagementConsole
             Console.WriteLine("Enter string: ");
             string s = Console.ReadLine();
             string[] seperator = { "p, ", ", ", "p " };
+
             //Int32 count = 4;
 
             string[] list = s.Split(seperator, 4, StringSplitOptions.None);
@@ -52,14 +53,16 @@ namespace TableManagementConsole
 
 
         //indtager data fra databasen, laver daten om til objekter(reservations) og putter dem i en liste
-        public void PopulateReservationList(string path, int sheet)
+        public List<Reservation> PopulateReservationList(string path, int sheet)
         {
             Excel excel = new Excel(path, sheet);
             List<Reservation> list = excel.ReadCell();
 
             list = SortReservations(list);
 
-            list = FilterByRangeTimeStart(list, "18:30", "17:00");
+            List<string> parameterlist = new List<string>{ "2 højstole",  "ved vand"};
+            list = FilterByisgap(list, true);
+
             //printer listen skal fjernes senere
             foreach (var reservation in list)
             {
@@ -67,6 +70,8 @@ namespace TableManagementConsole
             }
 
             excel.Quit();
+
+            return list;
         }
 
         //sletter reservationer
@@ -111,36 +116,44 @@ namespace TableManagementConsole
 
         public List<Reservation> FilterBySpecificTimeStart(List<Reservation> list, string timestart)
         {
-            List<Reservation> filteredList = list.Where(x => x.timeStart.ToString("HH:mm") == s).ToList();
+            //30/12/1899 is the default date and since the excel only has the time, it automatically used the default date. So in order to compare we also change it here
+            DateTime specificTime = DateTime.Parse("30/12/1899 " + timestart);
+            List<Reservation> filteredList = list.Where(x => x.timeStart.ToString("HH:mm") == timestart).ToList();
             return filteredList;
         }
 
         public List<Reservation> FilterByRangeTimeStart(List<Reservation> list, string max, string min)
         {
-            //List<Reservation> filteredList = list.Where(x => x.timeStart.ToString("HH:mm") == max).Where(x => x.timeStart.ToString("HH:mm") >= min).ToList();
-            //List<Reservation> filteredList =
+            //30/12/1899 is the default date and since the excel only has the time, it automatically used the default date. So in order to compare we also change it here
+            DateTime datemax = DateTime.Parse("30/12/1899 " + max);
+            DateTime datemin = DateTime.Parse("30/12/1899 " + min);
 
-            //s1.CompareTo(s2)
-            //List < Reservation > filteredList = list.Where(x => max.CompareTo(x.timeStart.ToString("HH:mm")) == 0 || max.CompareTo(x.timeStart.ToString("HH:mm")) == -1)
-            //                                        .Where(x => min.CompareTo(x.timeStart.ToString("HH:mm")) == 0 || min.CompareTo(x.timeStart.ToString("HH:mm")) == 1)
-            //                                        .ToList();
-
-
-
+            List<Reservation> filteredList = list.Where(x => x.timeStart <= datemax).Where(x => x.timeStart >= datemin).ToList();
             return filteredList;
         }
 
         public List<Reservation> FilterBySpecificParameter(List<Reservation> list, string parameter)
         {
-            
-            
-            List<Reservation> filteredList = list.Where(x => x. == parameter).ToList();
+            List<Reservation> filteredList = list.Where(x => x.parameter.Contains(parameter)).ToList();
+            return filteredList;
+        }
+
+        public List<Reservation> FilterByMoreParameters(List<Reservation> list, List<string> parameters)
+        {
+            List<Reservation> filteredList = new List<Reservation>();
+            //List<Reservation> filteredlist = list.Where(x => parameters.Any(p => p.Equals(x.parameter))).ToList();
+            foreach (string item in parameters)
+            {
+                filteredList = list.Where(x => x.parameter.Contains(item)).ToList();
+            }
 
             return filteredList;
         }
 
-
-        //"dd.M.yyyy H:mm:ss"
+        public List<Reservation> FilterByisgap(List<Reservation> list, bool isgap)
+        {
+            List<Reservation> filteredList = list.Where(x => x.isGap == isgap).ToList();
+            return filteredList;
+        }
     }
-    // numberofGuests (range and specific), timedate(range, specific), parameter (one or more specific)
 }
