@@ -55,7 +55,7 @@ namespace TableManagementConsole
 
                 //converterer lang string fra excel til list<string> som parameter.....
                 string parameterString = parameter.Value2.ToString();
-                List<string> parameters = parameterString.Split(',').ToList();
+                List<string> parameters = parameterString.Split(",  ").ToList();
 
 
                 //adds the data from the excel to a list of reservations
