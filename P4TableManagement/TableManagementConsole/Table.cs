@@ -45,5 +45,53 @@ namespace TableManagementConsole
             this.parameter.AddRange(parameter);
         }
 
-    }
+		public Table AddTable()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void DeleteTable()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void AssignTable()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void UnassignTable()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void TableStateOccupied()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void TableStateAvailable()
+		{
+			throw new NotImplementedException();
+		}
+		public void TableStatePaid()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void TableStateReserved()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void CombineTables()
+		{
+			throw new NotImplementedException();
+		}
+
+		public void SeparateTables()
+		{
+			throw new NotImplementedException();
+		}
+	}
 }
