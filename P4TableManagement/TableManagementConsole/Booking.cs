@@ -6,7 +6,6 @@ namespace TableManagementConsole
 {
     public class Booking
     {
-
         private int _id;
 		private int _numberOfGuests;
 		private DateTime _timeStart;
@@ -51,5 +50,6 @@ namespace TableManagementConsole
 			this.timeStart = timeStart;
 			isGap = is_gap;
         }
+
     }
 }

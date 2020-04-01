@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace TableManagementConsole
 {
@@ -8,19 +7,13 @@ namespace TableManagementConsole
     {
         static void Main(string[] args)
         {
+            ReservationList list = new ReservationList();
+            list.PopulateReservationList(@"C:\Users\T-Phamz\Desktop\test\test.xlsx", 1);
+            //list.DeleteReservations(@"C:\Users\T-Phamz\Desktop\test\test.xlsx", 1, 8);
+            //list.EditReservations(@"C:\Users\T-Phamz\Desktop\test\test.xlsx", 1, 1, 2);
 
-        }
-
-        // Method that prints all tables in a list.
-        public static void PrintList(List<Table> tableList)
-        {
-            foreach (Table table in tableList)
-            {
-                Console.WriteLine($"Type: { table.GetType().Name }, Seats: { table.seats }, " +
-                                  $"ID: { table.ID }, Table #{ table.tableNumber }, " +
-                                  $"Status: { table.state }");            
-            }
-            Console.WriteLine();
         }
     }
+
+
 }
