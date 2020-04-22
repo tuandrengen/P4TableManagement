@@ -55,6 +55,7 @@ namespace TableManagementConsole
 
                 //converterer lang string fra excel til list<string> som parameter.....
                 string parameterString = parameter.Value2.ToString();
+                parameterString = parameterString.ToLower();
                 List<string> parameters = parameterString.Split(",  ").ToList();
 
 

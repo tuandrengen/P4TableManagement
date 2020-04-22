@@ -60,9 +60,6 @@ namespace TableManagementConsole
 
             list = SortReservations(list);
 
-            List<string> parameterlist = new List<string>{ "2 højstole",  "ved vand"};
-            list = FilterByisgap(list, true);
-
             //printer listen skal fjernes senere
             foreach (var reservation in list)
             {
