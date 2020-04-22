@@ -24,20 +24,90 @@ namespace P4TableManagement
         {
             InitializeComponent();
 
-            // We initialize the Rows and Columns (and two colors)
-            MapTest.Rows = 25;
-            MapTest.Columns = 25;
+            List<Cell> items = new List<Cell>();
+            items.Add(new Cell() { X = 69, Y = 42, Z = 420});
 
-            SolidColorBrush Color1 = new SolidColorBrush(Colors.YellowGreen);
-            SolidColorBrush Color2 = new SolidColorBrush(Colors.White);
-
-            // Populate the map with REEEctangles and adds a color to them
-            for (int i = 0; i <= 625; i++)
-            {
-                MapTest.Children.Add(new Rectangle { Fill = Color1 });
-                MapTest.Children.Add(new Rectangle { Fill = Color2});
-            }
+            lvCells.ItemsSource = items;
 
         }
+
+        public class Cell
+        {
+            public int X { get; set; }
+
+            public int Y { get; set; }
+
+            public int Z { get; set; }
+        }
+
+
+        private void Window_ContentRendered(object sender, EventArgs e)
+        {
+            DrawGameArea();
+        }
+
+        const int SquareSize = 50;
+
+        private void DrawGameArea()
+        {
+            bool doneDrawingBackground = false;
+            int nextX = 0, nextY = 0;
+            int rowCounter = 0;
+            bool nextIsOdd = false;
+
+            while (doneDrawingBackground == false)
+            {
+                //Rectangle rect = new Rectangle
+                //{
+                //    Width = SquareSize,
+                //    Height = SquareSize,
+                //    //Fill = nextIsOdd ? Brushes.White : Brushes.Black,
+                //    Stroke = Brushes.Black
+                //};
+
+                Button rect = new Button
+                {
+                    Width = SquareSize,
+                    Height = SquareSize
+
+                };
+
+                Area.Children.Add(rect);
+                Canvas.SetTop(rect, nextY);
+                Canvas.SetLeft(rect, nextX);
+
+                nextIsOdd = !nextIsOdd;
+                nextX += SquareSize;
+                if (nextX >= Area.ActualWidth)
+                {
+                    nextX = 0;
+                    nextY += SquareSize;
+                    rowCounter++;
+                    nextIsOdd = (rowCounter % 2 != 0);
+                }
+
+                if (nextY >= Area.ActualHeight)
+                    doneDrawingBackground = true;
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

@@ -5,20 +5,51 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:P4TableManagement"
         mc:Ignorable="d"
-        Title="Table Management System" Height="720" Width="1080">
+        Title="Table Management System" Height="900" Width="1600" ContentRendered="Window_ContentRendered">
 
-    <UniformGrid x:Name="MapTest">
-        <!--<Rectangle Fill="Black"></Rectangle>
-        <Rectangle Fill="Red"></Rectangle>
-        <Rectangle Fill="Black"></Rectangle>
-        <Rectangle Fill="Red"></Rectangle>
-        <Rectangle Fill="Black"></Rectangle>
-        <Rectangle Fill="Red"></Rectangle>
-        <Rectangle Fill="Black"></Rectangle>
-        <Rectangle Fill="Red"></Rectangle>
-        <Rectangle Fill="Black"></Rectangle>-->
-    </UniformGrid>
-     
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="300"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Canvas x:Name="Area" ClipToBounds="True" Width="1000" Height="600" Grid.Column="0">
+            <!--<Button>Button 1</Button>-->
+
+    </Canvas>
+        
+        <ListView Margin="10" Name="lvCells" Grid.Column="1">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="X" Width="70" DisplayMemberBinding="{Binding X}" />
+                    <GridViewColumn Header="Y" Width="40" DisplayMemberBinding="{Binding Y}" />
+                    <GridViewColumn Header="Z" Width="150">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Z}" TextDecorations="Underline" Foreground="Blue" Cursor="Hand" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        
+        
+        
+        
+    </Grid>
+
+
+    <!--<Canvas x:Name="Area" ClipToBounds="True" Width="800" Height="400" Grid.Column="1">
+
+
+    </Canvas>-->
+
+    
+    
 </Window> 
     <!--How to go about creating a chess game
     https://stackoverflow.com/questions/20560519/wpf-controls-needed-to-build-chess-application/20563181-->
+
+<!--SizeToContent="WidthAndHeight"  ContentRendered="Window_ContentRendered"-->
