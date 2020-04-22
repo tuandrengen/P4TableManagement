@@ -58,11 +58,6 @@ namespace TableManagementConsole
             Excel excel = new Excel(path, sheet);
             List<Reservation> list = excel.ReadCell();
 
-            list = SortReservations(list);
-
-            List<string> parameterlist = new List<string>{ "2 højstole",  "ved vand"};
-            list = FilterByisgap(list, true);
-
             //printer listen skal fjernes senere
             foreach (var reservation in list)
             {
@@ -88,7 +83,7 @@ namespace TableManagementConsole
             //i GUI kan man vaelge en reservation dvs. en bestemt row i excel, 
             //ind i edit s[ vaelge man 
             Excel excel = new Excel(path, sheet);
-            string input = Console.ReadLine();
+            string input = "8";
             excel.WriteToCell(row, column, input);
             excel.Quit();
         }
@@ -146,7 +141,6 @@ namespace TableManagementConsole
             {
                 filteredList = list.Where(x => x.parameter.Contains(item)).ToList();
             }
-
             return filteredList;
         }
 
