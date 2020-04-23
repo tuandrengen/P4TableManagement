@@ -4,22 +4,33 @@ using System.Text;
 
 namespace TableManagementConsole
 {
-    class MapSection
+    public class MapSection
     {
-		private int _size;
-		private int _sectionID;
+		private static int _mapSectionID = 0;
 
-		//properties 
-		public int size
+		public int size { get; set; }
+		public int sectionID { get; set; }
+		public bool visibility { get; set; }
+
+		public MapSection()
 		{
-			get { return _size; }
-			set { _size = value; }
+			sectionID = System.Threading.Interlocked.Increment(ref _mapSectionID);
+			visibility = true;
 		}
-		
-		public int sectionID
-		{
-			get { return _sectionID; }
-			set { _sectionID = value; }
-		}
-    }
+
+		//public void EditMapSection()
+		//{
+		//	throw new NotImplementedException();
+		//}
+
+		//public void UpdateMapSection() // ???
+		//{
+		//	throw new NotImplementedException();
+		//}
+
+		//public void ResetMapSection()
+		//{
+		//	throw new NotImplementedException();
+		//}
+	}
 }

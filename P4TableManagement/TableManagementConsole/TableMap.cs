@@ -4,13 +4,11 @@ using System.Text;
 
 namespace TableManagementConsole
 {
-    class TableMap
+    public class TableMap
     {
-        List<MapSection> tableMap = new List<MapSection>();
-
-        public bool Active()
-        {
-            throw new NotImplementedException();
-        }
+        // Redudant, as the every functionality has been moved to TableManagementSystem.
+        // TableMap is essentially a list over Map Sections, if all mapsections are 
+        // gathered in TableManagementSystem, so it the TableMap.
+        // 
     }
 }
