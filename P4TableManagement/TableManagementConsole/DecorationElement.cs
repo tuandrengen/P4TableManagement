@@ -7,7 +7,6 @@ namespace TableManagementConsole
 {
     public class DecorationElement : MapElement
     {
-
         public int zoneWidth { get; set; }
         public int zoneHeight { get; set; }
         public string name { get; set; }

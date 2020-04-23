@@ -10,9 +10,10 @@ using _Excel = Microsoft.Office.Interop.Excel;
 namespace TableManagementConsole
 {
     public class ReservationList
+    {
         // mangler metoder som skaber ny sheet for hver dag
         // og en metode som skaber en ny workbook for hver måned
-    {
+
         public List<Reservation> listReservation = new List<Reservation>();
         
         //manuelt indtastning af data ind i database

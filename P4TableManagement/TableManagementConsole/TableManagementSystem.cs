@@ -23,6 +23,14 @@ namespace TableManagementConsole
 		public List<MapSection> MsList { get; } // Map Section
 		public List<MapSection> TmList { get { return MsList.FindAll(x => x.visibility == true); } }
 
+		public TableManagementSystem()
+		{
+			TableList = new List<Table>();
+			DeList = new List<DecorationElement>();
+			MeList = new List<MapElement>();
+			MsList = new List<MapSection>();
+		}
+
 		public void AddTableToList(Table table)
 		{
 			TableList.Add(table);
@@ -32,7 +40,8 @@ namespace TableManagementConsole
 		{
 			if (table.state == "Occupied")
 			{
-				throw new TableAlreadyAssignedException("Error: Cannot assign an occupied table!");
+				//throw new TableAlreadyAssignedException("Error: Cannot assign an occupied table!");
+				return;
 			}
 
 			table.bookingID = booking.id;
@@ -70,7 +79,7 @@ namespace TableManagementConsole
 		// tables from the tableList and then returning the new CombinedTable.
 		public Table CombineTables(Table one, Table two)
 		{
-			foreach (Table table in TableList)
+			foreach (Table table in TableList.ToList())
 			{
 				if (table.tableNumber == one.tableNumber || table.tableNumber == two.tableNumber)
 				{
@@ -113,13 +122,14 @@ namespace TableManagementConsole
 		{
 			if (DeList.Count != 0)
 			{
-				foreach (DecorationElement element in DeList)
+				foreach (DecorationElement element in DeList.ToList())
 				{
 					if (decorationElement.name == element.name)
 					{
 						// The two elements are called the same, therfore, it can not be added to the list.
 						// Eventually ask the user to change the name of the element.
-						throw new DecorationElementAlreadyExistsException("Cannot create a Decoration Element with the same name of another!");
+						//throw new DecorationElementAlreadyExistsException("Cannot create a Decoration Element with the same name of another!");
+						break;
 					}
 					else
 					{

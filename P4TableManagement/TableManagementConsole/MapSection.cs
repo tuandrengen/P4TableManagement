@@ -12,7 +12,6 @@ namespace TableManagementConsole
 		public int sectionID { get; set; }
 		public bool visibility { get; set; }
 
-
 		public MapSection()
 		{
 			sectionID = System.Threading.Interlocked.Increment(ref _mapSectionID);

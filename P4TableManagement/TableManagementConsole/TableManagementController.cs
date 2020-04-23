@@ -6,7 +6,7 @@ namespace TableManagementConsole
 {
     public class TableManagementController
     {
-        // May be replaced with the WPF events - code behind, as there is multiple events 
+        // May be replaced with the WPF events - code behind, as there are multiple events 
         // to redirect the code to TableManagementSystem.
 
         // Command parser

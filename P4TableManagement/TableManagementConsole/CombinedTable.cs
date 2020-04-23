@@ -17,9 +17,7 @@ namespace TableManagementConsole
         {
             combinedTables.Add(tableTwo);
             combinedTables.Add(tableOne);
-
             seats = tableOne.seats + tableTwo.seats;
-            // Lambda expression that returns the lowest tablenumber of the combinedTables list.
             tableNumber = combinedTables.Min(x => x.tableNumber);
         }
 
