@@ -10,8 +10,18 @@ namespace TableManagementConsole
 		// Most logic goes here
 		// 1 - All writelines should be removed, as we do not write out to a console application.
 		// 1a - Eventually make all the functions return a string so the UI can show it to the user.
+		
+		/*
+		 * TODO:
+		 * - All exceptions has to be caught somewhere - may be in the controller.
+		 *		The exceptions has to tell the user what went wrong.
+		 */
 
-		public List<Table> TableList { get { return Table.tableList; } } 
+		public List<Table> TableList { get; } // Table
+		public List<DecorationElement> DeList { get; } // Decoration Element
+		public List<MapElement> MeList { get; } // Map Element
+		public List<MapSection> MsList { get; } // Map Section
+		public List<MapSection> TmList { get { return MsList.FindAll(x => x.visibility == true); } }
 
 		public void AddTableToList(Table table)
 		{
@@ -95,6 +105,95 @@ namespace TableManagementConsole
 			//		tableList.Remove(item);
 			//	}
 			//}
+		}
+
+		// Creates a new decoration element if it does not exist in the decoration element list.
+		// If there are no elements in the decoration list, add the decoration element to the list.
+		public void CreateDecorationElement(DecorationElement decorationElement)
+		{
+			if (DeList.Count != 0)
+			{
+				foreach (DecorationElement element in DeList)
+				{
+					if (decorationElement.name == element.name)
+					{
+						// The two elements are called the same, therfore, it can not be added to the list.
+						// Eventually ask the user to change the name of the element.
+						throw new DecorationElementAlreadyExistsException("Cannot create a Decoration Element with the same name of another!");
+					}
+					else
+					{
+						DeList.Add(decorationElement);
+					}
+				}
+			}
+			else
+			{
+				DeList.Add(decorationElement);
+			}
+		}
+
+		public void DeleteDecorationElement(DecorationElement decorationElement)
+		{
+			DeList.Remove(decorationElement);
+		}
+
+		public void GetAllMapElements()
+		{
+			MeList.Clear();
+			MeList.TrimExcess();
+
+			foreach (Table table in TableList)
+			{
+				MeList.Add(table);
+			}
+			
+			foreach (DecorationElement decorationElement in DeList)
+			{
+				MeList.Add(decorationElement);
+			}
+		}
+
+		public void AddMapElementToList(MapElement mapElement)
+		{
+			MeList.Add(mapElement);
+		}
+
+		public void DeleteMapElementFromList(MapElement mapElement)
+		{
+			MeList.Remove(mapElement);
+		}
+
+		public void AddMapSectionToList(MapSection mapSection)
+		{
+			MsList.Add(mapSection);
+		}
+
+		public void ToggleMapSectionVisibility(MapSection mapSection)
+		{
+			if (mapSection.visibility)
+			{
+				mapSection.visibility = false;
+			}
+			else
+			{
+				mapSection.visibility = true;
+			}
+		}
+
+		public void RemoveMapSection(int id)
+		{
+			foreach (MapSection mapSection in MsList)
+			{
+				if (mapSection.sectionID == id)
+				{
+					MsList.Remove(mapSection);
+				}
+				else
+				{
+					throw new MapSectionNotFoundException();
+				}
+			}
 		}
 	}
 }
