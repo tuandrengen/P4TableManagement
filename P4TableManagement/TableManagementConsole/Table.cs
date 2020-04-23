@@ -51,21 +51,6 @@ namespace TableManagementConsole
 			//}
 		}
 
-		// Assign booking to table
-		// Need Booking.
-		public void AssignTable(Booking booking)
-		{
-			if(this.state == "Occupied")
-			{
-				// Error message on screen.
-				// throw new Exception("Error: Cannot assign an occupied table!");
-				return;
-			}
-			bookingID = booking.id;
-			state = "Occupied";
-			Console.WriteLine($"Table #{ tableNumber } has been assigned! Booking ID: { bookingID }");
-		}
-
 		public void UnassignTable()
 		{
 			bookingID = default;
@@ -103,6 +88,7 @@ namespace TableManagementConsole
 					tableList.Remove(table);
 				}
 			}
+
 			return new CombinedTable<Table>(this, other);
 		}
 
@@ -114,6 +100,7 @@ namespace TableManagementConsole
 			{
 				tableList.Add(table);
 			}
+
 			tableList.Remove(inputTable);
 		}
 
