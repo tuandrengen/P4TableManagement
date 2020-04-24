@@ -14,7 +14,7 @@
             <ColumnDefinition Width="300"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <Canvas x:Name="Area" ClipToBounds="True" Width="1000" Height="600" Grid.Column="0">
+        <Canvas x:Name="Area" ClipToBounds="True" Width="1000" Height="700" Margin="5" Grid.Column="0"  MouseDown="Area_MouseDown">
             <!--<Button>Button 1</Button>-->
 
     </Canvas>
