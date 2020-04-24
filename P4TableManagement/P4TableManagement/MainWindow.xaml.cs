@@ -32,18 +32,8 @@ namespace P4TableManagement
 
             
 
-            lvCells.ItemsSource = AllRectangles;
+            ListView.ItemsSource = AllRectangles;
         }
-
-        public class Cell
-        {            
-            public int X { get; set; }
-
-            public int Y { get; set; }
-
-            public int Z { get; set; }
-        }
-
 
         private void Window_ContentRendered(object sender, EventArgs e)
         {
@@ -51,7 +41,23 @@ namespace P4TableManagement
             PopulateRectanglesList();
         }
 
-        const int SquareSize = 50;
+        private void ListView_MouseLeftButtonDown (object sender, MouseButtonEventArgs e)
+        {
+            string selectedRect;
+            if (e.OriginalSource is Rectangle)
+            {
+                var test = e.Source as FrameworkElement;
+                selectedRect = test.Name;
+
+                TextBox textBox = new TextBox
+                {
+                    Name = selectedRect
+                };
+            }
+        }
+
+
+        const int SquareSize = 100;
         public List<Rectangle> AllRectangles = new List<Rectangle>();
 
         private void DrawGameArea()
@@ -63,22 +69,13 @@ namespace P4TableManagement
 
             while (doneDrawingBackground == false)
             {
-                //Rectangle rect = new Rectangle
-                //{
-                //    Width = SquareSize,
-                //    Height = SquareSize,
-                //    //Fill = nextIsOdd ? Brushes.White : Brushes.Black,
-                //    Stroke = Brushes.Black
-                //};
-
                 Rectangle rect = new Rectangle
                 {
                     Width = SquareSize,
                     Height = SquareSize,
                     Fill = Brushes.White,
-                    Stroke = Brushes.Red
+                    Stroke = Brushes.Black
                 };
-                //rect.Fill = new SolidColorBrush(Colors.White);
 
                 Area.Children.Add(rect);
                 AllRectangles.Add(rect);
@@ -100,14 +97,7 @@ namespace P4TableManagement
             }
         }
 
-
-
-
-
-        // The drag's last point.
-        private Point LastPoint;
-
-        // The part of the rectangle the mouse is over.
+        // The part of the rectangle the mouse is over. (We use body)
         private enum HitType
         {
             None, Body, UL, UR, LR, LL, L, R, T, B
@@ -120,7 +110,7 @@ namespace P4TableManagement
         private Rectangle HitRectangle = null;
 
         // The Rectangles that the user can move and resize.
-        private List<Rectangle> Rectangles = new List<Rectangle>();
+        private readonly List<Rectangle> Rectangles = new List<Rectangle>();
 
         private void PopulateRectanglesList()
         {
@@ -150,7 +140,6 @@ namespace P4TableManagement
                     return;
                 }
             }
-
             // We didn't find a hit.
             return;
         }
@@ -167,22 +156,23 @@ namespace P4TableManagement
             if (point.Y < top) return HitType.None;
             if (point.Y > bottom) return HitType.None;
 
+            // The code uses the mouse's coordinates and the rectangle's coordinates to decide whether the mouse is over a rectangle corner, edge, or body, and it returns the correct HitType.
             const double GAP = 10;
-            if (point.X - left < GAP)
-            {
-                // Left edge.
-                if (point.Y - top < GAP) return HitType.UL;
-                if (bottom - point.Y < GAP) return HitType.LL;
-                return HitType.L;
-            }
-            if (right - point.X < GAP)
-            {
-                // Right edge.
-                if (point.Y - top < GAP) return HitType.UR;
-                if (bottom - point.Y < GAP) return HitType.LR;
-                return HitType.R;
-            }
-            if (point.Y - top < GAP) return HitType.T;
+            //if (point.X - left < GAP)
+            //{
+            //    // Left edge.
+            //    if (point.Y - top < GAP) return HitType.UL;
+            //    if (bottom - point.Y < GAP) return HitType.LL;
+            //    return HitType.L;
+            //}
+            //if (right - point.X < GAP)
+            //{
+            //    // Right edge.
+            //    if (point.Y - top < GAP) return HitType.UR;
+            //    if (bottom - point.Y < GAP) return HitType.LR;
+            //    return HitType.R;
+            //}
+            //if (point.Y - top < GAP) return HitType.T;
             if (bottom - point.Y < GAP) return HitType.B;
             return HitType.Body;
         }
@@ -194,9 +184,6 @@ namespace P4TableManagement
             //SetMouseCursor();
             if (MouseHitType == HitType.None) return;
 
-            LastPoint = Mouse.GetPosition(Area);
-            //DragInProgress = true;
-
             if (HitRectangle.Fill == Brushes.White)
             {
                 HitRectangle.Fill = Brushes.Red;
@@ -205,23 +192,11 @@ namespace P4TableManagement
             {
                 HitRectangle.Fill = Brushes.White;
             }
-
         }
 
+        private void ListView_MouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
+        {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        }
     }
 }
