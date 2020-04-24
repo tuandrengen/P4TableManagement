@@ -14,20 +14,20 @@
             <ColumnDefinition Width="300"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-    <Canvas x:Name="Area" ClipToBounds="True" Width="1000" Height="700" Margin="5" Grid.Column="0"  MouseDown="Area_MouseDown">
+        <Canvas x:Name="Area" ClipToBounds="True" Width="1000" Height="700" Margin="5" Grid.Column="0" MouseDown="Area_MouseDown">
             <!--<Button>Button 1</Button>-->
 
     </Canvas>
         
-        <ListView Margin="10" Name="ListView" Grid.Column="1" MouseLeftButtonDown="ListView_MouseLeftButtonDown">
+        <ListView Margin="10" Name="ListView" Grid.Column="1">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Height" Width="70" DisplayMemberBinding="{Binding Height}" />
-                    <GridViewColumn Header="Witdh" Width="40" DisplayMemberBinding="{Binding Width}" />
+                    <GridViewColumn Header="Name" Width="70" DisplayMemberBinding="{Binding Content}" />
+                    <GridViewColumn Header="Size" Width="40" DisplayMemberBinding="{Binding Width}" />
                     <GridViewColumn Header="Color" Width="150">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Fill}" TextDecorations="Underline" Foreground="Blue" Cursor="Hand" />
+                                <TextBlock Text="{Binding Background}" TextDecorations="Underline" Foreground="Blue" Cursor="Hand" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

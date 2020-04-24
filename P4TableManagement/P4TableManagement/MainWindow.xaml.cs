@@ -32,13 +32,13 @@ namespace P4TableManagement
 
             
 
-            ListView.ItemsSource = AllRectangles;
+            ListView.ItemsSource = AllButtons;
         }
 
         private void Window_ContentRendered(object sender, EventArgs e)
         {
             DrawGameArea();
-            PopulateRectanglesList();
+            //PopulateButtonsList();
         }
 
         private void ListView_MouseLeftButtonDown (object sender, MouseButtonEventArgs e)
@@ -58,7 +58,7 @@ namespace P4TableManagement
 
 
         const int SquareSize = 100;
-        public List<Rectangle> AllRectangles = new List<Rectangle>();
+        public List<Button> AllButtons = new List<Button>();
 
         private void DrawGameArea()
         {
@@ -66,21 +66,27 @@ namespace P4TableManagement
             int nextX = 0, nextY = 0;
             int rowCounter = 0;
             bool nextIsOdd = false;
+            int ID = 1;
+            char letter = 'a';
 
             while (doneDrawingBackground == false)
             {
-                Rectangle rect = new Rectangle
+                Button button = new Button
                 {
                     Width = SquareSize,
                     Height = SquareSize,
-                    Fill = Brushes.White,
-                    Stroke = Brushes.Black
+                    //Background = Brushes.White,
+                    Content = $"{letter}{ID}",
+                    BorderBrush = Brushes.Black
                 };
+                //ID++;
+                letter++;
 
-                Area.Children.Add(rect);
-                AllRectangles.Add(rect);
-                Canvas.SetTop(rect, nextY);
-                Canvas.SetLeft(rect, nextX);
+
+                Area.Children.Add(button);
+                AllButtons.Add(button);
+                Canvas.SetTop(button, nextY);
+                Canvas.SetLeft(button, nextX);
 
                 nextIsOdd = !nextIsOdd;
                 nextX += SquareSize;
@@ -90,6 +96,8 @@ namespace P4TableManagement
                     nextY += SquareSize;
                     rowCounter++;
                     nextIsOdd = (rowCounter % 2 != 0);
+                    letter = 'a';
+                    ID++;
                 }
 
                 if (nextY >= Area.ActualHeight)
@@ -107,36 +115,36 @@ namespace P4TableManagement
         private HitType MouseHitType = HitType.None;
 
         // The Rectangle that was hit.
-        private Rectangle HitRectangle = null;
+        private Button HitButton = null;
 
         // The Rectangles that the user can move and resize.
-        private readonly List<Rectangle> Rectangles = new List<Rectangle>();
+        private readonly List<Button> Buttons = new List<Button>();
 
-        private void PopulateRectanglesList()
+        private void PopulateButtonList()
         {
             foreach (UIElement child in Area.Children)
             {
-                if (child is Rectangle)
-                    Rectangles.Add(child as Rectangle);
+                if (child is Button)
+                    Buttons.Add(child as Button);
             }
 
             // Reverse the list so the Rectangles on top come first.
-            Rectangles.Reverse();
+            Buttons.Reverse();
         }
 
         // If the point is over any Rectangle,
         // return the Rectangle and the hit type.
         private void FindHit(Point point)
         {
-            HitRectangle = null;
+            HitButton = null;
             MouseHitType = HitType.None;
 
-            foreach (Rectangle rect in AllRectangles)
+            foreach (Button butt in AllButtons)
             {
-                MouseHitType = SetHitType(rect, point);
+                MouseHitType = SetHitType(butt, point);
                 if (MouseHitType != HitType.None)
                 {
-                    HitRectangle = rect;
+                    HitButton = butt;
                     return;
                 }
             }
@@ -145,12 +153,12 @@ namespace P4TableManagement
         }
 
         // Return a HitType value to indicate what is at the point.
-        private HitType SetHitType(Rectangle rect, Point point)
+        private HitType SetHitType(Button butt, Point point)
         {
-            double left = Canvas.GetLeft(rect);
-            double top = Canvas.GetTop(rect);
-            double right = left + rect.Width;
-            double bottom = top + rect.Height;
+            double left = Canvas.GetLeft(butt);
+            double top = Canvas.GetTop(butt);
+            double right = left + butt.Width;
+            double bottom = top + butt.Height;
             if (point.X < left) return HitType.None;
             if (point.X > right) return HitType.None;
             if (point.Y < top) return HitType.None;
@@ -177,26 +185,24 @@ namespace P4TableManagement
             return HitType.Body;
         }
 
-        // Start dragging.
+
         private void Area_MouseDown(object sender, MouseButtonEventArgs e)
         {
             FindHit(Mouse.GetPosition(Area));
             //SetMouseCursor();
             if (MouseHitType == HitType.None) return;
 
-            if (HitRectangle.Fill == Brushes.White)
+            if (HitButton.Background == Brushes.White)
             {
-                HitRectangle.Fill = Brushes.Red;
+                HitButton.Background = Brushes.Red;
             }
             else
             {
-                HitRectangle.Fill = Brushes.White;
+                HitButton.Background = Brushes.White;
             }
         }
 
-        private void ListView_MouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
-        {
 
-        }
+
     }
 }
