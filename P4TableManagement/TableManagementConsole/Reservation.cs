@@ -11,26 +11,10 @@ namespace TableManagementConsole
 		private string _comment;
 		public List<string> parameter = new List<string>();
 
-        // her er properties
-		public string name 
-		{
-			get { return _name;}
-			set { _name = value;}
-		}
+		public string name { get; set; }
+		public int phoneNumber { get; set; }
+		public string comment { get; set; }
 
-		public int phoneNumber
-		{
-			get { return _phoneNumber;}
-			set { _phoneNumber = value;}
-		}
-
-		public string comment
-		{
-			get { return _comment;}
-			set { _comment = value;}
-		}
-
-        //her er alle constructors
 		public Reservation(string name, DateTime timeStart, bool isGap, int numberOfGuest, int phoneNumber) : base(numberOfGuest, timeStart, isGap)
 		{
 			this.name = name;

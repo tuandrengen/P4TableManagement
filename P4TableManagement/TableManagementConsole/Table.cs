@@ -1,97 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Diagnostics.CodeAnalysis;
 
 namespace TableManagementConsole
 {
-    class Table : MapElement
+	public abstract class Table : MapElement, IComparable<Table>
     {
-        private int _seats;
-		private int _tableNumber;
-		private string _state;
-		private int _bookingID;
-		public List<string> parameter = new List<string>();
+		private static int _tableID = 1;
+		public int seats { get; set; }
+		// tableNumber has been changed from private set; to protected set; 
+		// as sub classes should be able to set this value as well
+		public int tableNumber { get; protected set; }
+		public int bookingID { get; set; }
+		public string state { get; set; }
 
-        //properties
-		public int seats
-		{
-			get { return _seats;}
-			set { _seats = value;}
-		}
-		
-		public int tableNumber
-		{
-			get { return _tableNumber;}
-			set { _tableNumber = value;}
-		}
+		public int ID { get; set; }
 
-		public string state
+		public List<string> parameters = new List<string>();
+
+		public Table(int width, int height, int placementX, int placementY) : base(width, height, placementX, placementY)
 		{
-			get { return _state;}
-			set { _state = value;}
+			// Read this link for more information about auto-incrementing a value.
+			// https://stackoverflow.com/questions/8813435/incrementing-a-unique-id-number-in-the-constructor
+			tableNumber = System.Threading.Interlocked.Increment(ref _tableID);
+			state = "Available";
 		}
 
-		public int bookingID
+		public int CompareTo([AllowNull] Table other)
 		{
-			get { return _bookingID;}
-			set { _bookingID = value;}
-		}
-
-        //constructor
-		public Table(int width, int height, int placementX, int placementY, int seats, int tableNumber, List<string> parameter) : base(width, height, placementX, placementY)
-		{
-            this.seats = seats;
-            this.tableNumber = tableNumber;
-            this.parameter.AddRange(parameter);
-        }
-
-		public Table AddTable()
-		{
-			throw new NotImplementedException();
-		}
-
-		public void DeleteTable()
-		{
-			throw new NotImplementedException();
-		}
-
-		public void AssignTable()
-		{
-			throw new NotImplementedException();
-		}
-
-		public void UnassignTable()
-		{
-			throw new NotImplementedException();
-		}
-
-		public void TableStateOccupied()
-		{
-			throw new NotImplementedException();
-		}
-
-		public void TableStateAvailable()
-		{
-			throw new NotImplementedException();
-		}
-		public void TableStatePaid()
-		{
-			throw new NotImplementedException();
-		}
-
-		public void TableStateReserved()
-		{
-			throw new NotImplementedException();
-		}
-
-		public void CombineTables()
-		{
-			throw new NotImplementedException();
-		}
-
-		public void SeparateTables()
-		{
-			throw new NotImplementedException();
+			return ID.CompareTo(other.ID);
 		}
 	}
 }
