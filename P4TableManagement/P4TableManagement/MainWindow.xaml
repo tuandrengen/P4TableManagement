@@ -5,22 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:P4TableManagement"
         mc:Ignorable="d"
-        Title="Table Management System" Height="900" Width="1600" ContentRendered="Window_ContentRendered">
+        WindowState="Maximized"
+        WindowStyle="None"
+        Title="Table Management System" Height="1080" Width="1920" ContentRendered="Window_ContentRendered">
+        
 
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="300"></ColumnDefinition>
+            <ColumnDefinition Width="0.8*"></ColumnDefinition>
+            <ColumnDefinition Width="0.2*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         
-        <Canvas x:Name="Area" ClipToBounds="True" Width="1000" Height="700" Margin="5" Grid.Column="0" MouseDown="Area_MouseDown">
+        <Canvas x:Name="Area" ClipToBounds="True"  Margin="18,15" Grid.Column="0" MouseDown="Area_MouseDown">
             <!--<Button>Button 1</Button>-->
             
-
+            
     </Canvas>
         
-        <ListView Margin="10" Name="ListView" Grid.Column="1" MouseLeftButtonDown="ListView_MouseLeftButtonDown" MouseDown="ListView_MouseDown">
+        <ListView Margin="0" Name="ListView" Grid.Column="1" MouseLeftButtonDown="ListView_MouseLeftButtonDown" MouseDown="ListView_MouseDown">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name" Width="70" DisplayMemberBinding="{Binding Name}" />
@@ -54,3 +57,5 @@
     https://stackoverflow.com/questions/20560519/wpf-controls-needed-to-build-chess-application/20563181-->
 
 <!--SizeToContent="WidthAndHeight"  ContentRendered="Window_ContentRendered"-->
+
+<!--Add this for no topbar: WindowStyle="None"-->

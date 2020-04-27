@@ -69,10 +69,14 @@ namespace P4TableManagement
             int rowCounter = 0;
             bool nextIsOdd = false;
             int ID = 1;
+            char block_Letter = 'A';
             char letter = 'a';
+            string name = "test";
+            
 
             while (doneDrawingBackground == false)
             {
+                
                 Rectangle button = new Rectangle
                 {
                     Width = SquareSize,
@@ -80,13 +84,15 @@ namespace P4TableManagement
                     //Background = Brushes.White,
                     Stroke = Brushes.Black,
                     Fill = Brushes.White,
-                    Name = $"{letter}{ID}",
+                    Name = name,
                     //Content = $"{letter}{ID}",
                     //BorderBrush = Brushes.Black
                 };
                 //ID++;
-                letter++;
 
+                letter++;
+                block_Letter++;
+                //name = $"{letter}{ID}".ToString();
 
                 Area.Children.Add(button);
                 AllRectangles.Add(button);
@@ -103,6 +109,7 @@ namespace P4TableManagement
                     nextIsOdd = (rowCounter % 2 != 0);
                     letter = 'a';
                     ID++;
+                    name = $"{letter}{ID}".ToString();
                 }
 
                 if (nextY >= Area.ActualHeight)
@@ -190,6 +197,22 @@ namespace P4TableManagement
             return HitType.Body;
         }
 
+        //// Try hard to set the margin of the Canvas Area so it fits perfectly with SquareSize
+        //private void Divisible(double height, double width)
+        //{
+        //    double h = SystemParameters.FullPrimaryScreenHeight;
+        //    double w = SystemParameters.FullPrimaryScreenWidth;
+
+        //    if (height % h == 0)
+        //    {
+        //        Area.Margin = new Thickness(25,25,25,25);
+                
+        //    }
+
+
+
+
+        //}
 
         private void Area_MouseDown(object sender, MouseButtonEventArgs e)
         {
