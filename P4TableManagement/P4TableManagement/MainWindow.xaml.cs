@@ -56,13 +56,6 @@ namespace P4TableManagement
             //    };
             //}
 
-            TextBox textBox = new TextBox
-            {
-                Text = "Jamen hallo du"
-            };
-
-
-
         }
 
 
@@ -214,7 +207,9 @@ namespace P4TableManagement
             }
         }
 
+        private void ListView_MouseDown(object sender, MouseButtonEventArgs e)
+        {
 
-
+        }
     }
 }

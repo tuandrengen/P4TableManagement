@@ -20,7 +20,7 @@
 
     </Canvas>
         
-        <ListView Margin="10" Name="ListView" Grid.Column="1" MouseLeftButtonDown="ListView_MouseLeftButtonDown">
+        <ListView Margin="10" Name="ListView" Grid.Column="1" MouseLeftButtonDown="ListView_MouseLeftButtonDown" MouseDown="ListView_MouseDown">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Name" Width="70" DisplayMemberBinding="{Binding Name}" />
