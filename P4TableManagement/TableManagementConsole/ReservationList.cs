@@ -25,8 +25,6 @@ namespace TableManagementConsole
             string s = Console.ReadLine();
             string[] seperator = { "p, ", ", ", "p " };
 
-            //Int32 count = 4;
-
             string[] list = s.Split(seperator, 4, StringSplitOptions.None);
 
             excel.WriteToRow(list);
