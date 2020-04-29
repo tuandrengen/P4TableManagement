@@ -7,37 +7,42 @@
         mc:Ignorable="d"
         WindowState="Maximized"
         WindowStyle="None"
+        
         Title="Table Management System" Height="1080" Width="1920" ContentRendered="Window_ContentRendered">
         
 
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.8*"></ColumnDefinition>
+            <ColumnDefinition Width="0.8*" ></ColumnDefinition>
             <ColumnDefinition Width="0.2*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
+        
         
         <Canvas x:Name="Area" ClipToBounds="True"  Margin="18,15" Grid.Column="0" MouseDown="Area_MouseDown">
             <!--<Button>Button 1</Button>-->
             
             
     </Canvas>
-        
-        <ListView Margin="0" Name="ListView" Grid.Column="1" MouseLeftButtonDown="ListView_MouseLeftButtonDown" MouseDown="ListView_MouseDown" MaxHeight="1072" MouseDoubleClick="ListView_MouseDoubleClick">
+        <ListView Margin="0" Name="ListView" Grid.Column="1" MouseLeftButtonDown="ListView_MouseLeftButtonDown" MouseDown="ListView_MouseDown">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Name" Width="70" DisplayMemberBinding="{Binding Name}" />
-                    <GridViewColumn Header="Size" Width="40" DisplayMemberBinding="{Binding Width}" />
-                    <GridViewColumn Header="Color" Width="150">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Fill}" TextDecorations="Underline" Foreground="Blue" Cursor="Hand" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                    <GridView.ColumnHeaderContainerStyle>
+                        <Style>
+                            <Setter Property="TextElement.FontSize"
+                            Value="8" />
+                        </Style>
+                    </GridView.ColumnHeaderContainerStyle>
+                    <GridViewColumn Header="Guests" Width="auto" DisplayMemberBinding="{Binding numberOfGuests}" />
+                    <GridViewColumn Header="Time" Width="auto" DisplayMemberBinding="{Binding stringTime}" />
+                    <GridViewColumn Header="Name" Width="auto" DisplayMemberBinding="{Binding name}" />
+                    <GridViewColumn Header="Phone Number" Width="auto" DisplayMemberBinding="{Binding phoneNumber}" />
+                    <GridViewColumn Header="Parameter" Width="auto" DisplayMemberBinding="{Binding parameter}" />
+
                 </GridView>
             </ListView.View>
         </ListView>
+
         
         
         

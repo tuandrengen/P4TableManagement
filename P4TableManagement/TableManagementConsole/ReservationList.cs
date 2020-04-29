@@ -10,10 +10,9 @@ using _Excel = Microsoft.Office.Interop.Excel;
 namespace TableManagementConsole
 {
     public class ReservationList
-    {
         // mangler metoder som skaber ny sheet for hver dag
         // og en metode som skaber en ny workbook for hver måned
-
+    {
         public List<Reservation> listReservation = new List<Reservation>();
         
         //manuelt indtastning af data ind i database
@@ -25,8 +24,6 @@ namespace TableManagementConsole
             Console.WriteLine("Enter string: ");
             string s = Console.ReadLine();
             string[] seperator = { "p, ", ", ", "p " };
-
-            //Int32 count = 4;
 
             string[] list = s.Split(seperator, 4, StringSplitOptions.None);
 
@@ -59,6 +56,8 @@ namespace TableManagementConsole
             Excel excel = new Excel(path, sheet);
             List<Reservation> list = excel.ReadCell();
 
+            list = SortReservations(list);
+
             //printer listen skal fjernes senere
             foreach (var reservation in list)
             {
@@ -84,7 +83,7 @@ namespace TableManagementConsole
             //i GUI kan man vaelge en reservation dvs. en bestemt row i excel, 
             //ind i edit s[ vaelge man 
             Excel excel = new Excel(path, sheet);
-            string input = "8";
+            string input = Console.ReadLine();
             excel.WriteToCell(row, column, input);
             excel.Quit();
         }
@@ -142,6 +141,7 @@ namespace TableManagementConsole
             {
                 filteredList = list.Where(x => x.parameter.Contains(item)).ToList();
             }
+
             return filteredList;
         }
 
