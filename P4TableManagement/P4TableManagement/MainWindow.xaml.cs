@@ -13,6 +13,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+// Known bugs: Hvis du scroller for hurtigt når du starter programmet så crasher det, da alle elementer i listen ikker nået at "loade".
+
+
+
 namespace P4TableManagement
 {
     /// <summary>
@@ -28,8 +32,6 @@ namespace P4TableManagement
             //items.Add(new Cell() { X = 69, Y = 42, Z = 420});
 
             ////lvCells.ItemsSource = items;
-            
-
             
 
             ListView.ItemsSource = AllRectangles;
@@ -68,36 +70,40 @@ namespace P4TableManagement
             int nextX = 0, nextY = 0;
             int rowCounter = 0;
             bool nextIsOdd = false;
-            int ID = 1;
+            int x = 1;
+            int y = 1;
             char block_Letter = 'A';
             char letter = 'a';
-            string name = "test";
+
+
             
+
 
             while (doneDrawingBackground == false)
             {
-                
-                Rectangle button = new Rectangle
+                //string name = "_1";
+                Rectangle rectangle = new Rectangle
                 {
                     Width = SquareSize,
                     Height = SquareSize,
                     //Background = Brushes.White,
                     Stroke = Brushes.Black,
                     Fill = Brushes.White,
-                    Name = name,
+                    Name = $"_{x}_{y}",
                     //Content = $"{letter}{ID}",
                     //BorderBrush = Brushes.Black
                 };
-                //ID++;
+                x++;
 
-                letter++;
-                block_Letter++;
+                //ID++;
+                //letter++;
+
                 //name = $"{letter}{ID}".ToString();
 
-                Area.Children.Add(button);
-                AllRectangles.Add(button);
-                Canvas.SetTop(button, nextY);
-                Canvas.SetLeft(button, nextX);
+                Area.Children.Add(rectangle);
+                AllRectangles.Add(rectangle);
+                Canvas.SetTop(rectangle, nextY);
+                Canvas.SetLeft(rectangle, nextX);
 
                 nextIsOdd = !nextIsOdd;
                 nextX += SquareSize;
@@ -108,12 +114,16 @@ namespace P4TableManagement
                     rowCounter++;
                     nextIsOdd = (rowCounter % 2 != 0);
                     letter = 'a';
-                    ID++;
-                    name = $"{letter}{ID}".ToString();
+                    x = 1;
+                    y++;
+                    //ID++;
+                    //name = $"{letter}{ID}".ToString();
                 }
 
                 if (nextY >= Area.ActualHeight)
                     doneDrawingBackground = true;
+
+                //name = $"{letter}{ID}".ToString();
             }
         }
 
@@ -151,12 +161,12 @@ namespace P4TableManagement
             HitRectangle = null;
             MouseHitType = HitType.None;
 
-            foreach (Rectangle butt in AllRectangles)
+            foreach (Rectangle rect in AllRectangles)
             {
-                MouseHitType = SetHitType(butt, point);
+                MouseHitType = SetHitType(rect, point);
                 if (MouseHitType != HitType.None)
                 {
-                    HitRectangle = butt;
+                    HitRectangle = rect;
                     return;
                 }
             }
@@ -232,7 +242,40 @@ namespace P4TableManagement
 
         private void ListView_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            MessageBox.Show("you pressed something");
+            
+        }
 
+        private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            //ListViewItem item = sender as ListViewItem;
+            //object obj = item.Content;
+
+
+            //MessageBox.Show($"you pressed double click and selected {0}", (string)obj);
+
+
+            //XmlElement item = ((ListViewItem)sender).Content as XmlElement;
+
+            //MessageBox.Show("Time to order more copies of _" + item.GetType() +"_");
+
+            ListView listView = sender as ListView;
+            var selecteditem = listView.SelectedItem;
+            //ListViewItem item = (ListViewItem)listView.ItemContainerGenerator.ContainerFromItem(selecteditem);
+
+            if (selecteditem is Rectangle)
+            {
+                Rectangle selectedRectangle = selecteditem as Rectangle;
+
+                selectedRectangle.Fill = Brushes.Red;
+                
+                MessageBox.Show("Time to order more copies of: " + selectedRectangle.Name);
+            }
+            else
+            {
+                MessageBox.Show("Hallo min ven " + selecteditem);
+            }
+            
         }
     }
 }
