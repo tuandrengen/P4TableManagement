@@ -28,11 +28,17 @@ namespace P4TableManagement
             //items.Add(new Cell() { X = 69, Y = 42, Z = 420});
 
             ////lvCells.ItemsSource = items;
-            
+            ReservationList list = new ReservationList();
+            string path = @"C:\Users\T-Phamz\Desktop\test\test.xlsx";
+            List<Reservation> reservationList = list.PopulateReservationList(path, 1);
 
-            
+            foreach (Reservation item in reservationList)
+            {
+                item.stringTime = item.timeStart.ToShortTimeString();
+            }
 
-            ListView.ItemsSource = AllRectangles;
+
+            ListView.ItemsSource = reservationList;
         }
 
         private void Window_ContentRendered(object sender, EventArgs e)
@@ -95,7 +101,7 @@ namespace P4TableManagement
                 //name = $"{letter}{ID}".ToString();
 
                 Area.Children.Add(button);
-                AllRectangles.Add(button);
+                //AllRectangles.Add(button);
                 Canvas.SetTop(button, nextY);
                 Canvas.SetLeft(button, nextX);
 
