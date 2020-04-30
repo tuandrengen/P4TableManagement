@@ -34,7 +34,7 @@ namespace P4TableManagement
             ////lvCells.ItemsSource = items;
 
             ReservationList list = new ReservationList();
-            string path = @"C:\Users\T-Phamz\Desktop\test\test.xlsx";
+            string path = @"C:\P4\test.xlsx";
             List<Reservation> reservationList = list.PopulateReservationList(path, 1);
 
             foreach (Reservation item in reservationList)
@@ -44,6 +44,19 @@ namespace P4TableManagement
 
 
             ListView.ItemsSource = reservationList;
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
 
         private void Window_ContentRendered(object sender, EventArgs e)
@@ -71,7 +84,10 @@ namespace P4TableManagement
 
 
         const int SquareSize = 50;
+        int tableSize = 80;
+        int tableCoordinate = 10;
         public List<Rectangle> AllRectangles = new List<Rectangle>();
+        public List<Button> AllTables = new List<Button>();
 
         private void DrawGameArea()
         {
@@ -83,11 +99,14 @@ namespace P4TableManagement
             int y = 1;
             char block_Letter = 'A';
             char letter = 'a';
+            int tableID = 1;
+            bool firstButtonDrawn = true;
+            bool tablesDone = false;
+            Random rand = new Random();
+            int random = 0;
 
 
-            
-
-
+            // Drawing the grid of rectangles
             while (doneDrawingBackground == false)
             {
                 //string name = "_1";
@@ -130,9 +149,101 @@ namespace P4TableManagement
                 }
 
                 if (nextY >= Area.ActualHeight)
+                {
                     doneDrawingBackground = true;
+                    nextIsOdd = false;
+                    
+                }
+                    
 
                 //name = $"{letter}{ID}".ToString();
+            }
+            // Drawing tables
+            while (tablesDone == false)
+            {
+                Button test = new Button()
+                {
+                    Width = tableSize,
+                    Height = tableSize,
+                    //Click = "event",
+                    Content = $"Table {tableID}"
+                };
+
+
+                if (firstButtonDrawn == true)
+                {
+                    Canvas.SetTop(test, tableCoordinate);
+                    Canvas.SetLeft(test, tableCoordinate);
+                    firstButtonDrawn = false;
+                    nextY = 0;
+                    nextY += tableCoordinate;
+                    nextX = tableCoordinate;
+
+                }
+                else
+                {
+                    Canvas.SetTop(test, nextY);
+                    Canvas.SetLeft(test, nextX);
+                }
+                
+                
+
+                random = rand.Next(1, 4);
+                if (random == 1)
+                {
+                    nextX += 200;
+                    
+                }
+                else if (random == 2)
+                {
+                    nextX += 400;
+                    
+                }
+                else if (random == 3)
+                {
+                    nextX += 100;
+                    
+                }
+
+                Area.Children.Add(test);
+                AllTables.Add(test);
+                tableID++;
+
+                nextIsOdd = !nextIsOdd;
+                //nextX += 100;
+                if (nextX >= Area.ActualWidth)
+                {
+                    nextX = 10;
+                    if (random == 1)
+                    {
+                        nextX += 200;
+                        
+                    }
+                    else if (random == 2)
+                    {
+                        nextX += 400;
+                        
+                    }
+                    else if (random == 3)
+                    {
+                        nextX += 100;
+                        
+                    }
+                    nextY += 100;
+                    rowCounter++;
+                    nextIsOdd = (rowCounter % 2 != 0);
+                    letter = 'a';
+                    x = 1;
+                    y++;
+                    //ID++;
+                    //name = $"{letter}{ID}".ToString();
+                }
+
+                if (nextY >= Area.ActualHeight)
+                {
+                    tablesDone = true;
+                }
+
             }
         }
 
@@ -147,6 +258,8 @@ namespace P4TableManagement
 
         // The Rectangle that was hit.
         private Rectangle HitRectangle = null;
+
+        private Button HitButton = null;
 
         // The Rectangles that the user can move and resize.
         private readonly List<Rectangle> Rectangles = new List<Rectangle>();
@@ -168,14 +281,25 @@ namespace P4TableManagement
         private void FindHit(Point point)
         {
             HitRectangle = null;
+            HitButton = null;
             MouseHitType = HitType.None;
 
-            foreach (Rectangle rect in AllRectangles)
+            //foreach (Rectangle rect in AllRectangles)
+            //{
+            //    MouseHitType = SetHitType(rect, point);
+            //    if (MouseHitType != HitType.None)
+            //    {
+            //        HitRectangle = rect;
+            //        return;
+            //    }
+            //}
+
+            foreach (Button butt in AllTables)
             {
-                MouseHitType = SetHitType(rect, point);
+                MouseHitType = SetHitType(butt, point);
                 if (MouseHitType != HitType.None)
                 {
-                    HitRectangle = rect;
+                    HitButton = butt;
                     return;
                 }
             }
@@ -184,7 +308,7 @@ namespace P4TableManagement
         }
 
         // Return a HitType value to indicate what is at the point.
-        private HitType SetHitType(Rectangle butt, Point point)
+        private HitType SetHitType(Button butt, Point point)
         {
             double left = Canvas.GetLeft(butt);
             double top = Canvas.GetTop(butt);
@@ -195,58 +319,60 @@ namespace P4TableManagement
             if (point.Y < top) return HitType.None;
             if (point.Y > bottom) return HitType.None;
 
-            // The code uses the mouse's coordinates and the rectangle's coordinates to decide whether the mouse is over a rectangle corner, edge, or body, and it returns the correct HitType.
             const double GAP = 10;
-            //if (point.X - left < GAP)
-            //{
-            //    // Left edge.
-            //    if (point.Y - top < GAP) return HitType.UL;
-            //    if (bottom - point.Y < GAP) return HitType.LL;
-            //    return HitType.L;
-            //}
-            //if (right - point.X < GAP)
-            //{
-            //    // Right edge.
-            //    if (point.Y - top < GAP) return HitType.UR;
-            //    if (bottom - point.Y < GAP) return HitType.LR;
-            //    return HitType.R;
-            //}
-            //if (point.Y - top < GAP) return HitType.T;
+
             if (bottom - point.Y < GAP) return HitType.B;
             return HitType.Body;
         }
 
-        //// Try hard to set the margin of the Canvas Area so it fits perfectly with SquareSize
-        //private void Divisible(double height, double width)
+        //private HitType SetHitType(Rectangle butt, Point point)
         //{
-        //    double h = SystemParameters.FullPrimaryScreenHeight;
-        //    double w = SystemParameters.FullPrimaryScreenWidth;
+        //    double left = Canvas.GetLeft(butt);
+        //    double top = Canvas.GetTop(butt);
+        //    double right = left + butt.Width;
+        //    double bottom = top + butt.Height;
+        //    if (point.X < left) return HitType.None;
+        //    if (point.X > right) return HitType.None;
+        //    if (point.Y < top) return HitType.None;
+        //    if (point.Y > bottom) return HitType.None;
 
-        //    if (height % h == 0)
-        //    {
-        //        Area.Margin = new Thickness(25,25,25,25);
-                
-        //    }
+        //    const double GAP = 10;
 
-
-
-
+        //    if (bottom - point.Y < GAP) return HitType.B;
+        //    return HitType.Body;
         //}
 
         private void Area_MouseDown(object sender, MouseButtonEventArgs e)
         {
             FindHit(Mouse.GetPosition(Area));
             //SetMouseCursor();
+            //if (MouseHitType == HitType.None) return;
+
+            //if (HitRectangle.Fill == Brushes.White)
+            //{
+            //    HitRectangle.Fill = Brushes.Red;
+
+
+            //}
+            //else
+            //{
+            //    HitRectangle.Fill = Brushes.White;
+            //}
+
+
+
+
             if (MouseHitType == HitType.None) return;
 
-            if (HitRectangle.Fill == Brushes.White)
+            if (HitButton is Button)
             {
-                HitRectangle.Fill = Brushes.Red;
+                HitButton.Background = Brushes.Red;
+                TableWindow tableWindow = new TableWindow();
+                tableWindow.Show();
+
+                tableWindow.TableTextBox.Text = $"What do you want to do with {HitButton.Content}";
             }
-            else
-            {
-                HitRectangle.Fill = Brushes.White;
-            }
+
         }
 
         private void ListView_MouseDown(object sender, MouseButtonEventArgs e)
