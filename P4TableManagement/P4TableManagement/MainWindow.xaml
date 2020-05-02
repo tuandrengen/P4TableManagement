@@ -24,6 +24,7 @@
             
             
     </Canvas>
+        
         <ListView Margin="0" Name="ListView" Grid.Column="1" MouseLeftButtonDown="ListView_MouseLeftButtonDown" MouseDown="ListView_MouseDown">
             <ListView.View>
                 <GridView>

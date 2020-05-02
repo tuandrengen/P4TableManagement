@@ -165,6 +165,7 @@ namespace P4TableManagement
                 {
                     Width = tableSize,
                     Height = tableSize,
+                    ToolTip = $"Table: {tableID}\nSeats: 4\nStatus: Unassigned",
                     //Click = "event",
                     Content = $"Table {tableID}"
                 };
@@ -259,7 +260,7 @@ namespace P4TableManagement
         // The Rectangle that was hit.
         private Rectangle HitRectangle = null;
 
-        private Button HitButton = null;
+        public Button HitButton = null;
 
         // The Rectangles that the user can move and resize.
         private readonly List<Rectangle> Rectangles = new List<Rectangle>();
@@ -370,7 +371,7 @@ namespace P4TableManagement
                 TableWindow tableWindow = new TableWindow();
                 tableWindow.Show();
 
-                tableWindow.TableTextBox.Text = $"What do you want to do with {HitButton.Content}";
+                tableWindow.TableTextBox.Text = $"{HitButton.Content}";
             }
 
         }
