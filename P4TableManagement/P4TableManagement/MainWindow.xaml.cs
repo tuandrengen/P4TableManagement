@@ -24,6 +24,16 @@ namespace P4TableManagement
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        const int SquareSize = 50;
+        int tableSize = 80;
+        int tableCoordinate = 10;
+        public List<Rectangle> AllRectangles = new List<Rectangle>();
+        public List<Button> AllButtons = new List<Button>();
+        TableManagementSystem tableManagementSystem = new TableManagementSystem();
+
+        
+
         public MainWindow()
         {
             InitializeComponent();
@@ -33,36 +43,23 @@ namespace P4TableManagement
 
             ////lvCells.ItemsSource = items;
 
-            ReservationList list = new ReservationList();
-            string path = @"C:\P4\test.xlsx";
-            List<Reservation> reservationList = list.PopulateReservationList(path, 1);
+            //ReservationList list = new ReservationList();
+            //string path = @"C:\P4\test.xlsx";
+            //List<Reservation> reservationList = list.PopulateReservationList(path, 1);
 
-            foreach (Reservation item in reservationList)
-            {
-                item.stringTime = item.timeStart.ToShortTimeString();
-            }
+            //foreach (Reservation item in reservationList)
+            //{
+            //    item.stringTime = item.timeStart.ToShortTimeString();
+            //}
 
-
-            ListView.ItemsSource = reservationList;
-
-
-
-
-
-
-
-
-
-
-
-
-
+            //ListView.ItemsSource = reservationList;
         }
 
         private void Window_ContentRendered(object sender, EventArgs e)
         {
             DrawGameArea();
-            //PopulateRectanglesList();
+            CreateTables();
+
         }
 
         private void ListView_MouseLeftButtonDown (object sender, MouseButtonEventArgs e)
@@ -82,12 +79,26 @@ namespace P4TableManagement
 
         }
 
+        public void CreateTables()
+        {
+            foreach (Button butt in Area.Children.OfType<Button>())
+            {
+                // Kontrolstruktur der afgør om det er et SmallTable eller LargeTable
 
-        const int SquareSize = 50;
-        int tableSize = 80;
-        int tableCoordinate = 10;
-        public List<Rectangle> AllRectangles = new List<Rectangle>();
-        public List<Button> AllTables = new List<Button>();
+                SmallTable smallTable = new SmallTable(butt.ActualWidth, butt.ActualHeight, Canvas.GetTop(butt), Canvas.GetLeft(butt));
+
+                butt.ToolTip = $"Table: {smallTable.tableNumber}\nSeats: {smallTable.seats}\nStatus: {smallTable.state}\nX: {smallTable.placementX}\nY: {smallTable.placementY}";
+
+                tableManagementSystem.AddTableToList(smallTable);
+
+
+                //LargeTable largeTable = new LargeTable();
+
+            }
+
+
+        }
+        
 
         private void DrawGameArea()
         {
@@ -104,6 +115,10 @@ namespace P4TableManagement
             bool tablesDone = false;
             Random rand = new Random();
             int random = 0;
+
+            //int top = (int)GetValue(Canvas.TopProperty);
+            //int left = (int)GetValue(Canvas.LeftProperty);
+            
 
 
             // Drawing the grid of rectangles
@@ -161,20 +176,21 @@ namespace P4TableManagement
             // Drawing tables
             while (tablesDone == false)
             {
-                Button test = new Button()
+                //SmallTable smallTable = new SmallTable(tableSize, tableSize, top, left);
+
+                Button butt = new Button()
                 {
                     Width = tableSize,
                     Height = tableSize,
-                    ToolTip = $"Table: {tableID}\nSeats: 4\nStatus: Unassigned",
+                    ToolTip = $"Table: {tableID}\nSeats: 4\nStatus: Unassigned\nX: {nextX}\nY: {nextY}",
                     //Click = "event",
                     Content = $"Table {tableID}"
                 };
 
-
                 if (firstButtonDrawn == true)
                 {
-                    Canvas.SetTop(test, tableCoordinate);
-                    Canvas.SetLeft(test, tableCoordinate);
+                    Canvas.SetTop(butt, tableCoordinate);
+                    Canvas.SetLeft(butt, tableCoordinate);
                     firstButtonDrawn = false;
                     nextY = 0;
                     nextY += tableCoordinate;
@@ -183,8 +199,8 @@ namespace P4TableManagement
                 }
                 else
                 {
-                    Canvas.SetTop(test, nextY);
-                    Canvas.SetLeft(test, nextX);
+                    Canvas.SetTop(butt, nextY);
+                    Canvas.SetLeft(butt, nextX);
                 }
                 
                 
@@ -206,8 +222,9 @@ namespace P4TableManagement
                     
                 }
 
-                Area.Children.Add(test);
-                AllTables.Add(test);
+                Area.Children.Add(butt);
+                AllButtons.Add(butt);
+                //tableManagementSystem.TableList.Add(smallTable); // tilgået korrekt?
                 tableID++;
 
                 nextIsOdd = !nextIsOdd;
@@ -295,7 +312,7 @@ namespace P4TableManagement
             //    }
             //}
 
-            foreach (Button butt in AllTables)
+            foreach (Button butt in AllButtons)
             {
                 MouseHitType = SetHitType(butt, point);
                 if (MouseHitType != HitType.None)
