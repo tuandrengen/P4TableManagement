@@ -64,9 +64,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CombinedTable.cs" />
+    <Compile Include="DecorationElement.cs" />
     <Compile Include="Excel.cs" />
+    <Compile Include="Exceptions\DecorationElementAlreadyExistsException.cs" />
+    <Compile Include="Exceptions\MapSectionNotFoundException.cs" />
+    <Compile Include="Exceptions\TableAlreadyAssignedException.cs" />
+    <Compile Include="Interfaces\ITableManagementSystem.cs" />
+    <Compile Include="LargeTable.cs" />
+    <Compile Include="MapElement.cs" />
+    <Compile Include="MapSection.cs" />
     <Compile Include="Reservation.cs" />
     <Compile Include="ReservationList.cs" />
+    <Compile Include="SmallTable.cs" />
+    <Compile Include="Table.cs" />
+    <Compile Include="TableManagementSystem.cs" />
     <Compile Include="TableWindow.xaml.cs">
       <DependentUpon>TableWindow.xaml</DependentUpon>
     </Compile>
