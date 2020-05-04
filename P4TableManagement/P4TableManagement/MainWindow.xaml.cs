@@ -32,16 +32,20 @@ namespace P4TableManagement
         public List<Button> AllButtons = new List<Button>();
         TableManagementSystem tableManagementSystem = new TableManagementSystem();
 
+        ReservationList list = new ReservationList();
+        string path = @"C:\P4\test.xlsx";
+        public List<Reservation> reservationList = new List<Reservation>();
         
 
         public MainWindow()
         {
             InitializeComponent();
 
-            ReservationList list = new ReservationList();
-            string path = @"C:\P4\test.xlsx";
-            List<Reservation> reservationList = list.PopulateReservationList(path, 1);
+            //ReservationList list = new ReservationList();
+            //string path = @"C:\P4\test.xlsx";
+            //List<Reservation> reservationList = list.PopulateReservationList(path, 1);
 
+            reservationList = list.PopulateReservationList(path, 1);
             foreach (Reservation item in reservationList)
             {
                 item.stringTime = item.timeStart.ToShortTimeString();
@@ -75,14 +79,19 @@ namespace P4TableManagement
             ListView listView = sender as ListView;
             var selecteditem = listView.SelectedItem;
             //ListViewItem item = (ListViewItem)listView.ItemContainerGenerator.ContainerFromItem(selecteditem);
+            
 
             if (selecteditem is Reservation)
             {
+                //selecteditem.
+                
                 Reservation selectedBooking = selecteditem as Reservation;
 
-                selectedBooking.parameter.Add("Jamen hva så");
+                //selectedBooking.name = "Test123";
 
-                MessageBox.Show("Time to order more copies of: " + selectedBooking.parameter);
+                 reservationList.Find(x => x.name == selectedBooking.name);
+
+                MessageBox.Show("Time to order more copies of: " + selectedBooking.name);
             }
             else
             {
