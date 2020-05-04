@@ -26,12 +26,16 @@ namespace P4TableManagement
     public partial class MainWindow : Window
     {
 
-        const int SquareSize = 50;
+        const int SquareSize = 100;
         int tableSize = 80;
         int tableCoordinate = 10;
         public List<Rectangle> AllRectangles = new List<Rectangle>();
         public List<Button> AllButtons = new List<Button>();
         TableManagementSystem tableManagementSystem = new TableManagementSystem();
+        public bool assignEventActivated = false;
+        public bool combineEventActivated = false;
+        Booking highlightedReservation;
+
 
         ReservationList list = new ReservationList();
         string path = @"C:\P4\test.xlsx";
@@ -91,7 +95,7 @@ namespace P4TableManagement
                 //selectedBooking.name = "Test123";
 
                 // Should use ID instead of name (ID was broken at this time)
-                reservationList.Find(x => x.id == selectedBooking.id).name = "test123";
+                highlightedReservation = reservationList.Find(x => x.id == selectedBooking.id);
                 
                 // Umiddelbar måde til at opdatere listview
                 ICollectionView view = CollectionViewSource.GetDefaultView(reservationList);
@@ -160,9 +164,7 @@ namespace P4TableManagement
                     //Background = Brushes.White,
                     Stroke = Brushes.Black,
                     Fill = Brushes.White,
-                    Name = $"_{x}_{y}",
-                    //Content = $"{letter}{ID}",
-                    //BorderBrush = Brushes.Black
+                    Name = $"_{x}_{y}"
                 };
                 x++;
 
@@ -191,7 +193,7 @@ namespace P4TableManagement
                     //name = $"{letter}{ID}".ToString();
                 }
 
-                if (nextY >= Area.ActualHeight)
+                if (nextY >= Area.ActualHeight - tableSize)
                 {
                     doneDrawingBackground = true;
                     nextIsOdd = false;
@@ -211,7 +213,8 @@ namespace P4TableManagement
                     Width = tableSize,
                     Height = tableSize,
                     ToolTip = $"Table: {tableID}\nSeats: 4\nStatus: Unassigned\nX: {nextX}\nY: {nextY}",
-                    //Click = "event",
+                    //Tag = {tableID},
+                    //Click += new RoutedEventHandler(button_Click),
                     Content = $"Table {tableID}"
                 };
 
@@ -252,6 +255,7 @@ namespace P4TableManagement
 
                 Area.Children.Add(butt);
                 AllButtons.Add(butt);
+                butt.Click += new RoutedEventHandler(Button_Click); // We assign which method that handles the event
                 //tableManagementSystem.TableList.Add(smallTable); // tilgået korrekt?
                 tableID++;
 
@@ -285,12 +289,41 @@ namespace P4TableManagement
                     //name = $"{letter}{ID}".ToString();
                 }
 
-                if (nextY >= Area.ActualHeight)
+                if (nextY >= Area.ActualHeight - tableSize)
                 {
                     tablesDone = true;
                 }
 
             }
+        }
+
+        // Button representing a table on the map, Event handler
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            // We get the button we clicked on from the sender
+            Button clickedButton = (Button)sender;
+
+            // Assign button has been clicked
+            if (assignEventActivated)
+            {
+                //do the assign
+                MessageBox.Show("do assign event");
+
+                //tableManagementSystem.AssignTable(table, booking)
+                // Should be a statement that controls whether or not highlightedReservation has been set (if it hasn't then a null reference happens)
+                tableManagementSystem.AssignTable(tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}"  == (string)clickedButton.Content), highlightedReservation); // holy moly det messy
+                
+            }
+            else if (combineEventActivated)
+            {
+                //do the combine
+                MessageBox.Show("do combine event");
+            }
+            else
+            {
+                MessageBox.Show("No event has been triggered...");
+            }
+
         }
 
         // The part of the rectangle the mouse is over. (We use body)
@@ -457,6 +490,49 @@ namespace P4TableManagement
                 MessageBox.Show("Hallo min ven " + selecteditem);
             }
             
+        }
+
+        // Assign button
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            Button clickedButton = (Button)sender;
+            if (!assignEventActivated)
+            {
+                assignEventActivated = true;
+
+                helper_headline.Content = $"assignEventActivated = {assignEventActivated}";
+                clickedButton.Background = Brushes.LightCoral;
+                clickedButton.BorderBrush = Brushes.Black;
+            }
+            else
+            {
+                assignEventActivated = false;
+                helper_headline.Content = $"assignEventActivated = {assignEventActivated}";
+                clickedButton.Background = Brushes.White;
+                clickedButton.BorderBrush = Brushes.LightCoral;
+            }
+
+            
+        }
+
+        // Comnbine button
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            Button clickedButton = (Button)sender;
+            if (!combineEventActivated)
+            {
+                combineEventActivated = true;
+                helper_headline.Content = $"combineEventActivated = {combineEventActivated}";
+                clickedButton.Background = Brushes.LightCoral;
+                clickedButton.BorderBrush = Brushes.Black;
+            }
+            else
+            {
+                combineEventActivated = false;
+                helper_headline.Content = $"combineEventActivated = {combineEventActivated}";
+                clickedButton.Background = Brushes.White;
+                clickedButton.BorderBrush = Brushes.LightCoral;
+            }
         }
     }
 }

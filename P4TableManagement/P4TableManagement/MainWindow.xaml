@@ -17,15 +17,31 @@
             <ColumnDefinition Width="0.8*" ></ColumnDefinition>
             <ColumnDefinition Width="0.2*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"></RowDefinition>
+            <RowDefinition Height="0.9*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Label x:Name="helper_headline" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Content="Default state" FontSize="50" Margin="10" VerticalAlignment="Center" ></Label>
+        
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" >
+            <Button Width="100" Height="35" Margin="0,10" Background="White"  BorderBrush="LightCoral" BorderThickness="2" VerticalAlignment="Bottom" HorizontalAlignment="Center" Click="Button_Click_1"
+                   >
+                Assign</Button>
+
+            <Button Width="100" Height="35" Margin="18,10" Background="White" HorizontalAlignment="Right" VerticalAlignment="Bottom" BorderBrush="LightCoral" BorderThickness="2" Click="Button_Click_2">Combine</Button>
+            
+            
+        </StackPanel>
         
         
-        <Canvas x:Name="Area" ClipToBounds="True"  Margin="18,15" Grid.Column="0" MouseDown="Area_MouseDown">
+        <Canvas x:Name="Area" ClipToBounds="True"  Margin="18,15" Grid.Column="0" Grid.Row="1"  MouseDown="Area_MouseDown">
             <!--<Button>Button 1</Button>-->
             
             
-    </Canvas>
+        </Canvas>
         
-        <ListView Margin="0" Name="ListView" Grid.Column="1" MouseLeftButtonDown="ListView_MouseLeftButtonDown" MouseDown="ListView_MouseDown">
+        <ListView Margin="0" Name="ListView" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" MouseLeftButtonDown="ListView_MouseLeftButtonDown" MouseDown="ListView_MouseDown">
             <ListView.View>
                 <GridView>
                     <GridView.ColumnHeaderContainerStyle>

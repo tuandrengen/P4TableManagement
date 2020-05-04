@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows;
 
 namespace P4TableManagement
 {
@@ -41,12 +42,14 @@ namespace P4TableManagement
 			if (table.state == "Occupied")
 			{
 				//throw new TableAlreadyAssignedException("Error: Cannot assign an occupied table!");
+				MessageBox.Show("The table is already occupied and could not be assigned");
 				return;
 			}
 
 			table.bookingID = booking.id;
 			table.state = "Occupied";
-			Console.WriteLine($"Table #{ table.tableNumber } has been assigned! Booking ID: { table.bookingID }");
+			//Console.WriteLine($"Table #{ table.tableNumber } has been assigned! Booking ID: { table.bookingID }");
+			MessageBox.Show($"Table #{ table.tableNumber } has been assigned! Booking ID: { table.bookingID }");
 		}
 
 		public void UnassignTable(Table table)
