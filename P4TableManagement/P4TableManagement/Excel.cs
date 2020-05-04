@@ -56,15 +56,15 @@ namespace P4TableManagement
                 //converterer lang string fra excel til list<string> som parameter.....
                 string parameterString = parameter.Value2.ToString();
                 parameterString = parameterString.ToLower();
-                List<string> parameters = parameterString.Split(',').ToList();
+                //List<string> parameters = parameterString.Split(',').ToList();
 
-                foreach (string item in parameters)
-                {
-                    item.Trim();
-                }
+                //foreach (string item in parameters)
+                //{
+                //    item.Trim();
+                //}
 
                 //adds the data from the excel to a list of reservations
-                result.Add(new Reservation(name.Value2.ToString(), datetime, bool.Parse(isGap.Value2.ToString()), (int)numberOfGuest.Value2, (int)phoneNumber.Value2, parameters, comment.Value2.ToString()));
+                result.Add(new Reservation(name.Value2.ToString(), datetime, bool.Parse(isGap.Value2.ToString()), (int)numberOfGuest.Value2, (int)phoneNumber.Value2, parameterString, comment.Value2.ToString()));
             }
             return result;
         }
