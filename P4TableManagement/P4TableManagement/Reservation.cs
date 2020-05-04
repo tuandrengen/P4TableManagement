@@ -9,7 +9,7 @@ namespace P4TableManagement
         private string _name;
 		private int _phoneNumber;
 		private string _comment;
-		public List<string> parameter = new List<string>();
+		public string parameter;
 
 		public string name { get; set; }
 		public int phoneNumber { get; set; }
@@ -22,19 +22,19 @@ namespace P4TableManagement
 			this.phoneNumber = phoneNumber;
 		}
 
-		public Reservation(string name, DateTime timeStart, bool isGap, int numberOfGuest, int phoneNumber, List<string> parameter) : this(name, timeStart, isGap, numberOfGuest, phoneNumber)
-		{
-			this.parameter.AddRange(parameter);
-		}
+		//public Reservation(string name, DateTime timeStart, bool isGap, int numberOfGuest, int phoneNumber, List<string> parameter) : this(name, timeStart, isGap, numberOfGuest, phoneNumber)
+		//{
+		//	this.parameter = parameter;
+		//}
 
-        public Reservation(string name, DateTime timeStart, bool isGap, int numberOfGuest, int phoneNumber, string comment) : this(name, timeStart, isGap, numberOfGuest, phoneNumber)
-        {
-            this.comment = comment;
-        }
+  //      public Reservation(string name, DateTime timeStart, bool isGap, int numberOfGuest, int phoneNumber, string comment) : this(name, timeStart, isGap, numberOfGuest, phoneNumber)
+  //      {
+  //          this.comment = comment;
+  //      }
 
-        public Reservation(string name, DateTime timeStart, bool isGap, int numberOfGuest, int phoneNumber, List<string> parameter, string comment) : this(name, timeStart, isGap, numberOfGuest, phoneNumber)
+        public Reservation(string name, DateTime timeStart, bool isGap, int numberOfGuest, int phoneNumber, string parameter, string comment) : this(name, timeStart, isGap, numberOfGuest, phoneNumber)
         {
-            this.parameter.AddRange(parameter);
+			this.parameter = parameter;
             this.comment = comment;
         }
 
