@@ -39,6 +39,7 @@
                     <GridViewColumn Header="Name" Width="auto" DisplayMemberBinding="{Binding name}" />
                     <GridViewColumn Header="Phone Number" Width="auto" DisplayMemberBinding="{Binding phoneNumber}" />
                     <GridViewColumn Header="Parameter" Width="auto" DisplayMemberBinding="{Binding parameter}" />
+                    <GridViewColumn Header="ID" Width="auto" DisplayMemberBinding="{Binding id}" />
 
                 </GridView>
             </ListView.View>

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -89,7 +90,11 @@ namespace P4TableManagement
 
                 //selectedBooking.name = "Test123";
 
-                 reservationList.Find(x => x.name == selectedBooking.name);
+                // Should use ID
+                reservationList.Find(x => x.name == selectedBooking.name).name = "test123";
+                
+                ICollectionView view = CollectionViewSource.GetDefaultView(reservationList);
+                view.Refresh();
 
                 MessageBox.Show("Time to order more copies of: " + selectedBooking.name);
             }
