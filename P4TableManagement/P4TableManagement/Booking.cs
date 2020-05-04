@@ -14,6 +14,8 @@ namespace P4TableManagement
 		public DateTime timeEnd { get; set; }
 		public bool isGap { get; set; }
 
+		public bool isAssigned { get; set; }
+
 		public Booking(int numberOfGuests, DateTime timeStart, bool is_gap)
         {
 			this.numberOfGuests = numberOfGuests;

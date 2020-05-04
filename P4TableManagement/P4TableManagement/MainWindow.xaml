@@ -38,7 +38,7 @@
                     <GridViewColumn Header="Time" Width="auto" DisplayMemberBinding="{Binding stringTime}" />
                     <GridViewColumn Header="Name" Width="auto" DisplayMemberBinding="{Binding name}" />
                     <GridViewColumn Header="Phone Number" Width="auto" DisplayMemberBinding="{Binding phoneNumber}" />
-                    <GridViewColumn Header="Parameter" Width="auto" DisplayMemberBinding="{Binding parameter}" />
+                    <GridViewColumn Header="Parameter" Width="auto" DisplayMemberBinding="{Binding parameter[1]}" />
 
                 </GridView>
             </ListView.View>

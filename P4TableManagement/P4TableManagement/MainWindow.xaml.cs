@@ -38,21 +38,16 @@ namespace P4TableManagement
         {
             InitializeComponent();
 
-            //List<Cell> items = new List<Cell>();
-            //items.Add(new Cell() { X = 69, Y = 42, Z = 420});
+            ReservationList list = new ReservationList();
+            string path = @"C:\P4\test.xlsx";
+            List<Reservation> reservationList = list.PopulateReservationList(path, 1);
 
-            ////lvCells.ItemsSource = items;
+            foreach (Reservation item in reservationList)
+            {
+                item.stringTime = item.timeStart.ToShortTimeString();
+            }
 
-            //ReservationList list = new ReservationList();
-            //string path = @"C:\P4\test.xlsx";
-            //List<Reservation> reservationList = list.PopulateReservationList(path, 1);
-
-            //foreach (Reservation item in reservationList)
-            //{
-            //    item.stringTime = item.timeStart.ToShortTimeString();
-            //}
-
-            //ListView.ItemsSource = reservationList;
+            ListView.ItemsSource = reservationList;
         }
 
         private void Window_ContentRendered(object sender, EventArgs e)
@@ -76,6 +71,24 @@ namespace P4TableManagement
             //        Name = selectedRect
             //    };
             //}
+
+            ListView listView = sender as ListView;
+            var selecteditem = listView.SelectedItem;
+            //ListViewItem item = (ListViewItem)listView.ItemContainerGenerator.ContainerFromItem(selecteditem);
+
+            if (selecteditem is Reservation)
+            {
+                Reservation selectedBooking = selecteditem as Reservation;
+
+                selectedBooking.parameter.Add("Jamen hva så");
+
+                MessageBox.Show("Time to order more copies of: " + selectedBooking.parameter);
+            }
+            else
+            {
+                MessageBox.Show("Hallo min ven " + selecteditem);
+            }
+
 
         }
 
