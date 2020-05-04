@@ -90,13 +90,14 @@ namespace P4TableManagement
 
                 //selectedBooking.name = "Test123";
 
-                // Should use ID
-                reservationList.Find(x => x.name == selectedBooking.name).name = "test123";
+                // Should use ID instead of name (ID was broken at this time)
+                reservationList.Find(x => x.id == selectedBooking.id).name = "test123";
                 
+                // Umiddelbar måde til at opdatere listview
                 ICollectionView view = CollectionViewSource.GetDefaultView(reservationList);
                 view.Refresh();
 
-                MessageBox.Show("Time to order more copies of: " + selectedBooking.name);
+                MessageBox.Show("SelectedItem from list is: " + selectedBooking.name);
             }
             else
             {
