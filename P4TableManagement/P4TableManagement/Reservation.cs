@@ -32,10 +32,11 @@ namespace P4TableManagement
   //          this.comment = comment;
   //      }
 
-        public Reservation(string name, DateTime timeStart, bool isGap, int numberOfGuest, int phoneNumber, string parameter, string comment) : this(name, timeStart, isGap, numberOfGuest, phoneNumber)
+        public Reservation(int id, string name, DateTime timeStart, bool isGap, int numberOfGuest, int phoneNumber, string parameter, string comment) : this(name, timeStart, isGap, numberOfGuest, phoneNumber)
         {
 			this.parameter = parameter;
             this.comment = comment;
+			this.id = id;
         }
 
     }

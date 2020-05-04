@@ -64,7 +64,7 @@ namespace P4TableManagement
                 //}
 
                 //adds the data from the excel to a list of reservations
-                result.Add(new Reservation(name.Value2.ToString(), datetime, bool.Parse(isGap.Value2.ToString()), (int)numberOfGuest.Value2, (int)phoneNumber.Value2, parameterString, comment.Value2.ToString()));
+                result.Add(new Reservation(row, name.Value2.ToString(), datetime, bool.Parse(isGap.Value2.ToString()), (int)numberOfGuest.Value2, (int)phoneNumber.Value2, parameterString, comment.Value2.ToString()));
             }
             return result;
         }
