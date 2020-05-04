@@ -6,7 +6,7 @@ namespace P4TableManagement
 {
     public class Booking
     {
-        private int _id = 0;
+        //private static int _id = 0;
 
 		public int id { get; set; }
 		public int numberOfGuests { get; set; }
@@ -21,7 +21,7 @@ namespace P4TableManagement
 			this.numberOfGuests = numberOfGuests;
 			this.timeStart = timeStart;
 			isGap = is_gap;
-			id = System.Threading.Interlocked.Increment(ref _id);
+			//id = System.Threading.Interlocked.Increment(ref _id);
         }
     }
 }
