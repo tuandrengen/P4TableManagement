@@ -25,23 +25,17 @@ namespace P4TableManagement
             InitializeComponent();
         }
 
-        private void btnCombine_Click(object sender, RoutedEventArgs e)
-        {
-            TableTextBox.Text = $"Which table(s) do you want to combine with {TableTextBox.Text}";
-            // husk at ændre størrelsen på textboxen
-        }
-
-        private void btnAssign_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void btnUnassign_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
         private void btnSeperate_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
 
         }

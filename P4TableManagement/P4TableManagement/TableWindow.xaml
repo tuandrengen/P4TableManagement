@@ -5,26 +5,31 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:P4TableManagement"
         mc:Ignorable="d"
-        Title="TableWindow" Height="600" Width="800">
+        Title="TableWindow" Height="200" Width="800">
     <Grid>
         <Grid.RowDefinitions>
+
             <RowDefinition Height="100"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="100"></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition> 
         </Grid.RowDefinitions>
 
+        <!--Sæt rektangel ind på nederste Row, farv den grå-->
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.2*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="0.2*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
 
+        <Label Grid.Row="0" Grid.Column="1" x:Name="TableTextBox" HorizontalAlignment="Center" Height="68" Content="What do you want to do with " VerticalAlignment="Center" FontSize="20"/>
 
-
-        <TextBox Grid.Row="0" x:Name="TableTextBox" HorizontalAlignment="Left" Height="68" Margin="172,22,0,0" TextWrapping="Wrap" Text="defualt taxt" VerticalAlignment="Top" Width="479" FontSize="12"/>
-
-        <Button Grid.Row="2" ToolTipService.InitialShowDelay="1" 
-    ToolTipService.ShowDuration="20000" 
-    ToolTipService.BetweenShowDelay="1" 
-    ToolTip="This is a tool tip." Name="btnCombine" Click="btnCombine_Click" Content="Combine" Width="70" Height="30" Margin="328,10,394,60"></Button>
-        <Button Grid.Row="2" Name="btnAssign" Click="btnAssign_Click" Content="Assign" Width="70" Height="30" Margin="104,10,618,60"></Button>
-        <Button Grid.Row="2" Name="btnUnassign" Click="btnUnassign_Click" Content="Unassign" Width="70" Height="30" Margin="215,10,507,60"></Button>
-        <Button Grid.Row="2" Name="btnSeperate" Click="btnSeperate_Click" Content="Seperate" Width="70" Height="30" Margin="440,10,282,60"></Button>
+        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" Margin="0,0,0,31" HorizontalAlignment="Center">
+            <Button  Name="btnUnassign" Click="btnUnassign_Click" Content="Unassign" Margin="10" Width="70" Height="30" ></Button>
+            <Button  Name="btnSeperate" Click="btnSeperate_Click" Content="Seperate" Margin="10" Width="70" Height="30" ></Button>
+            <Button  Name="btnCancel" Click="btnCancel_Click" Content="Cancel" Margin="100,10" Width="70" Height="30" ></Button>
+        </StackPanel>
+        
+       
     </Grid>
 </Window>
 

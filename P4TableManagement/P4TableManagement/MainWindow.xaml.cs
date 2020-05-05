@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 // Known bugs: Hvis du scroller for hurtigt når du starter programmet så crasher det, da alle elementer i listen ikker nået at "loade".
 
@@ -297,23 +298,33 @@ namespace P4TableManagement
             }
         }
 
+
         // Button representing a table on the map, Event handler
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             // We get the button we clicked on from the sender
             Button clickedButton = (Button)sender;
 
-            // Assign button has been clicked
+            // Assign event has been triggered
             if (assignEventActivated)
             {
-                //do the assign
-                MessageBox.Show("do assign event");
-
-                //tableManagementSystem.AssignTable(table, booking)
-                // Should be a statement that controls whether or not highlightedReservation has been set (if it hasn't then a null reference happens)
-                tableManagementSystem.AssignTable(tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}"  == (string)clickedButton.Content), highlightedReservation); // holy moly det messy
-                
+                // If highlightedReservation hasn't been set its value is null, so we try to catch it
+                try
+                {
+                    // We assign the table with AssignTable 
+                    tableManagementSystem.AssignTable(tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}" == (string)clickedButton.Content), highlightedReservation);
+                    // Updates the button to now display it's updated state
+                    Table updateTable = tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}" == (string)clickedButton.Content);
+                    clickedButton.ToolTip = $"Table: {updateTable.tableNumber}\nSeats: {updateTable.seats}\nStatus: {updateTable.state}\nX: {updateTable.placementX}\nY: {updateTable.placementY}";
+                    clickedButton.Content += $"\nAssigned to {highlightedReservation.id}";
+                }
+                catch (NullReferenceException ex)
+                {
+                    MessageBox.Show("A reservation has not been selected");
+                    return;
+                }
             }
+            // Combine event has been triggered
             else if (combineEventActivated)
             {
                 //do the combine
@@ -421,6 +432,7 @@ namespace P4TableManagement
         //    return HitType.Body;
         //}
 
+        // Umiddelbart højre click interaction i canvas
         private void Area_MouseDown(object sender, MouseButtonEventArgs e)
         {
             FindHit(Mouse.GetPosition(Area));
@@ -446,10 +458,33 @@ namespace P4TableManagement
             if (HitButton is Button)
             {
                 HitButton.Background = Brushes.Red;
+
+
+
+
+                //// Process message box results
+                //switch (result)
+                //{
+                //    case MessageBoxResult.Yes:
+                //        // User pressed Yes button
+                //        // ...
+                //        break;
+                //    case MessageBoxResult.No:
+                //        // User pressed No button
+                //        // ...
+                //        break;
+                //    case MessageBoxResult.Cancel:
+                //        // User pressed Cancel button
+                //        // ...
+                //        break;
+                //}
+
+
+
                 TableWindow tableWindow = new TableWindow();
                 tableWindow.Show();
 
-                tableWindow.TableTextBox.Text = $"{HitButton.Content}";
+                tableWindow.TableTextBox.Content += $"{HitButton.Content}";
             }
 
         }

@@ -56,20 +56,20 @@ namespace P4TableManagement
 		{
 			table.bookingID = default;
 			table.state = "Available";
-			Console.WriteLine($"Table #{ table.tableNumber } has been unassigned!");
+			MessageBox.Show($"Table #{ table.tableNumber } has been unassigned!");
 		}
 
 		public void PayTable(Table table)
 		{
 			table.state = "Paid";
-			Console.WriteLine($"Table #{ table.tableNumber } has been paid! Booking ID: { table.bookingID }");
+			MessageBox.Show($"Table #{ table.tableNumber } has been paid! Booking ID: { table.bookingID }");
 		}
 
 		public void ReserveTable(Table table, Booking booking)
 		{
 			table.bookingID = booking.id;
 			table.state = "Reserved";
-			Console.WriteLine($"Table #{ table.tableNumber } has been reserved! Booking ID: { table.bookingID }");
+			MessageBox.Show($"Table #{ table.tableNumber } has been reserved! Booking ID: { table.bookingID }");
 		}
 
 		public List<Table> GetTableList(Predicate<Table> searchCriteria)
