@@ -23,6 +23,7 @@ namespace P4TableManagement
         public TableWindow()
         {
             InitializeComponent();
+            
         }
 
         private void btnUnassign_Click(object sender, RoutedEventArgs e)
@@ -38,6 +39,12 @@ namespace P4TableManagement
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        // Cross button right top corner
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

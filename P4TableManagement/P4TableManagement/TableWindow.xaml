@@ -5,31 +5,101 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:P4TableManagement"
         mc:Ignorable="d"
-        Title="TableWindow" Height="200" Width="800">
+        Title="TableWindow" BorderThickness="1" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" ShowInTaskbar="False" WindowStyle="None"  ResizeMode="NoResize">
+
+    <!--<ResourceDictionary>
+        
+    </ResourceDictionary>-->
+
     <Grid>
         <Grid.RowDefinitions>
-
-            <RowDefinition Height="100"></RowDefinition>
-            <RowDefinition Height="100"></RowDefinition> 
+            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
         </Grid.RowDefinitions>
 
         <!--Sæt rektangel ind på nederste Row, farv den grå-->
-        
+
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.2*"></ColumnDefinition>
+
             <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="0.2*"></ColumnDefinition>
+
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="1" x:Name="TableTextBox" HorizontalAlignment="Center" Height="68" Content="What do you want to do with " VerticalAlignment="Center" FontSize="20"/>
+        <DockPanel Grid.Row="0" Margin="0,0,0,0" HorizontalAlignment="Right">
+            <Canvas MinWidth="30" MinHeight="30" >
+                <Button BorderBrush="{x:Null}" MinWidth="30" MinHeight="30" BorderThickness="0" Opacity="1" Click="Button_Click" >
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="White"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Border Background="{TemplateBinding Background}" BorderThickness="0">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
 
-        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" Margin="0,0,0,31" HorizontalAlignment="Center">
-            <Button  Name="btnUnassign" Click="btnUnassign_Click" Content="Unassign" Margin="10" Width="70" Height="30" ></Button>
-            <Button  Name="btnSeperate" Click="btnSeperate_Click" Content="Seperate" Margin="10" Width="70" Height="30" ></Button>
-            <Button  Name="btnCancel" Click="btnCancel_Click" Content="Cancel" Margin="100,10" Width="70" Height="30" ></Button>
+                            <!--<Setter Property="Background" Value="White"/>-->
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="Red"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Path x:Name="ButtonPath" Margin="3" Stroke="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" StrokeThickness="1.5" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Stretch="Uniform">
+                        <Path.Data>
+                            <PathGeometry>
+                                <PathGeometry.Figures>
+                                    <PathFigure StartPoint="0,0">
+                                        <LineSegment Point="10,10"/>
+                                    </PathFigure>
+                                    <PathFigure StartPoint="0,10">
+                                        <LineSegment Point="10,0"/>
+                                    </PathFigure>
+                                </PathGeometry.Figures>
+                            </PathGeometry>
+                        </Path.Data>
+                    </Path>
+                </Button>
+
+
+
+
+            </Canvas>
+        </DockPanel>
+
+
+        <Label Content="bla bla" Grid.Row="1" Grid.Column="1" x:Name="LabelText" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12"/>
+
+        <Rectangle Grid.Row="2" Grid.ColumnSpan="2" Fill="LightGray" Opacity="0.3"></Rectangle>
+
+
+        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" Margin="0">
+            <!--<Rectangle Height="100" Width="380"></Rectangle>-->
+            <Button Name="btnUnassign" Click="btnUnassign_Click" Content="Unassign" Margin="20,10,10,10" Width="70" Height="30" BorderThickness="1,1,2,2" >
+                <Button.Background>
+                    <SolidColorBrush Color="LightGray" Opacity="0.3"/>
+                </Button.Background>
+            </Button>
+            <Button  Name="btnSeperate" Click="btnSeperate_Click" Content="Seperate" Margin="10" Width="70" Height="30" BorderThickness="1,1,2,2" >
+                <Button.Background>
+                    <SolidColorBrush Color="LightGray" Opacity="0.3"/>
+                </Button.Background>
+            </Button>
+            <Button  Name="btnCancel" Click="btnCancel_Click" Content="Cancel" Margin="100,10,20,10" Width="70" Height="30" BorderThickness="1,1,2,2"  >
+                <Button.Background>
+                    <SolidColorBrush Color="LightGray" Opacity="0.3"/>
+                </Button.Background>
+            </Button>
         </StackPanel>
-        
-       
+
+
     </Grid>
 </Window>
 

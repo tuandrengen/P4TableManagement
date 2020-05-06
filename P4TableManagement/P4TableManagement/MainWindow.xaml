@@ -25,11 +25,49 @@
         <Label x:Name="helper_headline" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Content="Default state" FontSize="50" Margin="10" VerticalAlignment="Center" ></Label>
         
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" >
-            <Button Width="100" Height="35" Margin="0,10" Background="White"  BorderBrush="LightCoral" BorderThickness="2" VerticalAlignment="Bottom" HorizontalAlignment="Center" Click="Button_Click_1"
-                   >
-                Assign</Button>
+            <Button Content="Assign" Width="100" Height="35" Margin="0,10" VerticalAlignment="Bottom" HorizontalAlignment="Center" Click="Button_Click_1">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="White"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}" BorderThickness="2" BorderBrush="LightCoral">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="LightCoral"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
 
-            <Button Width="100" Height="35" Margin="18,10" Background="White" HorizontalAlignment="Right" VerticalAlignment="Bottom" BorderBrush="LightCoral" BorderThickness="2" Click="Button_Click_2">Combine</Button>
+            <Button Content="Combine" Width="100" Height="35" Margin="18,10" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Button_Click_2">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="White"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}" BorderThickness="2" BorderBrush="LightCoral">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="LightCoral"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
             
             
         </StackPanel>

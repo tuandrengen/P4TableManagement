@@ -37,7 +37,6 @@ namespace P4TableManagement
         public bool combineEventActivated = false;
         Booking highlightedReservation;
 
-
         ReservationList list = new ReservationList();
         string path = @"C:\P4\test.xlsx";
         public List<Reservation> reservationList = new List<Reservation>();
@@ -482,9 +481,12 @@ namespace P4TableManagement
 
 
                 TableWindow tableWindow = new TableWindow();
-                tableWindow.Show();
+                //tableWindow.Show();
+                tableWindow.LabelText.Content = $"What do you want to do with {HitButton.Content}";
+                tableWindow.ShowDialog(); // Can't be minimized now
 
-                tableWindow.TableTextBox.Content += $"{HitButton.Content}";
+                
+
             }
 
         }
@@ -537,14 +539,12 @@ namespace P4TableManagement
 
                 helper_headline.Content = $"assignEventActivated = {assignEventActivated}";
                 clickedButton.Background = Brushes.LightCoral;
-                clickedButton.BorderBrush = Brushes.Black;
             }
             else
             {
                 assignEventActivated = false;
                 helper_headline.Content = $"assignEventActivated = {assignEventActivated}";
                 clickedButton.Background = Brushes.White;
-                clickedButton.BorderBrush = Brushes.LightCoral;
             }
 
             
@@ -559,14 +559,12 @@ namespace P4TableManagement
                 combineEventActivated = true;
                 helper_headline.Content = $"combineEventActivated = {combineEventActivated}";
                 clickedButton.Background = Brushes.LightCoral;
-                clickedButton.BorderBrush = Brushes.Black;
             }
             else
             {
                 combineEventActivated = false;
                 helper_headline.Content = $"combineEventActivated = {combineEventActivated}";
                 clickedButton.Background = Brushes.White;
-                clickedButton.BorderBrush = Brushes.LightCoral;
             }
         }
     }
