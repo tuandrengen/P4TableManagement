@@ -75,7 +75,7 @@
         </DockPanel>
 
 
-        <Label Content="bla bla" Grid.Row="1" Grid.Column="1" x:Name="LabelText" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12"/>
+        <Label Content="INSERT TABLE TEXT" Grid.Row="1" Grid.Column="1" x:Name="LabelText" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12"/>
 
         <Rectangle Grid.Row="2" Grid.ColumnSpan="2" Fill="LightGray" Opacity="0.3"></Rectangle>
 
