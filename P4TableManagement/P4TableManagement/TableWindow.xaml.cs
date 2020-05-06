@@ -20,6 +20,12 @@ namespace P4TableManagement
     /// </summary>
     public partial class TableWindow : Window
     {
+        // To access the data from MainWindow we: ((MainWindow)Application.Current.MainWindow).tableManagementSystem
+        // This allows us to use the created object in the MainWindow
+
+        readonly TableManagementSystem tableManagementSystem = ((MainWindow)Application.Current.MainWindow).tableManagementSystem;
+        readonly Table table = ((MainWindow)Application.Current.MainWindow).currentTable;
+
         public TableWindow()
         {
             InitializeComponent();
@@ -29,6 +35,20 @@ namespace P4TableManagement
         private void btnUnassign_Click(object sender, RoutedEventArgs e)
         {
 
+            //MessageBox.Show(tableManagementSystem.TableList.Count.ToString());
+            //MessageBox.Show(table.ToString());
+
+            //Table table = tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}" == (string)clickedButton.Content);
+
+
+            //MessageBox.Show(table.ToString());
+
+            //Table test = tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}" == (string)clickedButton.Content);
+            //MessageBox.Show(test.tableNumber.ToString());
+
+            //tableManagementSystem.UnassignTable(tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}" == (string)clickedButton.Content));
+
+            tableManagementSystem.UnassignTable(table);
         }
 
         private void btnSeperate_Click(object sender, RoutedEventArgs e)
@@ -38,7 +58,7 @@ namespace P4TableManagement
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Close();
         }
 
         // Cross button right top corner

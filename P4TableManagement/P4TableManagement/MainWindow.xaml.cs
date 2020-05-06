@@ -32,7 +32,11 @@ namespace P4TableManagement
         int tableCoordinate = 10;
         public List<Rectangle> AllRectangles = new List<Rectangle>();
         public List<Button> AllButtons = new List<Button>();
-        TableManagementSystem tableManagementSystem = new TableManagementSystem();
+        //public TableManagementSystem tableManagementSystem = new TableManagementSystem();
+        
+        public TableManagementSystem tableManagementSystem { get; set; } = new TableManagementSystem();
+        public Table currentTable;
+
         public bool assignEventActivated = false;
         public bool combineEventActivated = false;
         Booking highlightedReservation;
@@ -40,7 +44,7 @@ namespace P4TableManagement
         ReservationList list = new ReservationList();
         string path = @"C:\P4\test.xlsx";
         public List<Reservation> reservationList = new List<Reservation>();
-        
+       
 
         public MainWindow()
         {
@@ -63,8 +67,14 @@ namespace P4TableManagement
         {
             DrawGameArea();
             CreateTables();
-
+            MessageBox.Show(tableManagementSystem.TableList.Count.ToString());
         }
+
+        //partial Table ReturnTable(Button clickedButton)
+        //{
+
+        //    return tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}" == (string)clickedButton.Content);
+        //}
 
         private void ListView_MouseLeftButtonDown (object sender, MouseButtonEventArgs e)
         {
@@ -119,7 +129,8 @@ namespace P4TableManagement
 
                 SmallTable smallTable = new SmallTable(butt.ActualWidth, butt.ActualHeight, Canvas.GetTop(butt), Canvas.GetLeft(butt));
 
-                butt.ToolTip = $"Table: {smallTable.tableNumber}\nSeats: {smallTable.seats}\nStatus: {smallTable.state}\nX: {smallTable.placementX}\nY: {smallTable.placementY}";
+                butt.ToolTip = $"Table: {smallTable.tableNumber}\nSeats: {smallTable.seats}\nStatus: {smallTable.state}\nX: {smallTable.placementX}\nY: {smallTable.placementY}" +
+                    $"\n BookingID: {smallTable.bookingID}";
 
                 tableManagementSystem.AddTableToList(smallTable);
 
@@ -297,6 +308,7 @@ namespace P4TableManagement
             }
         }
 
+        
 
         // Button representing a table on the map, Event handler
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -314,7 +326,7 @@ namespace P4TableManagement
                     tableManagementSystem.AssignTable(tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}" == (string)clickedButton.Content), highlightedReservation);
                     // Updates the button to now display it's updated state
                     Table updateTable = tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}" == (string)clickedButton.Content);
-                    clickedButton.ToolTip = $"Table: {updateTable.tableNumber}\nSeats: {updateTable.seats}\nStatus: {updateTable.state}\nX: {updateTable.placementX}\nY: {updateTable.placementY}";
+                    clickedButton.ToolTip = $"Table: {updateTable.tableNumber}\nSeats: {updateTable.seats}\nStatus: {updateTable.state}\nX: {updateTable.placementX}\nY: {updateTable.placementY}\n BookingID: {updateTable.bookingID}";
                     clickedButton.Content += $"\nAssigned to {highlightedReservation.id}";
                 }
                 catch (NullReferenceException ex)
@@ -458,7 +470,8 @@ namespace P4TableManagement
             {
                 HitButton.Background = Brushes.Red;
 
-
+                currentTable = tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}" == (string)HitButton.Content);
+                
 
 
                 //// Process message box results
@@ -493,7 +506,7 @@ namespace P4TableManagement
 
         private void ListView_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show("you pressed something");
+            MessageBox.Show("MOUSEDOWNEVENT: you pressed something");
             
         }
 
