@@ -53,7 +53,7 @@ namespace P4TableManagement
 
         private void btnSeperate_Click(object sender, RoutedEventArgs e)
         {
-
+            //tableManagementSystem.SeparateTables(INSERT COMBINED TABLE);
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

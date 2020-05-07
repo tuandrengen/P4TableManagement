@@ -80,7 +80,7 @@ namespace P4TableManagement
 
 		// Combines this object of a table with another table by deleting the two
 		// tables from the tableList and then returning the new CombinedTable.
-		public Table CombineTables(Table one, Table two)
+		public CombinedTable<Table> CombineTables(Table one, Table two)
 		{
 			foreach (Table table in TableList.ToList())
 			{

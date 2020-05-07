@@ -32,6 +32,7 @@ namespace P4TableManagement
         int tableCoordinate = 10;
         public List<Rectangle> AllRectangles = new List<Rectangle>();
         public List<Button> AllButtons = new List<Button>();
+        public List<CombinedTable<Table>> AllCombinedTables = new List<CombinedTable<Table>>();
         //public TableManagementSystem tableManagementSystem = new TableManagementSystem();
         
         public TableManagementSystem tableManagementSystem { get; set; } = new TableManagementSystem();
@@ -308,7 +309,9 @@ namespace P4TableManagement
             }
         }
 
-        
+        private Table combineTableSource;
+        private Table combineTableSecond;
+        private CombinedTable<Table> currentCombinedTable;
 
         // Button representing a table on the map, Event handler
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -337,15 +340,43 @@ namespace P4TableManagement
             }
             // Combine event has been triggered
             else if (combineEventActivated)
-            {
-                //do the combine
-                MessageBox.Show("do combine event");
+            {                      
+                // Sets the second table and combines it with the source table if the source table already has been set and it isn't the one we clicked on
+                if (combineTableSource != tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}" == (string)clickedButton.Content) && combineTableSource != default)
+                {
+                    
+                    combineTableSecond = tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}" == (string)clickedButton.Content);
+                    MessageBox.Show($"Table {combineTableSecond.tableNumber} er nu Second table");
+                    currentCombinedTable = tableManagementSystem.CombineTables(combineTableSource, combineTableSecond);
+                    AllCombinedTables.Add(currentCombinedTable);
+                    //DrawCombinedTable(currentCombinedTable); soon tm
+
+                    foreach (var item in currentCombinedTable.combinedTables)
+                    {
+                        MessageBox.Show($"Combined Table exist of Table {item.tableNumber}");
+                    }
+                    
+                }
+                else // Setting the Source table
+                {
+                    
+                    combineTableSource = tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}" == (string)clickedButton.Content);
+
+                    MessageBox.Show($"Table {combineTableSource.tableNumber} er nu source table");
+                }
+                
             }
             else
             {
                 MessageBox.Show("No event has been triggered...");
             }
 
+        }
+
+        private void DrawCombinedTable(CombinedTable<Table> combinedTable)
+        {
+            // Vi tegner det nye kombinerede bord - kræver en position hvor vi kan tegne det
+            // Hjælpefunktion der tjekker SourceTable's naboer (rektangler) og farver dem som er ledige og returnere en position?
         }
 
         // The part of the rectangle the mouse is over. (We use body)
@@ -580,6 +611,10 @@ namespace P4TableManagement
                 helper_headline.Content = $"combineEventActivated = {combineEventActivated}";
                 clickedButton.Background = Brushes.White;
             }
+            
+            // Resets the variables
+            combineTableSource = default;
+            combineTableSecond = default;
         }
 
         //Reset Tables button
@@ -588,6 +623,7 @@ namespace P4TableManagement
             //Do some reset tables
         }
 
+        //Help button
         private void Help_Button_Click_3(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("These are the commands:\n" +

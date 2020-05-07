@@ -14,7 +14,7 @@ namespace P4TableManagement
         void AddMapSectionToList(MapSection mapSection);
         void AddTableToList(Table table);
         void AssignTable(Table table, Booking booking);
-        Table CombineTables(Table one, Table two);
+        CombinedTable<Table> CombineTables(Table one, Table two); // Changed type to CombinedTabled instead of Table...
         void CreateDecorationElement(DecorationElement decorationElement);
         void DeleteDecorationElement(DecorationElement decorationElement);
         void DeleteMapElementFromList(MapElement mapElement);
