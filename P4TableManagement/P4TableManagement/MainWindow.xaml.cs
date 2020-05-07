@@ -466,11 +466,12 @@ namespace P4TableManagement
 
             if (MouseHitType == HitType.None) return;
 
+
             if (HitButton is Button)
             {
                 HitButton.Background = Brushes.Red;
 
-                currentTable = tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}" == (string)HitButton.Content);
+                currentTable = tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}" == (string)HitButton.Content); // Lave en kontrolstruktur der tjekker om currentTable ikke er null VIGTIGT
                 
 
 
@@ -579,6 +580,12 @@ namespace P4TableManagement
                 helper_headline.Content = $"combineEventActivated = {combineEventActivated}";
                 clickedButton.Background = Brushes.White;
             }
+        }
+
+        //Reset Tables button
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            //Do some reset tables
         }
     }
 }
