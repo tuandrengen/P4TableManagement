@@ -115,7 +115,7 @@ namespace P4TableManagement
             }
             else
             {
-                MessageBox.Show("Hallo min ven " + selecteditem);
+                MessageBox.Show("Hallo min ven  " + selecteditem);
             }
 
 
@@ -586,6 +586,15 @@ namespace P4TableManagement
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
             //Do some reset tables
+        }
+
+        private void Help_Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("These are the commands:\n" +
+                "\nAssign: Vælg en reservation fra listen -> Try på assign knap -->  Tryk på bord - Assigned\n" +
+                "\nUnassign, Seperate, Annulere = long press bord -> menu opens -> select option\n" +
+                "\nCombine = combine knap -> tryk på bordSource -> tryk på bordTarget -> tryk på en af de grønne områder ved bordSource for placering\n" +
+                "\nSeperate event: de to bord kommer tilbage til deres orginal plads, hvis det ikke kan lade sig gøre, så sætter de bare ved siden af hinanden\n");
         }
     }
 }
