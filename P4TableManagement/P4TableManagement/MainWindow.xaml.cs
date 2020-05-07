@@ -349,12 +349,14 @@ namespace P4TableManagement
                     MessageBox.Show($"Table {combineTableSecond.tableNumber} er nu Second table");
                     currentCombinedTable = tableManagementSystem.CombineTables(combineTableSource, combineTableSecond);
                     AllCombinedTables.Add(currentCombinedTable);
-                    //DrawCombinedTable(currentCombinedTable); soon tm
+                    
+                    // soon tm
+                    DrawCombinedTable(currentCombinedTable, clickedButton);
 
-                    foreach (var item in currentCombinedTable.combinedTables)
-                    {
-                        MessageBox.Show($"Combined Table exist of Table {item.tableNumber}");
-                    }
+                    //foreach (var item in currentCombinedTable.combinedTables)
+                    //{
+                    //    MessageBox.Show($"Combined Table exist of Table {item.tableNumber}");
+                    //}
                     
                 }
                 else // Setting the Source table
@@ -373,10 +375,29 @@ namespace P4TableManagement
 
         }
 
-        private void DrawCombinedTable(CombinedTable<Table> combinedTable)
+        private void DrawCombinedTable(CombinedTable<Table> combinedTable, Button button)
         {
             // Vi tegner det nye kombinerede bord - kræver en position hvor vi kan tegne det
             // Hjælpefunktion der tjekker SourceTable's naboer (rektangler) og farver dem som er ledige og returnere en position?
+            CheckNeighbours(button);
+        }
+
+        private Point LastPoint;
+
+        //Checks the neighbours of the button to see if there is a free spot and marks the rectangles green 
+        private void CheckNeighbours(Button button)
+        {
+            Mouse.GetPosition(Area);
+            
+
+            MessageBox.Show($"The chosen button is: {button.Content}\n" +
+                $"MouseHitType is: {MouseHitType}\n" +
+                $"Mouse position is: {Mouse.GetPosition(Area).ToString()}\n" +
+                $"The Neighbour to the right is ...\n" +
+                $"The Neighbour to the left is ...\n" +
+                $"The Neighbour to the top is ...\n" +
+                $"The Neighbour to the bottom is ...\n");
+
         }
 
         // The part of the rectangle the mouse is over. (We use body)
@@ -396,18 +417,6 @@ namespace P4TableManagement
         // The Rectangles that the user can move and resize.
         private readonly List<Rectangle> Rectangles = new List<Rectangle>();
 
-        //private void PopulateRectangleList()
-        //{
-        //    foreach (UIElement child in Area.Children)
-        //    {
-        //        if (child is Rectangle)
-        //            Rectangles.Add(child as Rectangle);
-        //    }
-
-        //    // Reverse the list so the Rectangles on top come first.
-        //    Rectangles.Reverse();
-        //}
-
         // If the point is over any Rectangle,
         // return the Rectangle and the hit type.
         private void FindHit(Point point)
@@ -416,25 +425,28 @@ namespace P4TableManagement
             HitButton = null;
             MouseHitType = HitType.None;
 
-            //foreach (Rectangle rect in AllRectangles)
-            //{
-            //    MouseHitType = SetHitType(rect, point);
-            //    if (MouseHitType != HitType.None)
-            //    {
-            //        HitRectangle = rect;
-            //        return;
-            //    }
-            //}
-
             foreach (Button butt in AllButtons)
             {
                 MouseHitType = SetHitType(butt, point);
                 if (MouseHitType != HitType.None)
                 {
                     HitButton = butt;
+                    //return;
+                }
+            }
+
+            foreach (Rectangle rect in AllRectangles)
+            {
+                MouseHitType = SetHitType(rect, point);
+                if (MouseHitType != HitType.None)
+                {
+                    
+                    HitRectangle = rect;
                     return;
                 }
             }
+
+
             // We didn't find a hit.
             return;
         }
@@ -457,22 +469,22 @@ namespace P4TableManagement
             return HitType.Body;
         }
 
-        //private HitType SetHitType(Rectangle butt, Point point)
-        //{
-        //    double left = Canvas.GetLeft(butt);
-        //    double top = Canvas.GetTop(butt);
-        //    double right = left + butt.Width;
-        //    double bottom = top + butt.Height;
-        //    if (point.X < left) return HitType.None;
-        //    if (point.X > right) return HitType.None;
-        //    if (point.Y < top) return HitType.None;
-        //    if (point.Y > bottom) return HitType.None;
+        private HitType SetHitType(Rectangle rect, Point point)
+        {
+            double left = Canvas.GetLeft(rect);
+            double top = Canvas.GetTop(rect);
+            double right = left + rect.Width;
+            double bottom = top + rect.Height;
+            if (point.X < left) return HitType.None;
+            if (point.X > right) return HitType.None;
+            if (point.Y < top) return HitType.None;
+            if (point.Y > bottom) return HitType.None;
 
-        //    const double GAP = 10;
+            const double GAP = 10;
 
-        //    if (bottom - point.Y < GAP) return HitType.B;
-        //    return HitType.Body;
-        //}
+            if (bottom - point.Y < GAP) return HitType.B;
+            return HitType.Body;
+        }
 
         // Umiddelbart højre click interaction i canvas
         private void Area_MouseDown(object sender, MouseButtonEventArgs e)
@@ -493,47 +505,19 @@ namespace P4TableManagement
             //}
 
 
-
-
             if (MouseHitType == HitType.None) return;
-
 
             if (HitButton is Button)
             {
                 HitButton.Background = Brushes.Red;
 
                 currentTable = tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}" == (string)HitButton.Content); // Lave en kontrolstruktur der tjekker om currentTable ikke er null VIGTIGT
-                
-
-
-                //// Process message box results
-                //switch (result)
-                //{
-                //    case MessageBoxResult.Yes:
-                //        // User pressed Yes button
-                //        // ...
-                //        break;
-                //    case MessageBoxResult.No:
-                //        // User pressed No button
-                //        // ...
-                //        break;
-                //    case MessageBoxResult.Cancel:
-                //        // User pressed Cancel button
-                //        // ...
-                //        break;
-                //}
-
-
 
                 TableWindow tableWindow = new TableWindow();
                 //tableWindow.Show();
                 tableWindow.LabelText.Content = $"What do you want to do with {HitButton.Content}";
                 tableWindow.ShowDialog(); // Can't be minimized now
-
-                
-
             }
-
         }
 
         private void ListView_MouseDown(object sender, MouseButtonEventArgs e)
