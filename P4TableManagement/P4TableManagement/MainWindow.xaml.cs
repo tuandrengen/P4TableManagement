@@ -387,8 +387,15 @@ namespace P4TableManagement
         //Checks the neighbours of the button to see if there is a free spot and marks the rectangles green 
         private void CheckNeighbours(Button button)
         {
-            Mouse.GetPosition(Area);
-            
+            //Mouse.GetPosition(Area);
+
+            // Vi skal bruge Foreach (Button in Area.Children. etc Samme for alle rectangler osv...
+            //foreach (Button butt in Area.Children.OfType<Button>())
+            //{
+
+            //}
+            // Brug Canvas.GetTop(button) + 100 == Canvas.GetTop(butt) && same for y/x så vi tjekker begge coordinater. 
+
 
             MessageBox.Show($"The chosen button is: {button.Content}\n" +
                 $"MouseHitType is: {MouseHitType}\n" +
