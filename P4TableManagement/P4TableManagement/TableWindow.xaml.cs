@@ -48,6 +48,8 @@ namespace P4TableManagement
 
             //tableManagementSystem.UnassignTable(tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}" == (string)clickedButton.Content));
 
+            //tableManagementSystem.UnassignTable(table);
+            //MessageBox.Show($" { ((MainWindow)Application.Current.MainWindow).currentTable.ToString() } ");
             tableManagementSystem.UnassignTable(table);
         }
 

@@ -330,7 +330,7 @@ namespace P4TableManagement
                     // Updates the button to now display it's updated state
                     Table updateTable = tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}" == (string)clickedButton.Content);
                     clickedButton.ToolTip = $"Table: {updateTable.tableNumber}\nSeats: {updateTable.seats}\nStatus: {updateTable.state}\nX: {updateTable.placementX}\nY: {updateTable.placementY}\n BookingID: {updateTable.bookingID}";
-                    clickedButton.Content += $"\nAssigned to {highlightedReservation.id}";
+                    //clickedButton.Content += $"\nAssigned to {highlightedReservation.id}";
                 }
                 catch (NullReferenceException ex)
                 {
