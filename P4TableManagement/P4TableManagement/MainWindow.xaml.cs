@@ -461,21 +461,21 @@ namespace P4TableManagement
                         rect.Fill = Brushes.LightGreen;
                     }
                 }
-                else if (thereIsNotALeftNeighbour)
+                if (thereIsNotALeftNeighbour)
                 {
                     if (Canvas.GetTop(rect) == sourceButtonY - 10 && Canvas.GetLeft(rect) == leftNeighbour - 10)
                     {
                         rect.Fill = Brushes.LightGreen;
                     }
                 }
-                else if (thereIsNotATopNeighbour)
+                if (thereIsNotATopNeighbour)
                 {
                     if (Canvas.GetTop(rect) == topNeighbour - 10 && Canvas.GetLeft(rect) == sourceButtonX - 10)
                     {
                         rect.Fill = Brushes.LightGreen;
                     }
                 }
-                else if (thereIsNotABottomNeighbour)
+                if (thereIsNotABottomNeighbour)
                 {
                     if (Canvas.GetTop(rect) == bottomNeighbour - 10 && Canvas.GetLeft(rect) == sourceButtonX - 10)
                     {
