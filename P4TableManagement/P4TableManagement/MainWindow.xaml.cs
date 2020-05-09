@@ -128,7 +128,7 @@ namespace P4TableManagement
             {
                 // Kontrolstruktur der afgør om det er et SmallTable eller LargeTable
 
-                SmallTable smallTable = new SmallTable(butt.ActualWidth, butt.ActualHeight, Canvas.GetTop(butt), Canvas.GetLeft(butt));
+                SmallTable smallTable = new SmallTable(butt.ActualWidth, butt.ActualHeight, Canvas.GetLeft(butt), Canvas.GetTop(butt));
 
                 butt.ToolTip = $"Table: {smallTable.tableNumber}\nSeats: {smallTable.seats}\nStatus: {smallTable.state}\nX: {smallTable.placementX}\nY: {smallTable.placementY}" +
                     $"\n BookingID: {smallTable.bookingID}";
@@ -395,15 +395,30 @@ namespace P4TableManagement
 
             //}
             // Brug Canvas.GetTop(button) + 100 == Canvas.GetTop(butt) && same for y/x så vi tjekker begge coordinater. 
+            double sourceButtonX = Canvas.GetLeft(button);
+            double sourceButtonY = Canvas.GetTop(button);
+
+            double leftNeighbour = sourceButtonX - 100;
+            double topNeighbour = sourceButtonY - 100;
+            double rightNeighbour = sourceButtonX + 100;
+            double bottomNeighbour = sourceButtonY + 100;
 
 
-            MessageBox.Show($"The chosen button is: {button.Content}\n" +
-                $"MouseHitType is: {MouseHitType}\n" +
-                $"Mouse position is: {Mouse.GetPosition(Area).ToString()}\n" +
-                $"The Neighbour to the right is ...\n" +
-                $"The Neighbour to the left is ...\n" +
-                $"The Neighbour to the top is ...\n" +
-                $"The Neighbour to the bottom is ...\n");
+            helper_headline.Content = $"The chosen button is: {button.Content} " +
+            $"MouseHitType is: {MouseHitType} " +
+            $"The X:{sourceButtonX} Y:{sourceButtonY} " +
+            $"The Neighbour to the right is X:{rightNeighbour} Y:{sourceButtonY} " +
+            $"The Neighbour to the left is X:{leftNeighbour} Y:{sourceButtonY} " +
+            $"The Neighbour to the top is X:{sourceButtonX} Y:{topNeighbour}" +
+            $"The Neighbour to the bottom is X:{sourceButtonX} Y:{bottomNeighbour}";
+
+            //MessageBox.Show($"The chosen button is: {button.Content}\n" +
+            //    $"MouseHitType is: {MouseHitType}\n" +
+            //    $"Mouse position is: {Mouse.GetPosition(Area).ToString()}\n" +
+            //    $"The Neighbour to the right is {right}\n" +
+            //    $"The Neighbour to the left is {left}\n" +
+            //    $"The Neighbour to the top is {top}\n" +
+            //    $"The Neighbour to the bottom is {bottom}\n");
 
         }
 
