@@ -384,19 +384,9 @@ namespace P4TableManagement
             CheckNeighbours(button);
         }
 
-        private Point LastPoint;
-
         //Checks the neighbours of the button to see if there is a free spot and marks the rectangles green 
         private void CheckNeighbours(Button button)
         {
-            //Mouse.GetPosition(Area);
-
-            // Vi skal bruge Foreach (Button in Area.Children. etc Samme for alle rectangler osv...
-            //foreach (Button butt in Area.Children.OfType<Button>())
-            //{
-
-            //}
-            // Brug Canvas.GetTop(button) + 100 == Canvas.GetTop(butt) && same for y/x så vi tjekker begge coordinater. 
             double sourceButtonX = Canvas.GetLeft(button);
             double sourceButtonY = Canvas.GetTop(button);
 
@@ -410,21 +400,13 @@ namespace P4TableManagement
             bool thereIsNotATopNeighbour = true;
             bool thereIsNotABottomNeighbour = true;
 
-
-            helper_headline.Content = $"The chosen button is: {button.Content} " +
-            $"MouseHitType is: {MouseHitType} " +
-            $"The X:{sourceButtonX} Y:{sourceButtonY} " +
-            $"The Neighbour to the right is X:{rightNeighbour} Y:{sourceButtonY} " +
-            $"The Neighbour to the left is X:{leftNeighbour} Y:{sourceButtonY} " +
-            $"The Neighbour to the top is X:{sourceButtonX} Y:{topNeighbour}" +
-            $"The Neighbour to the bottom is X:{sourceButtonX} Y:{bottomNeighbour}";
-
-
-            //foreach (Rectangle rect in Area.Children.OfType<Rectangle>())
-            //{
-
-                //}
-
+            //helper_headline.Content = $"The chosen button is: {button.Content} " +
+            //$"MouseHitType is: {MouseHitType} " +
+            //$"The X:{sourceButtonX} Y:{sourceButtonY} " +
+            //$"The Neighbour to the right is X:{rightNeighbour} Y:{sourceButtonY} " +
+            //$"The Neighbour to the left is X:{leftNeighbour} Y:{sourceButtonY} " +
+            //$"The Neighbour to the top is X:{sourceButtonX} Y:{topNeighbour}" +
+            //$"The Neighbour to the bottom is X:{sourceButtonX} Y:{bottomNeighbour}";
            
             // We check every button in the canvas to see if any of them is a neighbour to our sourceButton
             foreach (Button butt in Area.Children.OfType<Button>())
@@ -483,51 +465,6 @@ namespace P4TableManagement
                     }
                 }
             }
-
-            //else if (thereIsNotARightNeighbour) // If we do not find a button then there is no neighbour
-            //{
-            //    foreach (Rectangle rect in Area.Children.OfType<Rectangle>())
-            //    {
-            //        if (Canvas.GetTop(rect) == sourceButtonY - 10 && Canvas.GetLeft(rect) == rightNeighbour - 10)
-            //        {
-            //            rect.Fill = Brushes.LightGreen;
-            //        }
-            //    }
-            //}
-
-            //else if (thereIsNotALeftNeighbour) // If we do not find a button then there is no neighbour
-            //{
-            //    foreach (Rectangle rect in Area.Children.OfType<Rectangle>())
-            //    {
-            //        if (Canvas.GetTop(rect) == sourceButtonY - 10 && Canvas.GetLeft(rect) == leftNeighbour - 10)
-            //        {
-            //            rect.Fill = Brushes.LightGreen;
-            //        }
-            //    }
-            //}
-
-            //else if (thereIsNotATopNeighbour) // If we do not find a button then there is no neighbour
-            //{
-            //    foreach (Rectangle rect in Area.Children.OfType<Rectangle>())
-            //    {
-            //        if (Canvas.GetTop(rect) == topNeighbour - 10 && Canvas.GetLeft(rect) == sourceButtonX - 10)
-            //        {
-            //            rect.Fill = Brushes.LightGreen;
-            //        }
-            //    }
-            //}
-
-            //else if (thereIsNotABottomNeighbour) // If we do not find a button then there is no neighbour
-            //{
-            //    foreach (Rectangle rect in Area.Children.OfType<Rectangle>())
-            //    {
-            //        if (Canvas.GetTop(rect) == bottomNeighbour - 10 && Canvas.GetLeft(rect) == sourceButtonX - 10)
-            //        {
-            //            rect.Fill = Brushes.LightGreen;
-            //        }
-            //    }
-            //}
-
         }
 
         
