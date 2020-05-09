@@ -24,7 +24,7 @@
         </Grid.RowDefinitions>
 
         <Label x:Name="helper_headline" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Content="Default state" FontSize="10" Margin="0" VerticalAlignment="Top" />
-        <Button Content="Reset tables" Width="100" Height="35" HorizontalAlignment="Right" Margin="18,0" VerticalAlignment="Bottom" Click="Button_Click_3"></Button>
+        <Button Content="Restart system" Width="100" Height="35" HorizontalAlignment="Right" Margin="18,0" VerticalAlignment="Bottom" Click="Button_Click_3"></Button>
         <Button Content="Help" Width="100" Height="35" HorizontalAlignment="Right" Margin="18,0,136,0" VerticalAlignment="Bottom" Click="Help_Button_Click_3"></Button>
 
         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" >

@@ -312,12 +312,14 @@ namespace P4TableManagement
         private Table combineTableSource;
         private Table combineTableSecond;
         private CombinedTable<Table> currentCombinedTable;
+        Button sourceButton = default;
 
         // Button representing a table on the map, Event handler
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             // We get the button we clicked on from the sender
             Button clickedButton = (Button)sender;
+            
 
             // Assign event has been triggered
             if (assignEventActivated)
@@ -351,7 +353,7 @@ namespace P4TableManagement
                     AllCombinedTables.Add(currentCombinedTable);
                     
                     // soon tm
-                    DrawCombinedTable(currentCombinedTable, clickedButton);
+                    DrawCombinedTable(currentCombinedTable, sourceButton);
 
                     //foreach (var item in currentCombinedTable.combinedTables)
                     //{
@@ -361,7 +363,7 @@ namespace P4TableManagement
                 }
                 else // Setting the Source table
                 {
-                    
+                    sourceButton = clickedButton;
                     combineTableSource = tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}" == (string)clickedButton.Content);
 
                     MessageBox.Show($"Table {combineTableSource.tableNumber} er nu source table");
@@ -403,6 +405,11 @@ namespace P4TableManagement
             double rightNeighbour = sourceButtonX + 100;
             double bottomNeighbour = sourceButtonY + 100;
 
+            bool thereIsNotARightNeighbour = true;
+            bool thereIsNotALeftNeighbour = true;
+            bool thereIsNotATopNeighbour = true;
+            bool thereIsNotABottomNeighbour = true;
+
 
             helper_headline.Content = $"The chosen button is: {button.Content} " +
             $"MouseHitType is: {MouseHitType} " +
@@ -412,15 +419,118 @@ namespace P4TableManagement
             $"The Neighbour to the top is X:{sourceButtonX} Y:{topNeighbour}" +
             $"The Neighbour to the bottom is X:{sourceButtonX} Y:{bottomNeighbour}";
 
-            //MessageBox.Show($"The chosen button is: {button.Content}\n" +
-            //    $"MouseHitType is: {MouseHitType}\n" +
-            //    $"Mouse position is: {Mouse.GetPosition(Area).ToString()}\n" +
-            //    $"The Neighbour to the right is {right}\n" +
-            //    $"The Neighbour to the left is {left}\n" +
-            //    $"The Neighbour to the top is {top}\n" +
-            //    $"The Neighbour to the bottom is {bottom}\n");
+
+            //foreach (Rectangle rect in Area.Children.OfType<Rectangle>())
+            //{
+
+                //}
+
+           
+            // We check every button in the canvas to see if any of them is a neighbour to our sourceButton
+            foreach (Button butt in Area.Children.OfType<Button>())
+            {
+                // Checks RIGHT neighbour
+                if (Canvas.GetTop(butt) == sourceButtonY && Canvas.GetLeft(butt) == rightNeighbour)
+                {
+                    thereIsNotARightNeighbour = false;
+                }
+                // Checks LEFT neighbour
+                if (Canvas.GetTop(butt) == sourceButtonY && Canvas.GetLeft(butt) == leftNeighbour)
+                {
+                    thereIsNotALeftNeighbour = false;
+                }
+                // Checks TOP neighbour
+                if (Canvas.GetTop(butt) == topNeighbour && Canvas.GetLeft(butt) == sourceButtonX)
+                {
+                    thereIsNotATopNeighbour = false;
+                }
+                // Checks BOTTOM neighbour
+                if (Canvas.GetTop(butt) == bottomNeighbour && Canvas.GetLeft(butt) == sourceButtonX)
+                {
+                    thereIsNotABottomNeighbour = false;
+                }
+            }
+
+            // We color the rectangles green if there isn't a neighbour
+            foreach (Rectangle rect in Area.Children.OfType<Rectangle>())
+            {
+                if (thereIsNotARightNeighbour)
+                {
+                    if (Canvas.GetTop(rect) == sourceButtonY - 10 && Canvas.GetLeft(rect) == rightNeighbour - 10)
+                    {
+                        rect.Fill = Brushes.LightGreen;
+                    }
+                }
+                else if (thereIsNotALeftNeighbour)
+                {
+                    if (Canvas.GetTop(rect) == sourceButtonY - 10 && Canvas.GetLeft(rect) == leftNeighbour - 10)
+                    {
+                        rect.Fill = Brushes.LightGreen;
+                    }
+                }
+                else if (thereIsNotATopNeighbour)
+                {
+                    if (Canvas.GetTop(rect) == topNeighbour - 10 && Canvas.GetLeft(rect) == sourceButtonX - 10)
+                    {
+                        rect.Fill = Brushes.LightGreen;
+                    }
+                }
+                else if (thereIsNotABottomNeighbour)
+                {
+                    if (Canvas.GetTop(rect) == bottomNeighbour - 10 && Canvas.GetLeft(rect) == sourceButtonX - 10)
+                    {
+                        rect.Fill = Brushes.LightGreen;
+                    }
+                }
+            }
+
+            //else if (thereIsNotARightNeighbour) // If we do not find a button then there is no neighbour
+            //{
+            //    foreach (Rectangle rect in Area.Children.OfType<Rectangle>())
+            //    {
+            //        if (Canvas.GetTop(rect) == sourceButtonY - 10 && Canvas.GetLeft(rect) == rightNeighbour - 10)
+            //        {
+            //            rect.Fill = Brushes.LightGreen;
+            //        }
+            //    }
+            //}
+
+            //else if (thereIsNotALeftNeighbour) // If we do not find a button then there is no neighbour
+            //{
+            //    foreach (Rectangle rect in Area.Children.OfType<Rectangle>())
+            //    {
+            //        if (Canvas.GetTop(rect) == sourceButtonY - 10 && Canvas.GetLeft(rect) == leftNeighbour - 10)
+            //        {
+            //            rect.Fill = Brushes.LightGreen;
+            //        }
+            //    }
+            //}
+
+            //else if (thereIsNotATopNeighbour) // If we do not find a button then there is no neighbour
+            //{
+            //    foreach (Rectangle rect in Area.Children.OfType<Rectangle>())
+            //    {
+            //        if (Canvas.GetTop(rect) == topNeighbour - 10 && Canvas.GetLeft(rect) == sourceButtonX - 10)
+            //        {
+            //            rect.Fill = Brushes.LightGreen;
+            //        }
+            //    }
+            //}
+
+            //else if (thereIsNotABottomNeighbour) // If we do not find a button then there is no neighbour
+            //{
+            //    foreach (Rectangle rect in Area.Children.OfType<Rectangle>())
+            //    {
+            //        if (Canvas.GetTop(rect) == bottomNeighbour - 10 && Canvas.GetLeft(rect) == sourceButtonX - 10)
+            //        {
+            //            rect.Fill = Brushes.LightGreen;
+            //        }
+            //    }
+            //}
 
         }
+
+        
 
         // The part of the rectangle the mouse is over. (We use body)
         private enum HitType
@@ -627,6 +737,8 @@ namespace P4TableManagement
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
             //Do some reset tables
+            System.Windows.Forms.Application.Restart();
+            System.Windows.Application.Current.Shutdown();
         }
 
         //Help button
