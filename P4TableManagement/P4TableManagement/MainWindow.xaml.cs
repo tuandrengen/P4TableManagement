@@ -152,8 +152,6 @@ namespace P4TableManagement
             bool nextIsOdd = false;
             int x = 1;
             int y = 1;
-            char block_Letter = 'A';
-            char letter = 'a';
             int tableID = 1;
             bool firstButtonDrawn = true;
             bool tablesDone = false;
@@ -198,7 +196,6 @@ namespace P4TableManagement
                     nextY += SquareSize;
                     rowCounter++;
                     nextIsOdd = (rowCounter % 2 != 0);
-                    letter = 'a';
                     x = 1;
                     y++;
                     //ID++;
@@ -225,8 +222,6 @@ namespace P4TableManagement
                     Width = tableSize,
                     Height = tableSize,
                     ToolTip = $"Table: {tableID}\nSeats: 4\nStatus: Unassigned\nX: {nextX}\nY: {nextY}",
-                    //Tag = {tableID},
-                    //Click += new RoutedEventHandler(button_Click),
                     Content = $"Table {tableID}"
                 };
 
@@ -294,7 +289,6 @@ namespace P4TableManagement
                     nextY += 100;
                     rowCounter++;
                     nextIsOdd = (rowCounter % 2 != 0);
-                    letter = 'a';
                     x = 1;
                     y++;
                     //ID++;
@@ -351,9 +345,11 @@ namespace P4TableManagement
                     MessageBox.Show($"Table {combineTableSecond.tableNumber} er nu Second table");
                     currentCombinedTable = tableManagementSystem.CombineTables(combineTableSource, combineTableSecond);
                     AllCombinedTables.Add(currentCombinedTable);
+
                     
-                    // soon tm
-                    DrawCombinedTable(currentCombinedTable, sourceButton);
+                    // Hjælpefunktion der tjekker SourceTable's naboer (rektangler) og farver dem som er ledige
+                    CheckNeighbours(sourceButton);
+                    
 
                     //foreach (var item in currentCombinedTable.combinedTables)
                     //{
@@ -377,11 +373,100 @@ namespace P4TableManagement
 
         }
 
-        private void DrawCombinedTable(CombinedTable<Table> combinedTable, Button button)
+        private void DrawCombinedTable(CombinedTable<Table> combinedTable)
         {
+            double sourceX = Canvas.GetLeft(sourceButton);
+            double sourceY = Canvas.GetTop(sourceButton);
+            double newX = Canvas.GetLeft(HitRectangle);
+            double newY = Canvas.GetTop(HitRectangle);
+
+            MessageBox.Show($"SourceX: {sourceX} og newX: {newX}\nSourceY: {sourceY} og newY: {newY}\n" +
+                $"Venstre: {sourceX} > {newX} && {sourceY} == {newY + 10}\n" +
+                $"Højre: {sourceX} < {newX} && {sourceY} == {newY + 10}\n" +
+                $"Bund: {sourceY} > {newY} && {sourceX} == {newX + 10}\n" +
+                $"Top: {sourceY} < {newY} && {sourceX} == {newX + 10}\n");
+
             // Vi tegner det nye kombinerede bord - kræver en position hvor vi kan tegne det
-            // Hjælpefunktion der tjekker SourceTable's naboer (rektangler) og farver dem som er ledige og returnere en position?
-            CheckNeighbours(button);
+            // Vi skal fjerne secondTable og sourceTable
+            // Vi skal lave et nyt bord (button) der har størrelsen på sourceTable + secondTable (Width og Height er afhængig af hvad der bliver valgt)
+            //Area.Children.Remove(combinedTable.combinedTables.Find());
+            foreach (Table item in combinedTable.combinedTables)
+            {
+                Area.Children.Remove(AllButtons.Find(x => (string)x.Content == $"Table {item.tableNumber}"));
+            }
+
+            // Left
+            if (sourceX > newX && sourceY == newY + 10)
+            {
+                Button butt = new Button()
+                {
+                    Width = tableSize + 100,
+                    Height = tableSize,
+                    ToolTip = $"{sourceButton.Content}\nSeats: X\nStatus: Unassigned\nX: {sourceX}\nY: {sourceY}",
+                    Content = $"{sourceButton.Content}"
+                };
+
+            }
+            // Right
+            else if (sourceX < newX && sourceY == newY + 10)
+            {
+                Button butt = new Button()
+                {
+                    Width = tableSize + 100,
+                    Height = tableSize,
+                    ToolTip = $"{sourceButton.Content}\nSeats: X\nStatus: Unassigned\nX: {sourceX}\nY: {sourceY}",
+                    Content = $"{sourceButton.Content}"
+                };
+
+                butt.Margin = new Thickness(10);
+                Canvas.SetTop(butt, sourceY);
+                Canvas.SetLeft(butt, sourceX);
+
+                Area.Children.Add(butt);
+                AllButtons.Add(butt);
+                butt.Click += new RoutedEventHandler(Button_Click);
+            }
+            // Bottom
+            else if (sourceY > newY && sourceX == newX + 10)
+            {
+                Button butt = new Button()
+                {
+                    Width = tableSize,
+                    Height = tableSize + 100,
+                    ToolTip = $"{sourceButton.Content}\nSeats: X\nStatus: Unassigned\nX: {sourceX}\nY: {sourceY}",
+                    Content = $"{sourceButton.Content}"
+                };
+
+                butt.Margin = new Thickness(10);
+                Canvas.SetTop(butt, sourceY);
+                Canvas.SetLeft(butt, sourceX);
+
+                Area.Children.Add(butt);
+                AllButtons.Add(butt);
+                butt.Click += new RoutedEventHandler(Button_Click);
+            }
+            // Top
+            else if (sourceY < newY && sourceX == newX + 10)
+            {
+                Button butt = new Button()
+                {
+                    Width = tableSize,
+                    Height = tableSize + 100,
+                    ToolTip = $"{sourceButton.Content}\nSeats: X\nStatus: Unassigned\nX: {sourceX}\nY: {sourceY}",
+                    Content = $"{sourceButton.Content}"
+                };
+
+                butt.Margin = new Thickness(10);
+                Canvas.SetTop(butt, newY);
+                Canvas.SetLeft(butt, newX);
+
+                Area.Children.Add(butt);
+                AllButtons.Add(butt);
+                butt.Click += new RoutedEventHandler(Button_Click);
+            }
+
+
+
         }
 
         //Checks the neighbours of the button to see if there is a free spot and marks the rectangles green 
@@ -559,19 +644,21 @@ namespace P4TableManagement
         private void Area_MouseDown(object sender, MouseButtonEventArgs e)
         {
             FindHit(Mouse.GetPosition(Area));
-            //SetMouseCursor();
-            //if (MouseHitType == HitType.None) return;
+ 
+            if (HitRectangle is Rectangle)
+            {
+                if (HitRectangle.Fill == Brushes.LightGreen)
+                {
+                    MessageBox.Show("Grøn");
 
-            //if (HitRectangle.Fill == Brushes.White)
-            //{
-            //    HitRectangle.Fill = Brushes.Red;
-
-
-            //}
-            //else
-            //{
-            //    HitRectangle.Fill = Brushes.White;
-            //}
+                    DrawCombinedTable(currentCombinedTable);
+                    foreach (Rectangle rect in Area.Children.OfType<Rectangle>())
+                    {
+                        rect.Fill = Brushes.White;
+                    }
+                }
+                //MessageBox.Show("ik grøn");
+            }
 
 
             if (MouseHitType == HitType.None) return;
