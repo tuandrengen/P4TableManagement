@@ -100,7 +100,7 @@
 
         <StackPanel Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Orientation="Vertical">
             <Label Content="Unassigned reservations" HorizontalAlignment="Center" FontSize="20"></Label>
-            <ListView Margin="10" Name="ListView" MouseLeftButtonDown="ListView_MouseLeftButtonDown" MouseDown="ListView_MouseDown" VerticalAlignment="Bottom">
+            <ListView Height="700" Margin="10" Name="ListView" MouseLeftButtonDown="ListView_MouseLeftButtonDown" MouseDown="ListView_MouseDown" VerticalAlignment="Bottom">
                 <ListView.View>
                     <GridView>
                         <GridView.ColumnHeaderContainerStyle>

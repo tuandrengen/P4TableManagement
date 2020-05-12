@@ -324,6 +324,7 @@ namespace P4TableManagement
                 {
                     // We assign the table with AssignTable 
                     tableManagementSystem.AssignTable(tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}" == (string)clickedButton.Content), highlightedReservation);
+                    tableManagementSystem.AssignedReservationList.Add(highlightedReservation);
 
                     // Updates the button to now display it's updated state
                     Table updateTable = tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}" == (string)clickedButton.Content);

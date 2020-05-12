@@ -19,7 +19,7 @@ namespace P4TableManagement
 		 */
 
 		public List<Reservation> ReservationList { get; set; }
-		public List<Reservation> AssignedReservationList { get; set; }
+		public List<Booking> AssignedReservationList { get; set; }
 		public List<Table> TableList { get; } // Table
 		public List<DecorationElement> DeList { get; } // Decoration Element
 		public List<MapElement> MeList { get; } // Map Element
