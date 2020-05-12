@@ -55,13 +55,14 @@ namespace P4TableManagement
             //string path = @"C:\P4\test.xlsx";
             //List<Reservation> reservationList = list.PopulateReservationList(path, 1);
 
-            reservationList = list.PopulateReservationList(path, 1);
+            tableManagementSystem.ReservationList = list.PopulateReservationList(path, 1);
             foreach (Reservation item in reservationList)
             {
                 item.stringTime = item.timeStart.ToShortTimeString();
             }
 
-            ListView.ItemsSource = reservationList;
+            ListView.ItemsSource = tableManagementSystem.ReservationList;
+            AssResListView.ItemsSource = tableManagementSystem.AssignedReservationList;
         }
 
         private void Window_ContentRendered(object sender, EventArgs e)
@@ -323,6 +324,7 @@ namespace P4TableManagement
                 {
                     // We assign the table with AssignTable 
                     tableManagementSystem.AssignTable(tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}" == (string)clickedButton.Content), highlightedReservation);
+
                     // Updates the button to now display it's updated state
                     Table updateTable = tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}" == (string)clickedButton.Content);
                     clickedButton.ToolTip = $"Table: {updateTable.tableNumber}\nSeats: {updateTable.seats}\nStatus: {updateTable.state}\nX: {updateTable.placementX}\nY: {updateTable.placementY}\n BookingID: {updateTable.bookingID}";

@@ -20,7 +20,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="0.1*"></RowDefinition>
             <RowDefinition Height="0.1*"></RowDefinition>
-            <RowDefinition Height="0.9*"></RowDefinition>
+            <RowDefinition Height="0.8*"></RowDefinition>
+            <RowDefinition Height="0.4*"></RowDefinition>
         </Grid.RowDefinitions>
 
         <DockPanel Grid.Row="0" Grid.Column="0" Width="800" Height="100" HorizontalAlignment="Left">
@@ -91,13 +92,36 @@
         </StackPanel>
 
 
-        <Canvas x:Name="Area" ClipToBounds="True"  Margin="18,15" Grid.Column="0" Grid.Row="2"  MouseDown="Area_MouseDown">
+        <Canvas x:Name="Area" ClipToBounds="True"  Margin="18,15" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2"  MouseDown="Area_MouseDown">
             <!--<Button>Button 1</Button>-->
 
 
         </Canvas>
 
-        <ListView Margin="0" Name="ListView" Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" MouseLeftButtonDown="ListView_MouseLeftButtonDown" MouseDown="ListView_MouseDown">
+        <StackPanel Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Orientation="Vertical">
+            <Label Content="Unassigned reservations" HorizontalAlignment="Center" FontSize="20"></Label>
+            <ListView Margin="10" Name="ListView" MouseLeftButtonDown="ListView_MouseLeftButtonDown" MouseDown="ListView_MouseDown" VerticalAlignment="Bottom">
+                <ListView.View>
+                    <GridView>
+                        <GridView.ColumnHeaderContainerStyle>
+                            <Style>
+                                <Setter Property="TextElement.FontSize"
+                            Value="8" />
+                            </Style>
+                        </GridView.ColumnHeaderContainerStyle>
+                        <GridViewColumn Header="Guests" Width="auto" DisplayMemberBinding="{Binding numberOfGuests}" />
+                        <GridViewColumn Header="Time" Width="auto" DisplayMemberBinding="{Binding stringTime}" />
+                        <GridViewColumn Header="Name" Width="auto" DisplayMemberBinding="{Binding name}" />
+                        <GridViewColumn Header="Phone Number" Width="auto" DisplayMemberBinding="{Binding phoneNumber}" />
+                        <GridViewColumn Header="Parameter" Width="auto" DisplayMemberBinding="{Binding parameter}" />
+                        <GridViewColumn Header="ID" Width="auto" DisplayMemberBinding="{Binding id}" />
+
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </StackPanel>
+        
+        <!--<ListView Margin="0" Name="ListView" Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" MouseLeftButtonDown="ListView_MouseLeftButtonDown" MouseDown="ListView_MouseDown">
             <ListView.View>
                 <GridView>
                     <GridView.ColumnHeaderContainerStyle>
@@ -115,7 +139,32 @@
 
                 </GridView>
             </ListView.View>
-        </ListView>
+        </ListView>-->
+
+        <StackPanel Orientation="Vertical" Grid.Row="4" Grid.Column="1">
+            <Label Content="Assigned reservations" HorizontalAlignment="Center" FontSize="20"></Label>
+            <ListView Margin="10" Name="AssResListView">
+                <ListView.View>
+                    <GridView>
+                        <GridView.ColumnHeaderContainerStyle>
+                            <Style>
+                                <Setter Property="TextElement.FontSize"
+                            Value="8" />
+                            </Style>
+                        </GridView.ColumnHeaderContainerStyle>
+                        <GridViewColumn Header="Guests" Width="auto" DisplayMemberBinding="{Binding numberOfGuests}" />
+                        <GridViewColumn Header="Time" Width="auto" DisplayMemberBinding="{Binding stringTime}" />
+                        <GridViewColumn Header="Name" Width="auto" DisplayMemberBinding="{Binding name}" />
+                        <GridViewColumn Header="Phone Number" Width="auto" DisplayMemberBinding="{Binding phoneNumber}" />
+                        <GridViewColumn Header="Parameter" Width="auto" DisplayMemberBinding="{Binding parameter}" />
+                        <GridViewColumn Header="ID" Width="auto" DisplayMemberBinding="{Binding id}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <Button Height="50" Content="Add new reservation" FontSize="20" >
+                
+            </Button>
+        </StackPanel>
 
 
 

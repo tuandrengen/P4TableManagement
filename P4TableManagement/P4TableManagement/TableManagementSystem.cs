@@ -18,6 +18,8 @@ namespace P4TableManagement
 		 *		The exceptions has to tell the user what went wrong.
 		 */
 
+		public List<Reservation> ReservationList { get; set; }
+		public List<Reservation> AssignedReservationList { get; set; }
 		public List<Table> TableList { get; } // Table
 		public List<DecorationElement> DeList { get; } // Decoration Element
 		public List<MapElement> MeList { get; } // Map Element
@@ -48,7 +50,8 @@ namespace P4TableManagement
 
 			table.bookingID = booking.id;
 			table.state = "Occupied";
-			//Console.WriteLine($"Table #{ table.tableNumber } has been assigned! Booking ID: { table.bookingID }");
+			//AssignedReservationList.Add(booking);
+
 			MessageBox.Show($"Table #{ table.tableNumber } has been assigned! Booking ID: { table.bookingID }");
 		}
 
