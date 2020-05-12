@@ -25,6 +25,7 @@ namespace P4TableManagement
 
         readonly TableManagementSystem tableManagementSystem = ((MainWindow)Application.Current.MainWindow).tableManagementSystem;
         readonly Table table = ((MainWindow)Application.Current.MainWindow).currentTable;
+        readonly CombinedTable<Table> combinedTable = ((MainWindow)Application.Current.MainWindow).currentCombinedTable;
 
         public TableWindow()
         {
@@ -34,28 +35,14 @@ namespace P4TableManagement
 
         private void btnUnassign_Click(object sender, RoutedEventArgs e)
         {
-
-            //MessageBox.Show(tableManagementSystem.TableList.Count.ToString());
-            //MessageBox.Show(table.ToString());
-
-            //Table table = tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}" == (string)clickedButton.Content);
-
-
-            //MessageBox.Show(table.ToString());
-
-            //Table test = tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}" == (string)clickedButton.Content);
-            //MessageBox.Show(test.tableNumber.ToString());
-
-            //tableManagementSystem.UnassignTable(tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}" == (string)clickedButton.Content));
-
-            //tableManagementSystem.UnassignTable(table);
-            //MessageBox.Show($" { ((MainWindow)Application.Current.MainWindow).currentTable.ToString() } ");
             tableManagementSystem.UnassignTable(table);
         }
 
         private void btnSeperate_Click(object sender, RoutedEventArgs e)
         {
-            //tableManagementSystem.SeparateTables(INSERT COMBINED TABLE);
+            tableManagementSystem.SeparateTables(combinedTable);
+            MessageBox.Show("Seperated");
+            // Call function from mainwindow that draws the tables that were seperated
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

@@ -305,7 +305,7 @@ namespace P4TableManagement
 
         private Table combineTableSource;
         private Table combineTableSecond;
-        private CombinedTable<Table> currentCombinedTable;
+        public CombinedTable<Table> currentCombinedTable;
         Button sourceButton = default;
 
         // Button representing a table on the map, Event handler
@@ -796,8 +796,8 @@ namespace P4TableManagement
             System.Windows.Application.Current.Shutdown();
         }
 
-        //Help button
-        private void Help_Button_Click_3(object sender, RoutedEventArgs e)
+        // Help
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("These are the commands:\n" +
                 "\nAssign: Vælg en reservation fra listen -> Try på assign knap -->  Tryk på bord - Assigned\n" +
