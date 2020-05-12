@@ -362,6 +362,13 @@ namespace P4TableManagement
                     sourceButton = clickedButton;
                     combineTableSource = tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}" == (string)clickedButton.Content);
 
+                    if (combineTableSource is null)
+                    {
+                        combineTableSource = AllCombinedTables.Find(x => $"Table {x.tableNumber}" == (string)clickedButton.Content);
+                    }
+                    
+                    
+
                     MessageBox.Show($"Table {combineTableSource.tableNumber} er nu source table");
                 }
                 
@@ -379,12 +386,13 @@ namespace P4TableManagement
             double sourceY = Canvas.GetTop(sourceButton);
             double newX = Canvas.GetLeft(HitRectangle);
             double newY = Canvas.GetTop(HitRectangle);
+            bool tableLocation = false;
 
-            MessageBox.Show($"SourceX: {sourceX} og newX: {newX}\nSourceY: {sourceY} og newY: {newY}\n" +
-                $"Venstre: {sourceX} > {newX} && {sourceY} == {newY + 10}\n" +
-                $"Højre: {sourceX} < {newX} && {sourceY} == {newY + 10}\n" +
-                $"Bund: {sourceY} > {newY} && {sourceX} == {newX + 10}\n" +
-                $"Top: {sourceY} < {newY} && {sourceX} == {newX + 10}\n");
+            //MessageBox.Show($"SourceX: {sourceX} og newX: {newX}\nSourceY: {sourceY} og newY: {newY}\n" +
+            //    $"Venstre: {sourceX} > {newX} && {sourceY} == {newY + 10}\n" +
+            //    $"Højre: {sourceX} < {newX} && {sourceY} == {newY + 10}\n" +
+            //    $"Bund: {sourceY} > {newY} && {sourceX} == {newX + 10}\n" +
+            //    $"Top: {sourceY} < {newY} && {sourceX} == {newX + 10}\n");
 
             // Vi tegner det nye kombinerede bord - kræver en position hvor vi kan tegne det
             // Vi skal fjerne secondTable og sourceTable
@@ -405,7 +413,13 @@ namespace P4TableManagement
                     ToolTip = $"{sourceButton.Content}\nSeats: X\nStatus: Unassigned\nX: {sourceX}\nY: {sourceY}",
                     Content = $"{sourceButton.Content}"
                 };
+                butt.Margin = new Thickness(10);
+                Canvas.SetTop(butt, newY);
+                Canvas.SetLeft(butt, newX);
 
+                Area.Children.Add(butt);
+                AllButtons.Add(butt);
+                butt.Click += new RoutedEventHandler(Button_Click);
             }
             // Right
             else if (sourceX < newX && sourceY == newY + 10)
@@ -418,7 +432,7 @@ namespace P4TableManagement
                     Content = $"{sourceButton.Content}"
                 };
 
-                butt.Margin = new Thickness(10);
+                //butt.Margin = new Thickness(5);
                 Canvas.SetTop(butt, sourceY);
                 Canvas.SetLeft(butt, sourceX);
 
@@ -427,7 +441,7 @@ namespace P4TableManagement
                 butt.Click += new RoutedEventHandler(Button_Click);
             }
             // Bottom
-            else if (sourceY > newY && sourceX == newX + 10)
+            else if (sourceY < newY && sourceX == newX + 10)
             {
                 Button butt = new Button()
                 {
@@ -437,7 +451,7 @@ namespace P4TableManagement
                     Content = $"{sourceButton.Content}"
                 };
 
-                butt.Margin = new Thickness(10);
+                //butt.Margin = new Thickness(5);
                 Canvas.SetTop(butt, sourceY);
                 Canvas.SetLeft(butt, sourceX);
 
@@ -446,7 +460,7 @@ namespace P4TableManagement
                 butt.Click += new RoutedEventHandler(Button_Click);
             }
             // Top
-            else if (sourceY < newY && sourceX == newX + 10)
+            else if (sourceY > newY && sourceX == newX + 10)
             {
                 Button butt = new Button()
                 {
@@ -718,12 +732,22 @@ namespace P4TableManagement
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             Button clickedButton = (Button)sender;
+            
             if (!assignEventActivated)
             {
                 assignEventActivated = true;
 
                 helper_headline.Content = $"assignEventActivated = {assignEventActivated}";
                 clickedButton.Background = Brushes.LightCoral;
+                
+                if (combineEventActivated)
+                {
+                    combineEventActivated = false;
+                    helper_headline.Content += $"combineEventActivated = {combineEventActivated}";
+                    combinebtn.Background = Brushes.White;
+                    combineTableSource = default;
+                    combineTableSecond = default;
+                }
             }
             else
             {
@@ -744,6 +768,13 @@ namespace P4TableManagement
                 combineEventActivated = true;
                 helper_headline.Content = $"combineEventActivated = {combineEventActivated}";
                 clickedButton.Background = Brushes.LightCoral;
+                
+                if (assignEventActivated)
+                {
+                    assignEventActivated = false;
+                    helper_headline.Content += $"assignEventActivated = {assignEventActivated}";
+                    assignbtn.Background = Brushes.White;
+                }
             }
             else
             {
