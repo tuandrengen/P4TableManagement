@@ -16,8 +16,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 
 // Known bugs: Hvis du scroller for hurtigt når du starter programmet så crasher det, da alle elementer i listen ikker nået at "loade".
-
-
+// Anh Tuan (13-05-2020 22:17): Køb en hurtigere computer
 
 namespace P4TableManagement
 {
@@ -26,7 +25,6 @@ namespace P4TableManagement
     /// </summary>
     public partial class MainWindow : Window
     {
-
         const int SquareSize = 100;
         int tableSize = 80;
         int tableCoordinate = 10;
@@ -57,23 +55,22 @@ namespace P4TableManagement
             //List<Reservation> reservationList = list.PopulateReservationList(path, 1);
 
             tableManagementSystem.ReservationList = list.PopulateReservationList(path, 1);
-            foreach (Reservation item in tableManagementSystem.ReservationList)
+            foreach (Reservation reservation in tableManagementSystem.ReservationList)
             {
-                item.stringTime = item.timeStart.ToShortTimeString();
+                reservation.stringTime = reservation.timeStart.ToShortTimeString();
             }
 
             tableManagementSystem.AssignedReservationList = tableManagementSystem.ReservationList.Where(x => x.id == 1).ToList();
             tableManagementSystem.AssignedReservationList.Remove(tableManagementSystem.AssignedReservationList.Find(x => x.id == 1));
 
             ListView.ItemsSource = tableManagementSystem.ReservationList;
-            AssResListView.ItemsSource = tableManagementSystem.AssignedReservationList;
+            AssignedReservationList.ItemsSource = tableManagementSystem.AssignedReservationList;
         }
 
         private void Window_ContentRendered(object sender, EventArgs e)
         {
-            DrawGameArea();
+            DrawGrid();
             CreateTables();
-            //MessageBox.Show(tableManagementSystem.TableList.Count.ToString());
         }
 
         //partial Table ReturnTable(Button clickedButton)
@@ -103,12 +100,8 @@ namespace P4TableManagement
             
 
             if (selecteditem is Reservation)
-            {
-                //selecteditem.
-                
-                Reservation selectedBooking = selecteditem as Reservation;
-
-                //selectedBooking.name = "Test123";
+            {   
+                Reservation selectedBooking = (Reservation)selecteditem;
 
                 // find the reservation from the reservationList
                 highlightedReservation = tableManagementSystem.ReservationList.Find(x => x.id == selectedBooking.id);
@@ -124,45 +117,46 @@ namespace P4TableManagement
             {
                 MessageBox.Show("Hallo min ven  " + selecteditem);
             }
-
-
         }
 
         public void CreateTables()
         {
-            foreach (Button butt in Area.Children.OfType<Button>())
+            foreach (Button button in Area.Children.OfType<Button>())
             {
                 // Kontrolstruktur der afgør om det er et SmallTable eller LargeTable
 
-                SmallTable smallTable = new SmallTable(butt.ActualWidth, butt.ActualHeight, Canvas.GetLeft(butt), Canvas.GetTop(butt));
+                SmallTable smallTable = new SmallTable(button.ActualWidth, button.ActualHeight, Canvas.GetLeft(button), Canvas.GetTop(button));
 
-                butt.ToolTip = $"Table: {smallTable.tableNumber}\nSeats: {smallTable.seats}\nStatus: {smallTable.state}\nX: {smallTable.placementX}\nY: {smallTable.placementY}" +
-                    $"\n BookingID: {smallTable.bookingID}";
+                button.ToolTip = $"Table: { smallTable.tableNumber }" +
+                        $"\nSeats: { smallTable.seats }" +
+                        $"\nStatus: { smallTable.state }" +
+                        $"\nX: { smallTable.placementX }" +
+                        $"\nY: { smallTable.placementY }" +
+                        $"\n BookingID: {smallTable.bookingID}";
 
                 tableManagementSystem.AddTableToList(smallTable);
 
                 //LargeTable largeTable = new LargeTable();
-
             }
         }
         
 
-        private void DrawGameArea()
+        private void DrawGrid()
         {
             bool doneDrawingBackground = false;
             int nextX = 0, nextY = 0;
             int rowCounter = 0;
-            bool nextIsOdd = false;
+            bool _nextIsOdd = false;
             int x = 1;
             int y = 1;
             int tableID = 1;
-            bool firstButtonDrawn = true;
-            bool tablesDone = false;
+            bool _firstButtonDrawn = true;
+            bool _tableIsDone = false;
             Random rand = new Random();
             int random = 0;
 
             // Drawing the grid of rectangles
-            while (doneDrawingBackground == false)
+            while (!doneDrawingBackground)
             {
                 //string name = "_1";
                 Rectangle rectangle = new Rectangle
@@ -172,7 +166,7 @@ namespace P4TableManagement
                     //Background = Brushes.White,
                     Stroke = Brushes.Black,
                     Fill = Brushes.White,
-                    Name = $"_{x}_{y}"
+                    Name = $"_{ x }_{ y }"
                 };
                 x++;
 
@@ -184,14 +178,14 @@ namespace P4TableManagement
                 Canvas.SetTop(rectangle, nextY);
                 Canvas.SetLeft(rectangle, nextX);
 
-                nextIsOdd = !nextIsOdd;
+                _nextIsOdd = !_nextIsOdd;
                 nextX += SquareSize;
                 if (nextX >= Area.ActualWidth)
                 {
                     nextX = 0;
                     nextY += SquareSize;
                     rowCounter++;
-                    nextIsOdd = (rowCounter % 2 != 0);
+                    _nextIsOdd = (rowCounter % 2 != 0);
                     x = 1;
                     y++;
                 }
@@ -199,25 +193,29 @@ namespace P4TableManagement
                 if (nextY >= Area.ActualHeight - tableSize)
                 {
                     doneDrawingBackground = true;
-                    nextIsOdd = false;
+                    _nextIsOdd = false;
                 }
             }
             // Drawing tables
-            while (tablesDone == false)
+            while (!_tableIsDone)
             {
-                Button butt = new Button()
+                Button button = new Button()
                 {
                     Width = tableSize,
                     Height = tableSize,
-                    ToolTip = $"Table: {tableID}\nSeats: 4\nStatus: Unassigned\nX: {nextX}\nY: {nextY}",
-                    Content = $"Table {tableID}"
+                    ToolTip = $"Table: { tableID }" +
+                        $"\nSeats: 4" +
+                        $"\nStatus: Unassigned" +
+                        $"\nX: { nextX }" +
+                        $"\nY: { nextY }",
+                    Content = $"Table { tableID }"
                 };
 
-                if (firstButtonDrawn == true)
+                if (_firstButtonDrawn)
                 {
-                    Canvas.SetTop(butt, tableCoordinate);
-                    Canvas.SetLeft(butt, tableCoordinate);
-                    firstButtonDrawn = false;
+                    Canvas.SetTop(button, tableCoordinate);
+                    Canvas.SetLeft(button, tableCoordinate);
+                    _firstButtonDrawn = false;
                     nextY = 0;
                     nextY += tableCoordinate;
                     nextX = tableCoordinate;
@@ -225,8 +223,8 @@ namespace P4TableManagement
                 }
                 else
                 {
-                    Canvas.SetTop(butt, nextY);
-                    Canvas.SetLeft(butt, nextX);
+                    Canvas.SetTop(button, nextY);
+                    Canvas.SetLeft(button, nextX);
                 }
                 
                 random = rand.Next(1, 4);
@@ -243,13 +241,13 @@ namespace P4TableManagement
                     nextX += 100;
                 }
 
-                Area.Children.Add(butt);
-                AllButtons.Add(butt);
-                butt.Click += new RoutedEventHandler(Button_Click); // We assign which method that handles the event
+                Area.Children.Add(button);
+                AllButtons.Add(button);
+                button.Click += new RoutedEventHandler(Button_Click); // We assign which method that handles the event
                 //tableManagementSystem.TableList.Add(smallTable); // tilgået korrekt?
                 tableID++;
 
-                nextIsOdd = !nextIsOdd;
+                _nextIsOdd = !_nextIsOdd;
                 //nextX += 100;
                 if (nextX >= Area.ActualWidth)
                 {
@@ -271,7 +269,7 @@ namespace P4TableManagement
                     }
                     nextY += 100;
                     rowCounter++;
-                    nextIsOdd = (rowCounter % 2 != 0);
+                    _nextIsOdd = (rowCounter % 2 != 0);
                     x = 1;
                     y++;
                     //ID++;
@@ -280,7 +278,7 @@ namespace P4TableManagement
 
                 if (nextY >= Area.ActualHeight - tableSize)
                 {
-                    tablesDone = true;
+                    _tableIsDone = true;
                 }
 
             }
@@ -305,17 +303,22 @@ namespace P4TableManagement
                 try
                 {
                     // We assign the table with AssignTable 
-                    tableManagementSystem.AssignTable(tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}" == (string)clickedButton.Content), highlightedReservation);
+                    tableManagementSystem.AssignTable(tableManagementSystem.TableList.Find(x => $"Table { x.tableNumber }" == (string)clickedButton.Content), highlightedReservation);
                     tableManagementSystem.AssignedReservationList.Add(highlightedReservation);
                     tableManagementSystem.ReservationList.Remove(tableManagementSystem.ReservationList.Find(x => x.id == highlightedReservation.id));
 
                     ListView.Items.Refresh();
-                    AssResListView.Items.Refresh();
+                    AssignedReservationList.Items.Refresh();
     
 
                     // Updates the button to now display it's updated state
-                    Table updateTable = tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}" == (string)clickedButton.Content);
-                    clickedButton.ToolTip = $"Table: {updateTable.tableNumber}\nSeats: {updateTable.seats}\nStatus: {updateTable.state}\nX: {updateTable.placementX}\nY: {updateTable.placementY}\n BookingID: {updateTable.bookingID}";
+                    Table updateTable = tableManagementSystem.TableList.Find(x => $"Table { x.tableNumber }" == (string)clickedButton.Content);
+                    clickedButton.ToolTip = $"Table: { updateTable.tableNumber }" +
+                        $"\nSeats: { updateTable.seats }" +
+                        $"\nStatus: { updateTable.state }" +
+                        $"\nX: { updateTable.placementX }" +
+                        $"\nY: { updateTable.placementY }" +
+                        $"\n BookingID: { updateTable.bookingID }";
                     //clickedButton.Content += $"\nAssigned to {highlightedReservation.id}";
                 }
                 catch (NullReferenceException ex)
@@ -328,11 +331,11 @@ namespace P4TableManagement
             else if (combineEventActivated)
             {                      
                 // Sets the second table and combines it with the source table if the source table already has been set and it isn't the one we clicked on
-                if (combineTableSource != tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}" == (string)clickedButton.Content) && combineTableSource != default)
+                if (combineTableSource != tableManagementSystem.TableList.Find(x => $"Table { x.tableNumber }" == (string)clickedButton.Content) && combineTableSource != default)
                 {
                     
-                    combineTableSecond = tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}" == (string)clickedButton.Content);
-                    MessageBox.Show($"Table {combineTableSecond.tableNumber} er nu Second table");
+                    combineTableSecond = tableManagementSystem.TableList.Find(x => $"Table { x.tableNumber }" == (string)clickedButton.Content);
+                    MessageBox.Show($"Table { combineTableSecond.tableNumber } er nu Second table");
                     currentCombinedTable = tableManagementSystem.CombineTables(combineTableSource, combineTableSecond);
                     AllCombinedTables.Add(currentCombinedTable);
 
@@ -350,18 +353,15 @@ namespace P4TableManagement
                 else // Setting the Source table
                 {
                     sourceButton = clickedButton;
-                    combineTableSource = tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}" == (string)clickedButton.Content);
+                    combineTableSource = tableManagementSystem.TableList.Find(x => $"Table { x.tableNumber }" == (string)clickedButton.Content);
 
                     if (combineTableSource is null)
                     {
-                        combineTableSource = AllCombinedTables.Find(x => $"Table {x.tableNumber}" == (string)clickedButton.Content);
+                        combineTableSource = AllCombinedTables.Find(x => $"Table { x.tableNumber }" == (string)clickedButton.Content);
                     }
-                    
-                    
 
-                    MessageBox.Show($"Table {combineTableSource.tableNumber} er nu source table");
+                    MessageBox.Show($"Table { combineTableSource.tableNumber } er nu source table");
                 }
-                
             }
             else
             {
@@ -374,8 +374,8 @@ namespace P4TableManagement
         {
             double sourceX = Canvas.GetLeft(sourceButton);
             double sourceY = Canvas.GetTop(sourceButton);
-            double newX = Canvas.GetLeft(HitRectangle);
-            double newY = Canvas.GetTop(HitRectangle);
+            double newX = Canvas.GetLeft(_hitRectangle);
+            double newY = Canvas.GetTop(_hitRectangle);
             bool tableLocation = false;
 
             //MessageBox.Show($"SourceX: {sourceX} og newX: {newX}\nSourceY: {sourceY} og newY: {newY}\n" +
@@ -388,106 +388,119 @@ namespace P4TableManagement
             // Vi skal fjerne secondTable og sourceTable
             // Vi skal lave et nyt bord (button) der har størrelsen på sourceTable + secondTable (Width og Height er afhængig af hvad der bliver valgt)
             //Area.Children.Remove(combinedTable.combinedTables.Find());
-            foreach (Table item in combinedTable.combinedTables)
+            foreach (Table table in combinedTable.combinedTables)
             {
-                Area.Children.Remove(AllButtons.Find(x => (string)x.Content == $"Table {item.tableNumber}"));
+                Area.Children.Remove(AllButtons.Find(x => (string)x.Content == $"Table { table.tableNumber }"));
             }
 
             // Left
             if (sourceX > newX && sourceY == newY + 10)
             {
-                Button butt = new Button()
+                Button button = new Button()
                 {
                     Width = tableSize + 100,
                     Height = tableSize,
-                    ToolTip = $"{sourceButton.Content}\nSeats: X\nStatus: Unassigned\nX: {sourceX}\nY: {sourceY}",
+                    ToolTip = $"{ sourceButton.Content }" +
+                        $"\nSeats: { combinedTable.seats }" +
+                        $"\nStatus: Unassigned" +
+                        $"\nX: { sourceX }" +
+                        $"\nY: { sourceY }",
                     Content = $"{sourceButton.Content}"
                 };
-                butt.Margin = new Thickness(10);
-                Canvas.SetTop(butt, newY);
-                Canvas.SetLeft(butt, newX);
+                button.Margin = new Thickness(10);
+                Canvas.SetTop(button, newY);
+                Canvas.SetLeft(button, newX);
 
-                Area.Children.Add(butt);
-                AllButtons.Add(butt);
-                butt.Click += new RoutedEventHandler(Button_Click);
+                Area.Children.Add(button);
+                AllButtons.Add(button);
+                button.Click += new RoutedEventHandler(Button_Click);
             }
             // Right
             else if (sourceX < newX && sourceY == newY + 10)
             {
-                Button butt = new Button()
+                Button button = new Button()
                 {
                     Width = tableSize + 100,
                     Height = tableSize,
-                    ToolTip = $"{sourceButton.Content}\nSeats: X\nStatus: Unassigned\nX: {sourceX}\nY: {sourceY}",
-                    Content = $"{sourceButton.Content}"
+                    ToolTip = $"{ sourceButton.Content }" +
+                        $"\nSeats: { combinedTable.seats }" +
+                        $"\nStatus: Unassigned" +
+                        $"\nX: { sourceX }" +
+                        $"\nY: { sourceY }",
+                    Content = $"{ sourceButton.Content }"
                 };
 
                 //butt.Margin = new Thickness(5);
-                Canvas.SetTop(butt, sourceY);
-                Canvas.SetLeft(butt, sourceX);
+                Canvas.SetTop(button, sourceY);
+                Canvas.SetLeft(button, sourceX);
 
-                Area.Children.Add(butt);
-                AllButtons.Add(butt);
-                butt.Click += new RoutedEventHandler(Button_Click);
+                Area.Children.Add(button);
+                AllButtons.Add(button);
+                button.Click += new RoutedEventHandler(Button_Click);
             }
             // Bottom
             else if (sourceY < newY && sourceX == newX + 10)
             {
-                Button butt = new Button()
+                Button button = new Button()
                 {
                     Width = tableSize,
                     Height = tableSize + 100,
-                    ToolTip = $"{sourceButton.Content}\nSeats: X\nStatus: Unassigned\nX: {sourceX}\nY: {sourceY}",
-                    Content = $"{sourceButton.Content}"
+                    ToolTip = $"{ sourceButton.Content }" +
+                        $"\nSeats: { combinedTable.seats }" +
+                        $"\nStatus: Unassigned" +
+                        $"\nX: { sourceX }" +
+                        $"\nY: { sourceY }",
+                    Content = $"{ sourceButton.Content }"
                 };
 
                 //butt.Margin = new Thickness(5);
-                Canvas.SetTop(butt, sourceY);
-                Canvas.SetLeft(butt, sourceX);
+                Canvas.SetTop(button, sourceY);
+                Canvas.SetLeft(button, sourceX);
 
-                Area.Children.Add(butt);
-                AllButtons.Add(butt);
-                butt.Click += new RoutedEventHandler(Button_Click);
+                Area.Children.Add(button);
+                AllButtons.Add(button);
+                button.Click += new RoutedEventHandler(Button_Click);
             }
             // Top
             else if (sourceY > newY && sourceX == newX + 10)
             {
-                Button butt = new Button()
+                Button button = new Button()
                 {
                     Width = tableSize,
                     Height = tableSize + 100,
-                    ToolTip = $"{sourceButton.Content}\nSeats: X\nStatus: Unassigned\nX: {sourceX}\nY: {sourceY}",
+                    ToolTip = $"{ sourceButton.Content }" +
+                        $"\nSeats: { combinedTable.seats }" +
+                        $"\nStatus: Unassigned" +
+                        $"\nX: { sourceX }" +
+                        $"\nY: { sourceY }",
                     Content = $"{sourceButton.Content}"
                 };
 
-                butt.Margin = new Thickness(10);
-                Canvas.SetTop(butt, newY);
-                Canvas.SetLeft(butt, newX);
+                button.Margin = new Thickness(10);
+                Canvas.SetTop(button, newY);
+                Canvas.SetLeft(button, newX);
 
-                Area.Children.Add(butt);
-                AllButtons.Add(butt);
-                butt.Click += new RoutedEventHandler(Button_Click);
+                Area.Children.Add(button);
+                AllButtons.Add(button);
+                button.Click += new RoutedEventHandler(Button_Click);
             }
-
-
-
         }
 
         //Checks the neighbours of the button to see if there is a free spot and marks the rectangles green 
-        private void CheckNeighbours(Button button)
+        private void CheckNeighbours(Button buttonIn)
         {
-            double sourceButtonX = Canvas.GetLeft(button);
-            double sourceButtonY = Canvas.GetTop(button);
+            double sourceButtonX = Canvas.GetLeft(buttonIn);
+            double sourceButtonY = Canvas.GetTop(buttonIn);
 
             double leftNeighbour = sourceButtonX - 100;
             double topNeighbour = sourceButtonY - 100;
             double rightNeighbour = sourceButtonX + 100;
             double bottomNeighbour = sourceButtonY + 100;
 
-            bool thereIsNotARightNeighbour = true;
-            bool thereIsNotALeftNeighbour = true;
-            bool thereIsNotATopNeighbour = true;
-            bool thereIsNotABottomNeighbour = true;
+            bool noRightNeighbour = true;
+            bool noLeftNeighbour = true;
+            bool noTopNeighbour = true;
+            bool noBottomNeighbour = true;
 
             //helper_headline.Content = $"The chosen button is: {button.Content} " +
             //$"MouseHitType is: {MouseHitType} " +
@@ -498,65 +511,63 @@ namespace P4TableManagement
             //$"The Neighbour to the bottom is X:{sourceButtonX} Y:{bottomNeighbour}";
            
             // We check every button in the canvas to see if any of them is a neighbour to our sourceButton
-            foreach (Button butt in Area.Children.OfType<Button>())
+            foreach (Button button in Area.Children.OfType<Button>())
             {
                 // Checks RIGHT neighbour
-                if (Canvas.GetTop(butt) == sourceButtonY && Canvas.GetLeft(butt) == rightNeighbour)
+                if (Canvas.GetTop(button) == sourceButtonY && Canvas.GetLeft(button) == rightNeighbour)
                 {
-                    thereIsNotARightNeighbour = false;
+                    noRightNeighbour = false;
                 }
                 // Checks LEFT neighbour
-                if (Canvas.GetTop(butt) == sourceButtonY && Canvas.GetLeft(butt) == leftNeighbour)
+                if (Canvas.GetTop(button) == sourceButtonY && Canvas.GetLeft(button) == leftNeighbour)
                 {
-                    thereIsNotALeftNeighbour = false;
+                    noLeftNeighbour = false;
                 }
                 // Checks TOP neighbour
-                if (Canvas.GetTop(butt) == topNeighbour && Canvas.GetLeft(butt) == sourceButtonX)
+                if (Canvas.GetTop(button) == topNeighbour && Canvas.GetLeft(button) == sourceButtonX)
                 {
-                    thereIsNotATopNeighbour = false;
+                    noTopNeighbour = false;
                 }
                 // Checks BOTTOM neighbour
-                if (Canvas.GetTop(butt) == bottomNeighbour && Canvas.GetLeft(butt) == sourceButtonX)
+                if (Canvas.GetTop(button) == bottomNeighbour && Canvas.GetLeft(button) == sourceButtonX)
                 {
-                    thereIsNotABottomNeighbour = false;
+                    noBottomNeighbour = false;
                 }
             }
 
             // We color the rectangles green if there isn't a neighbour
-            foreach (Rectangle rect in Area.Children.OfType<Rectangle>())
+            foreach (Rectangle rectangle in Area.Children.OfType<Rectangle>())
             {
-                if (thereIsNotARightNeighbour)
+                if (noRightNeighbour)
                 {
-                    if (Canvas.GetTop(rect) == sourceButtonY - 10 && Canvas.GetLeft(rect) == rightNeighbour - 10)
+                    if (Canvas.GetTop(rectangle) == sourceButtonY - 10 && Canvas.GetLeft(rectangle) == rightNeighbour - 10)
                     {
-                        rect.Fill = Brushes.LightGreen;
+                        rectangle.Fill = Brushes.LightGreen;
                     }
                 }
-                if (thereIsNotALeftNeighbour)
+                if (noLeftNeighbour)
                 {
-                    if (Canvas.GetTop(rect) == sourceButtonY - 10 && Canvas.GetLeft(rect) == leftNeighbour - 10)
+                    if (Canvas.GetTop(rectangle) == sourceButtonY - 10 && Canvas.GetLeft(rectangle) == leftNeighbour - 10)
                     {
-                        rect.Fill = Brushes.LightGreen;
+                        rectangle.Fill = Brushes.LightGreen;
                     }
                 }
-                if (thereIsNotATopNeighbour)
+                if (noTopNeighbour)
                 {
-                    if (Canvas.GetTop(rect) == topNeighbour - 10 && Canvas.GetLeft(rect) == sourceButtonX - 10)
+                    if (Canvas.GetTop(rectangle) == topNeighbour - 10 && Canvas.GetLeft(rectangle) == sourceButtonX - 10)
                     {
-                        rect.Fill = Brushes.LightGreen;
+                        rectangle.Fill = Brushes.LightGreen;
                     }
                 }
-                if (thereIsNotABottomNeighbour)
+                if (noBottomNeighbour)
                 {
-                    if (Canvas.GetTop(rect) == bottomNeighbour - 10 && Canvas.GetLeft(rect) == sourceButtonX - 10)
+                    if (Canvas.GetTop(rectangle) == bottomNeighbour - 10 && Canvas.GetLeft(rectangle) == sourceButtonX - 10)
                     {
-                        rect.Fill = Brushes.LightGreen;
+                        rectangle.Fill = Brushes.LightGreen;
                     }
                 }
             }
         }
-
-        
 
         // The part of the rectangle the mouse is over. (We use body)
         private enum HitType
@@ -565,10 +576,10 @@ namespace P4TableManagement
         };
 
         // The part of the rectangle under the mouse.
-        private HitType MouseHitType = HitType.None;
+        private HitType _mouseHitType = HitType.None;
 
         // The Rectangle that was hit.
-        private Rectangle HitRectangle = null;
+        private Rectangle _hitRectangle = null;
 
         public Button HitButton = null;
 
@@ -579,43 +590,41 @@ namespace P4TableManagement
         // return the Rectangle and the hit type.
         private void FindHit(Point point)
         {
-            HitRectangle = null;
+            _hitRectangle = null;
             HitButton = null;
-            MouseHitType = HitType.None;
+            _mouseHitType = HitType.None;
 
-            foreach (Button butt in AllButtons)
+            foreach (Button button in AllButtons)
             {
-                MouseHitType = SetHitType(butt, point);
-                if (MouseHitType != HitType.None)
+                _mouseHitType = SetHitType(button, point);
+                if (_mouseHitType != HitType.None)
                 {
-                    HitButton = butt;
+                    HitButton = button;
                     //return;
                 }
             }
 
-            foreach (Rectangle rect in AllRectangles)
+            foreach (Rectangle rectangle in AllRectangles)
             {
-                MouseHitType = SetHitType(rect, point);
-                if (MouseHitType != HitType.None)
+                _mouseHitType = SetHitType(rectangle, point);
+                if (_mouseHitType != HitType.None)
                 {
-                    
-                    HitRectangle = rect;
+                    _hitRectangle = rectangle;
                     return;
                 }
             }
-
 
             // We didn't find a hit.
             return;
         }
 
         // Return a HitType value to indicate what is at the point.
-        private HitType SetHitType(Button butt, Point point)
+        private HitType SetHitType(Button button, Point point)
         {
-            double left = Canvas.GetLeft(butt);
-            double top = Canvas.GetTop(butt);
-            double right = left + butt.Width;
-            double bottom = top + butt.Height;
+            double left = Canvas.GetLeft(button);
+            double top = Canvas.GetTop(button);
+            double right = left + button.Width;
+            double bottom = top + button.Height;
             if (point.X < left) return HitType.None;
             if (point.X > right) return HitType.None;
             if (point.Y < top) return HitType.None;
@@ -627,12 +636,12 @@ namespace P4TableManagement
             return HitType.Body;
         }
 
-        private HitType SetHitType(Rectangle rect, Point point)
+        private HitType SetHitType(Rectangle rectangle, Point point)
         {
-            double left = Canvas.GetLeft(rect);
-            double top = Canvas.GetTop(rect);
-            double right = left + rect.Width;
-            double bottom = top + rect.Height;
+            double left = Canvas.GetLeft(rectangle);
+            double top = Canvas.GetTop(rectangle);
+            double right = left + rectangle.Width;
+            double bottom = top + rectangle.Height;
             if (point.X < left) return HitType.None;
             if (point.X > right) return HitType.None;
             if (point.Y < top) return HitType.None;
@@ -649,9 +658,9 @@ namespace P4TableManagement
         {
             FindHit(Mouse.GetPosition(Area));
  
-            if (HitRectangle is Rectangle)
+            if (_hitRectangle is Rectangle)
             {
-                if (HitRectangle.Fill == Brushes.LightGreen)
+                if (_hitRectangle.Fill == Brushes.LightGreen)
                 {
                     MessageBox.Show("Grøn");
 
@@ -665,17 +674,17 @@ namespace P4TableManagement
             }
 
 
-            if (MouseHitType == HitType.None) return;
+            if (_mouseHitType == HitType.None) return;
 
             if (HitButton is Button)
             {
                 HitButton.Background = Brushes.Red;
 
-                currentTable = tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}" == (string)HitButton.Content); // Lave en kontrolstruktur der tjekker om currentTable ikke er null VIGTIGT
+                currentTable = tableManagementSystem.TableList.Find(x => $"Table { x.tableNumber }" == (string)HitButton.Content); // Lave en kontrolstruktur der tjekker om currentTable ikke er null VIGTIGT
 
                 TableWindow tableWindow = new TableWindow();
                 //tableWindow.Show();
-                tableWindow.LabelText.Content = $"What do you want to do with {HitButton.Content}";
+                tableWindow.LabelText.Content = $"What do you want to do with { HitButton.Content }";
                 tableWindow.ShowDialog(); // Can't be minimized now
             }
         }
@@ -727,13 +736,13 @@ namespace P4TableManagement
             {
                 assignEventActivated = true;
 
-                helper_headline.Content = $"assignEventActivated = {assignEventActivated}";
+                helper_headline.Content = $"assignEventActivated = { assignEventActivated }";
                 clickedButton.Background = Brushes.LightCoral;
                 
                 if (combineEventActivated)
                 {
                     combineEventActivated = false;
-                    helper_headline.Content += $"combineEventActivated = {combineEventActivated}";
+                    helper_headline.Content += $"combineEventActivated = { combineEventActivated }";
                     combinebtn.Background = Brushes.White;
                     combineTableSource = default;
                     combineTableSecond = default;
@@ -742,34 +751,32 @@ namespace P4TableManagement
             else
             {
                 assignEventActivated = false;
-                helper_headline.Content = $"assignEventActivated = {assignEventActivated}";
+                helper_headline.Content = $"assignEventActivated = { assignEventActivated }";
                 clickedButton.Background = Brushes.White;
             }
-
-            
         }
 
-        // Comnbine button
+        // Combine button
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             Button clickedButton = (Button)sender;
             if (!combineEventActivated)
             {
                 combineEventActivated = true;
-                helper_headline.Content = $"combineEventActivated = {combineEventActivated}";
+                helper_headline.Content = $"combineEventActivated = { combineEventActivated }";
                 clickedButton.Background = Brushes.LightCoral;
                 
                 if (assignEventActivated)
                 {
                     assignEventActivated = false;
-                    helper_headline.Content += $"assignEventActivated = {assignEventActivated}";
+                    helper_headline.Content += $"assignEventActivated = { assignEventActivated }";
                     assignbtn.Background = Brushes.White;
                 }
             }
             else
             {
                 combineEventActivated = false;
-                helper_headline.Content = $"combineEventActivated = {combineEventActivated}";
+                helper_headline.Content = $"combineEventActivated = { combineEventActivated }";
                 clickedButton.Background = Brushes.White;
             }
             
