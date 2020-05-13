@@ -795,5 +795,12 @@ namespace P4TableManagement
                 "\nCombine = combine knap -> tryk på bordSource -> tryk på bordTarget -> tryk på en af de grønne områder ved bordSource for placering\n" +
                 "\nSeperate event: de to bord kommer tilbage til deres orginal plads, hvis det ikke kan lade sig gøre, så sætter de bare ved siden af hinanden\n");
         }
+
+        // Add new Reservation button
+        private void AddReservationbtn_Click(object sender, RoutedEventArgs e)
+        {
+            AddReservationWindow addReservationWindow = new AddReservationWindow();
+            addReservationWindow.ShowDialog();
+        }
     }
 }

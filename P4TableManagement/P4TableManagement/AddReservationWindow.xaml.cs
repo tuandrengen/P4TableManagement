@@ -23,5 +23,11 @@ namespace P4TableManagement
         {
             InitializeComponent();
         }
+
+        // Cross button
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

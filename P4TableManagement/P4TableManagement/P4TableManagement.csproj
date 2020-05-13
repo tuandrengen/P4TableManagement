@@ -64,6 +64,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddReservationWindow.xaml.cs">
+      <DependentUpon>AddReservationWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CombinedTable.cs" />
     <Compile Include="DecorationElement.cs" />
     <Compile Include="Excel.cs" />
@@ -83,6 +86,10 @@
       <DependentUpon>TableWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="WalkIn.cs" />
+    <Page Include="AddReservationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
