@@ -40,12 +40,13 @@ namespace P4TableManagement
 
         public bool assignEventActivated = false;
         public bool combineEventActivated = false;
-        Booking highlightedReservation;
+        Reservation highlightedReservation;
 
         ReservationList list = new ReservationList();
         string path = @"C:\P4\test.xlsx";
-        public List<Reservation> reservationList = new List<Reservation>();
-       
+
+        //public List<Reservation> reservationList = new List<Reservation>();
+        
 
         public MainWindow()
         {
@@ -56,10 +57,13 @@ namespace P4TableManagement
             //List<Reservation> reservationList = list.PopulateReservationList(path, 1);
 
             tableManagementSystem.ReservationList = list.PopulateReservationList(path, 1);
-            foreach (Reservation item in reservationList)
+            foreach (Reservation item in tableManagementSystem.ReservationList)
             {
                 item.stringTime = item.timeStart.ToShortTimeString();
             }
+
+            tableManagementSystem.AssignedReservationList = tableManagementSystem.ReservationList.Where(x => x.id == 1).ToList();
+            tableManagementSystem.AssignedReservationList.Remove(tableManagementSystem.AssignedReservationList.Find(x => x.id == 1));
 
             ListView.ItemsSource = tableManagementSystem.ReservationList;
             AssResListView.ItemsSource = tableManagementSystem.AssignedReservationList;
@@ -69,7 +73,7 @@ namespace P4TableManagement
         {
             DrawGameArea();
             CreateTables();
-            MessageBox.Show(tableManagementSystem.TableList.Count.ToString());
+            //MessageBox.Show(tableManagementSystem.TableList.Count.ToString());
         }
 
         //partial Table ReturnTable(Button clickedButton)
@@ -106,14 +110,15 @@ namespace P4TableManagement
 
                 //selectedBooking.name = "Test123";
 
-                // Should use ID instead of name (ID was broken at this time)
-                highlightedReservation = reservationList.Find(x => x.id == selectedBooking.id);
+                // find the reservation from the reservationList
+                highlightedReservation = tableManagementSystem.ReservationList.Find(x => x.id == selectedBooking.id);
+                //helper_headline.Content = highlightedReservation.ToString();
                 
                 // Umiddelbar måde til at opdatere listview
-                ICollectionView view = CollectionViewSource.GetDefaultView(reservationList);
+                ICollectionView view = CollectionViewSource.GetDefaultView(tableManagementSystem.ReservationList);
                 view.Refresh();
 
-                MessageBox.Show("SelectedItem from list is: " + selectedBooking.name);
+                MessageBox.Show("SelectedItem from list is: " + selectedBooking.id);
             }
             else
             {
@@ -136,12 +141,9 @@ namespace P4TableManagement
 
                 tableManagementSystem.AddTableToList(smallTable);
 
-
                 //LargeTable largeTable = new LargeTable();
 
             }
-
-
         }
         
 
@@ -158,11 +160,6 @@ namespace P4TableManagement
             bool tablesDone = false;
             Random rand = new Random();
             int random = 0;
-
-            //int top = (int)GetValue(Canvas.TopProperty);
-            //int left = (int)GetValue(Canvas.LeftProperty);
-            
-
 
             // Drawing the grid of rectangles
             while (doneDrawingBackground == false)
@@ -182,8 +179,6 @@ namespace P4TableManagement
                 //ID++;
                 //letter++;
 
-                //name = $"{letter}{ID}".ToString();
-
                 Area.Children.Add(rectangle);
                 AllRectangles.Add(rectangle);
                 Canvas.SetTop(rectangle, nextY);
@@ -199,25 +194,17 @@ namespace P4TableManagement
                     nextIsOdd = (rowCounter % 2 != 0);
                     x = 1;
                     y++;
-                    //ID++;
-                    //name = $"{letter}{ID}".ToString();
                 }
 
                 if (nextY >= Area.ActualHeight - tableSize)
                 {
                     doneDrawingBackground = true;
                     nextIsOdd = false;
-                    
                 }
-                    
-
-                //name = $"{letter}{ID}".ToString();
             }
             // Drawing tables
             while (tablesDone == false)
             {
-                //SmallTable smallTable = new SmallTable(tableSize, tableSize, top, left);
-
                 Button butt = new Button()
                 {
                     Width = tableSize,
@@ -242,23 +229,18 @@ namespace P4TableManagement
                     Canvas.SetLeft(butt, nextX);
                 }
                 
-                
-
                 random = rand.Next(1, 4);
                 if (random == 1)
                 {
                     nextX += 200;
-                    
                 }
                 else if (random == 2)
                 {
                     nextX += 400;
-                    
                 }
                 else if (random == 3)
                 {
                     nextX += 100;
-                    
                 }
 
                 Area.Children.Add(butt);
@@ -325,6 +307,11 @@ namespace P4TableManagement
                     // We assign the table with AssignTable 
                     tableManagementSystem.AssignTable(tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}" == (string)clickedButton.Content), highlightedReservation);
                     tableManagementSystem.AssignedReservationList.Add(highlightedReservation);
+                    tableManagementSystem.ReservationList.Remove(tableManagementSystem.ReservationList.Find(x => x.id == highlightedReservation.id));
+
+                    ListView.Items.Refresh();
+                    AssResListView.Items.Refresh();
+    
 
                     // Updates the button to now display it's updated state
                     Table updateTable = tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}" == (string)clickedButton.Content);

@@ -92,15 +92,15 @@
         </StackPanel>
 
 
-        <Canvas x:Name="Area" ClipToBounds="True"  Margin="18,15" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2"  MouseDown="Area_MouseDown">
+        <Canvas x:Name="Area" ClipToBounds="True"  Margin="18,13" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2"  MouseDown="Area_MouseDown">
             <!--<Button>Button 1</Button>-->
 
 
         </Canvas>
 
-        <StackPanel Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Orientation="Vertical">
+        <!--<StackPanel Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Orientation="Vertical">
             <Label Content="Unassigned reservations" HorizontalAlignment="Center" FontSize="20"></Label>
-            <ListView Height="700" Margin="10" Name="ListView" MouseLeftButtonDown="ListView_MouseLeftButtonDown" MouseDown="ListView_MouseDown" VerticalAlignment="Bottom">
+            <ListView  Margin="10" Name="ListView" MouseLeftButtonDown="ListView_MouseLeftButtonDown" MouseDown="ListView_MouseDown" VerticalAlignment="Bottom">
                 <ListView.View>
                     <GridView>
                         <GridView.ColumnHeaderContainerStyle>
@@ -119,9 +119,11 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-        </StackPanel>
-        
-        <!--<ListView Margin="0" Name="ListView" Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" MouseLeftButtonDown="ListView_MouseLeftButtonDown" MouseDown="ListView_MouseDown">
+        </StackPanel>-->
+
+        <Label Grid.Column="1" Content="Unassigned reservations" HorizontalAlignment="Center" FontSize="20"></Label>
+
+        <ListView Margin="0,50,0,0" Name="ListView" Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" MouseLeftButtonDown="ListView_MouseLeftButtonDown" MouseDown="ListView_MouseDown">
             <ListView.View>
                 <GridView>
                     <GridView.ColumnHeaderContainerStyle>
@@ -139,11 +141,11 @@
 
                 </GridView>
             </ListView.View>
-        </ListView>-->
+        </ListView>
 
         <StackPanel Orientation="Vertical" Grid.Row="4" Grid.Column="1">
             <Label Content="Assigned reservations" HorizontalAlignment="Center" FontSize="20"></Label>
-            <ListView Margin="10" Name="AssResListView">
+            <ListView MinHeight="190" Margin="10" Name="AssResListView">
                 <ListView.View>
                     <GridView>
                         <GridView.ColumnHeaderContainerStyle>
@@ -161,7 +163,7 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <Button Height="50" Content="Add new reservation" FontSize="20" >
+            <Button x:Name="AddReservationbtn" Height="50" Content="Add new reservation" FontSize="20" Margin="5,0" >
                 
             </Button>
         </StackPanel>
