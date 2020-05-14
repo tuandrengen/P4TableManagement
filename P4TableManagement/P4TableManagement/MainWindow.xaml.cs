@@ -818,7 +818,8 @@ namespace P4TableManagement
         // Add new Walk-in
         private void Walk_in_Click(object sender, RoutedEventArgs e)
         {
-
+            AddWalkInWindow addWalkInWindow = new AddWalkInWindow();
+            addWalkInWindow.ShowDialog();
         }
     }
 }

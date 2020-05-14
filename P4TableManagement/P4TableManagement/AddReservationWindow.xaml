@@ -89,7 +89,7 @@
             </StackPanel>-->
 
             <StackPanel Orientation="Vertical" Margin="20,10,4,10">
-                <Label Content="Seats, Time, Name, Telephone number" FontWeight="Bold" Padding="0,5,0,1"></Label>
+                <Label Content="Number of guests, Time, Name, Tel." FontWeight="Bold" Padding="0,5,0,1"></Label>
                 <RichTextBox MinWidth="250" MinHeight="20" HorizontalAlignment="Left" HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True"></RichTextBox>
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="20,10,5,10">

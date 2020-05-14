@@ -67,6 +67,9 @@
     <Compile Include="AddReservationWindow.xaml.cs">
       <DependentUpon>AddReservationWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AddWalkInWindow.xaml.cs">
+      <DependentUpon>AddWalkInWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CombinedTable.cs" />
     <Compile Include="DecorationElement.cs" />
     <Compile Include="Excel.cs" />
@@ -87,6 +90,10 @@
     </Compile>
     <Compile Include="WalkIn.cs" />
     <Page Include="AddReservationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddWalkInWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
