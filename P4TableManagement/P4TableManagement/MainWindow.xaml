@@ -117,7 +117,7 @@
 
         <Label Grid.Column="1" Content="Reservation List" HorizontalAlignment="Center" FontSize="30"/>
 
-        <ListView Margin="0,50,0,0" x:Name="ReservationList" Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" MouseLeftButtonDown="ListView_MouseLeftButtonDown" MouseDown="ListView_MouseDown">
+        <ListView Margin="0,50,0,0" x:Name="ReservationListView" Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" MouseLeftButtonDown="ListView_MouseLeftButtonDown" MouseDown="ListView_MouseDown">
             <ListView.View>
                 <GridView>
                     <GridView.ColumnHeaderContainerStyle>
@@ -137,7 +137,7 @@
 
         <StackPanel Orientation="Vertical" Grid.Row="4" Grid.Column="1">
             <Label Content="Assigned reservations" HorizontalAlignment="Center" FontSize="20"/>
-            <ListView MinHeight="190" Margin="10" x:Name="AssignedReservationList">
+            <ListView MinHeight="190" Margin="10" x:Name="AssignedReservationListView">
                 <ListView.View>
                     <GridView>
                         <GridView.ColumnHeaderContainerStyle>
@@ -154,13 +154,30 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <Button x:Name="AddReservationbtn" Height="50" Content="Add new reservation" FontSize="20" Margin="5,0" Click="AddReservationbtn_Click"/>
+            <Menu Height="50" x:Name="AddBookingMenu" Margin="10,0">
+                <MenuItem Padding="0">
+                    <MenuItem.Header>
+                        <Image Source="C:\P4\plus.png" Height="{Binding ActualHeight, ElementName=AddBookingMenu}" Width="{Binding ActualWidth, ElementName=AddBookingMenu}"></Image>
+                    </MenuItem.Header>
+                    <MenuItem Header="Reservation" Background="White" Click="AddReservationbtn_Click" BorderBrush="White" Height="50">
+                        <MenuItem.Icon>
+                            <Image Source="C:\P4\reservation.png" Margin="0,-15,-9,-15"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Walk-in" Background="White" Click="Walk_in_Click" BorderBrush="White" Height="50">
+                        <MenuItem.Icon>
+                            <Image Source="C:\P4\walker.png" Margin="0,-15,-15,-15" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+            </Menu>
         </StackPanel>
     </Grid>
 
 
     <!--<Canvas x:Name="Area" ClipToBounds="True" Width="800" Height="400" Grid.Column="1">
-
+            <Button x:Name="AddReservationbtn" Height="50" Content="Add new reservation" FontSize="20" Margin="5,0" Click="AddReservationbtn_Click"/>
+<TextBlock Text="Add new booking" Height="{Binding ActualHeight, ElementName=AddBookingMenu}" Width="{Binding ActualWidth, ElementName=AddBookingMenu}"></TextBlock>
 
     </Canvas>-->
 

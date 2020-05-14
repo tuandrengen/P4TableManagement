@@ -26,6 +26,8 @@ namespace P4TableManagement
         readonly TableManagementSystem tableManagementSystem = ((MainWindow)Application.Current.MainWindow).tableManagementSystem;
         readonly Table table = ((MainWindow)Application.Current.MainWindow).currentTable;
         readonly CombinedTable<Table> combinedTable = ((MainWindow)Application.Current.MainWindow).currentCombinedTable;
+        readonly Button button = ((MainWindow)Application.Current.MainWindow).sourceButton;
+        readonly Reservation reservation = ((MainWindow)Application.Current.MainWindow).highlightedReservation;
 
         public TableWindow()
         {
@@ -36,6 +38,13 @@ namespace P4TableManagement
         private void btnUnassign_Click(object sender, RoutedEventArgs e)
         {
             tableManagementSystem.UnassignTable(table);
+            button.Background = Brushes.White;
+            //Updates the ListViews
+            tableManagementSystem.ReservationList.Add(reservation);
+            tableManagementSystem.AssignedReservationList.Remove(tableManagementSystem.ReservationList.Find(x => x.id == reservation.id));
+
+            ((MainWindow)Application.Current.MainWindow).ReservationListView.Items.Refresh();
+            ((MainWindow)Application.Current.MainWindow).AssignedReservationListView.Items.Refresh();
         }
 
         private void btnSeperate_Click(object sender, RoutedEventArgs e)

@@ -38,7 +38,7 @@ namespace P4TableManagement
 
         public bool assignEventActivated = false;
         public bool combineEventActivated = false;
-        Reservation highlightedReservation;
+        public Reservation highlightedReservation;
 
         ReservationList list = new ReservationList();
         string path = @"C:\P4\test.xlsx";
@@ -60,11 +60,10 @@ namespace P4TableManagement
                 reservation.stringTime = reservation.timeStart.ToShortTimeString();
             }
 
-            tableManagementSystem.AssignedReservationList = tableManagementSystem.ReservationList.Where(x => x.id == 1).ToList();
-            tableManagementSystem.AssignedReservationList.Remove(tableManagementSystem.AssignedReservationList.Find(x => x.id == 1));
+            tableManagementSystem.AssignedReservationList = new List<Reservation>();
 
-            ReservationList.ItemsSource = tableManagementSystem.ReservationList;
-            AssignedReservationList.ItemsSource = tableManagementSystem.AssignedReservationList;
+            ReservationListView.ItemsSource = tableManagementSystem.ReservationList;
+            AssignedReservationListView.ItemsSource = tableManagementSystem.AssignedReservationList;
         }
 
         private void Window_ContentRendered(object sender, EventArgs e)
@@ -287,7 +286,7 @@ namespace P4TableManagement
         private Table combineTableSource;
         private Table combineTableSecond;
         public CombinedTable<Table> currentCombinedTable;
-        Button sourceButton = default;
+        public Button sourceButton = default;
 
         // Button representing a table on the map, Event handler
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -302,24 +301,39 @@ namespace P4TableManagement
                 // If highlightedReservation hasn't been set its value is null, so we try to catch it
                 try
                 {
+                    // Checks if the table is already occupied
+                    if (tableManagementSystem.TableList.Find(x => $"Table { x.tableNumber }" == (string)clickedButton.Content).state == "Occupied")
+                    {
+                        //throw new TableAlreadyAssignedException("Error: Cannot assign an occupied table!");
+                        MessageBox.Show("The table is already occupied and could not be assigned");
+                        return;
+                    }
                     // We assign the table with AssignTable 
-                    tableManagementSystem.AssignTable(tableManagementSystem.TableList.Find(x => $"Table { x.tableNumber }" == (string)clickedButton.Content), highlightedReservation);
-                    tableManagementSystem.AssignedReservationList.Add(highlightedReservation);
-                    tableManagementSystem.ReservationList.Remove(tableManagementSystem.ReservationList.Find(x => x.id == highlightedReservation.id));
+                    else
+                    {
+                        tableManagementSystem.AssignTable(tableManagementSystem.TableList.Find(x => $"Table { x.tableNumber }" == (string)clickedButton.Content), highlightedReservation);
+                        tableManagementSystem.AssignedReservationList.Add(highlightedReservation);
+                        tableManagementSystem.ReservationList.Remove(tableManagementSystem.ReservationList.Find(x => x.id == highlightedReservation.id));
 
-                    ReservationList.Items.Refresh();
-                    AssignedReservationList.Items.Refresh();
-    
+                        ReservationListView.Items.Refresh();
+                        AssignedReservationListView.Items.Refresh();
 
-                    // Updates the button to now display it's updated state
-                    Table updateTable = tableManagementSystem.TableList.Find(x => $"Table { x.tableNumber }" == (string)clickedButton.Content);
-                    clickedButton.ToolTip = $"Table: { updateTable.tableNumber }" +
-                        $"\nSeats: { updateTable.seats }" +
-                        $"\nStatus: { updateTable.state }" +
-                        $"\nX: { updateTable.placementX }" +
-                        $"\nY: { updateTable.placementY }" +
-                        $"\n BookingID: { updateTable.bookingID }";
-                    //clickedButton.Content += $"\nAssigned to {highlightedReservation.id}";
+                        // Updates the button to now display it's updated state
+                        Table updateTable = tableManagementSystem.TableList.Find(x => $"Table { x.tableNumber }" == (string)clickedButton.Content);
+                        clickedButton.ToolTip = $"Table: { updateTable.tableNumber }" +
+                            $"\nSeats: { updateTable.seats }" +
+                            $"\nStatus: { updateTable.state }" +
+                            $"\nX: { updateTable.placementX }" +
+                            $"\nY: { updateTable.placementY }" +
+                            $"\n BookingID: { updateTable.bookingID }";
+
+                        clickedButton.Background = Brushes.Orange;
+                        sourceButton = clickedButton;
+
+                        // Reset...
+                        assignEventActivated = false;
+                        assignbtn.Background = Brushes.White;
+                    }
                 }
                 catch (NullReferenceException ex)
                 {
@@ -377,12 +391,6 @@ namespace P4TableManagement
             double newX = Canvas.GetLeft(_hitRectangle);
             double newY = Canvas.GetTop(_hitRectangle);
             bool tableLocation = false;
-
-            //MessageBox.Show($"SourceX: {sourceX} og newX: {newX}\nSourceY: {sourceY} og newY: {newY}\n" +
-            //    $"Venstre: {sourceX} > {newX} && {sourceY} == {newY + 10}\n" +
-            //    $"Højre: {sourceX} < {newX} && {sourceY} == {newY + 10}\n" +
-            //    $"Bund: {sourceY} > {newY} && {sourceX} == {newX + 10}\n" +
-            //    $"Top: {sourceY} < {newY} && {sourceX} == {newX + 10}\n");
 
             // Vi tegner det nye kombinerede bord - kræver en position hvor vi kan tegne det
             // Vi skal fjerne secondTable og sourceTable
@@ -501,14 +509,6 @@ namespace P4TableManagement
             bool noLeftNeighbour = true;
             bool noTopNeighbour = true;
             bool noBottomNeighbour = true;
-
-            //helper_headline.Content = $"The chosen button is: {button.Content} " +
-            //$"MouseHitType is: {MouseHitType} " +
-            //$"The X:{sourceButtonX} Y:{sourceButtonY} " +
-            //$"The Neighbour to the right is X:{rightNeighbour} Y:{sourceButtonY} " +
-            //$"The Neighbour to the left is X:{leftNeighbour} Y:{sourceButtonY} " +
-            //$"The Neighbour to the top is X:{sourceButtonX} Y:{topNeighbour}" +
-            //$"The Neighbour to the bottom is X:{sourceButtonX} Y:{bottomNeighbour}";
            
             // We check every button in the canvas to see if any of them is a neighbour to our sourceButton
             foreach (Button button in Area.Children.OfType<Button>())
@@ -678,7 +678,7 @@ namespace P4TableManagement
 
             if (HitButton is Button)
             {
-                HitButton.Background = Brushes.Red;
+                //HitButton.Background = Brushes.Red;
 
                 currentTable = tableManagementSystem.TableList.Find(x => $"Table { x.tableNumber }" == (string)HitButton.Content); // Lave en kontrolstruktur der tjekker om currentTable ikke er null VIGTIGT
 
@@ -803,11 +803,22 @@ namespace P4TableManagement
                 "\nSeperate event: de to bord kommer tilbage til deres orginal plads, hvis det ikke kan lade sig gøre, så sætter de bare ved siden af hinanden\n");
         }
 
-        // Add new Reservation button
+        // Add new Reservation
         private void AddReservationbtn_Click(object sender, RoutedEventArgs e)
         {
             AddReservationWindow addReservationWindow = new AddReservationWindow();
             addReservationWindow.ShowDialog();
+        }
+
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        // Add new Walk-in
+        private void Walk_in_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -41,12 +41,13 @@ namespace P4TableManagement
 
 		public void AssignTable(Table table, Booking booking)
 		{
-			if (table.state == "Occupied")
-			{
-				//throw new TableAlreadyAssignedException("Error: Cannot assign an occupied table!");
-				MessageBox.Show("The table is already occupied and could not be assigned");
-				return;
-			}
+			// Now we check this statement before the method is cast in MainWindow.xaml.cs!
+			//if (table.state == "Occupied")
+			//{
+			//	//throw new TableAlreadyAssignedException("Error: Cannot assign an occupied table!");
+			//	MessageBox.Show("The table is already occupied and could not be assigned");
+			//	return;
+			//}
 
 			table.bookingID = booking.id;
 			table.state = "Occupied";
