@@ -63,7 +63,7 @@ namespace P4TableManagement
             tableManagementSystem.AssignedReservationList = tableManagementSystem.ReservationList.Where(x => x.id == 1).ToList();
             tableManagementSystem.AssignedReservationList.Remove(tableManagementSystem.AssignedReservationList.Find(x => x.id == 1));
 
-            ListView.ItemsSource = tableManagementSystem.ReservationList;
+            ReservationList.ItemsSource = tableManagementSystem.ReservationList;
             AssignedReservationList.ItemsSource = tableManagementSystem.AssignedReservationList;
         }
 
@@ -307,7 +307,7 @@ namespace P4TableManagement
                     tableManagementSystem.AssignedReservationList.Add(highlightedReservation);
                     tableManagementSystem.ReservationList.Remove(tableManagementSystem.ReservationList.Find(x => x.id == highlightedReservation.id));
 
-                    ListView.Items.Refresh();
+                    ReservationList.Items.Refresh();
                     AssignedReservationList.Items.Refresh();
     
 

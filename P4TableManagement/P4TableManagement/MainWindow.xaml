@@ -115,9 +115,9 @@
             </ListView>
         </StackPanel>-->
 
-        <Label Grid.Column="1" Content="Unassigned reservations" HorizontalAlignment="Center" FontSize="20"></Label>
+        <Label Grid.Column="1" Content="Reservation List" HorizontalAlignment="Center" FontSize="30"/>
 
-        <ListView Margin="0,50,0,0" x:Name="ListView" Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" MouseLeftButtonDown="ListView_MouseLeftButtonDown" MouseDown="ListView_MouseDown">
+        <ListView Margin="0,50,0,0" x:Name="ReservationList" Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" MouseLeftButtonDown="ListView_MouseLeftButtonDown" MouseDown="ListView_MouseDown">
             <ListView.View>
                 <GridView>
                     <GridView.ColumnHeaderContainerStyle>
