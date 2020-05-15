@@ -72,6 +72,9 @@
     </Compile>
     <Compile Include="CombinedTable.cs" />
     <Compile Include="DecorationElement.cs" />
+    <Compile Include="EditReservationWindow.xaml.cs">
+      <DependentUpon>EditReservationWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Excel.cs" />
     <Compile Include="Exceptions\DecorationElementAlreadyExistsException.cs" />
     <Compile Include="Exceptions\MapSectionNotFoundException.cs" />
@@ -94,6 +97,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AddWalkInWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditReservationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
