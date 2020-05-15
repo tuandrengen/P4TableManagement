@@ -821,5 +821,33 @@ namespace P4TableManagement
             AddWalkInWindow addWalkInWindow = new AddWalkInWindow();
             addWalkInWindow.ShowDialog();
         }
+
+        // Edit selected item from ReservationListView
+        private void EditReservationListView_Click(object sender, RoutedEventArgs e)
+        {
+            //ListView listView = sender as ListView;
+            //var selecteditem = listView.SelectedItem;
+            Reservation selectedBooking = (Reservation)ReservationListView.SelectedItem;
+            EditReservationWindow editReservationWindow = new EditReservationWindow();
+
+            //MessageBox.Show($"EDIT: We want to edit {selectedBooking.id} call edit window...");
+            editReservationWindow.ShowDialog();
+            
+            // Indsæt variabler fra selectedBooking editReservationWindow
+            //editReservationWindow.NumberOfGuestText...
+
+
+            //ReservationListView.Items.Refresh();
+        }
+
+        // Delete selected item from ReservationListView
+        private void DeleteReservationListView_Click(object sender, RoutedEventArgs e)
+        {
+            Reservation selectedBooking = (Reservation)ReservationListView.SelectedItem;
+
+            tableManagementSystem.ReservationList.Remove(tableManagementSystem.ReservationList.Find(x => x.id == selectedBooking.id));
+
+            ReservationListView.Items.Refresh();
+        }
     }
 }
