@@ -29,7 +29,7 @@
                         <MenuItem.Header>
                             <Image Width="50" Height="60" Source="C:\P4\hamburger1.png"/>
                         </MenuItem.Header>
-                        <MenuItem Header="Map Editor"/>
+                        <MenuItem Header="Map Editor" Click="MenuItem_Click_2"/>
                         <MenuItem Header="Help" Click="MenuItem_Click"/>
                         <MenuItem Header="Settings"/>
                         <MenuItem Header="Contact us"/>
@@ -90,30 +90,7 @@
 
 
         <Canvas x:Name="Area" ClipToBounds="True" Margin="18,13" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2"  MouseDown="Area_MouseDown"/>
-        <!--<Button>Button 1</Button>-->
 
-        <!--<StackPanel Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Orientation="Vertical">
-            <Label Content="Unassigned reservations" HorizontalAlignment="Center" FontSize="20"></Label>
-            <ListView  Margin="10" Name="ListView" MouseLeftButtonDown="ListView_MouseLeftButtonDown" MouseDown="ListView_MouseDown" VerticalAlignment="Bottom">
-                <ListView.View>
-                    <GridView>
-                        <GridView.ColumnHeaderContainerStyle>
-                            <Style>
-                                <Setter Property="TextElement.FontSize"
-                            Value="8" />
-                            </Style>
-                        </GridView.ColumnHeaderContainerStyle>
-                        <GridViewColumn Header="Guests" Width="auto" DisplayMemberBinding="{Binding numberOfGuests}" />
-                        <GridViewColumn Header="Time" Width="auto" DisplayMemberBinding="{Binding stringTime}" />
-                        <GridViewColumn Header="Name" Width="auto" DisplayMemberBinding="{Binding name}" />
-                        <GridViewColumn Header="Phone Number" Width="auto" DisplayMemberBinding="{Binding phoneNumber}" />
-                        <GridViewColumn Header="Parameter" Width="auto" DisplayMemberBinding="{Binding parameter}" />
-                        <GridViewColumn Header="ID" Width="auto" DisplayMemberBinding="{Binding id}" />
-
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </StackPanel>-->
 
         <Label Grid.Column="1" Content="Reservation List" HorizontalAlignment="Center" FontSize="30"/>
 

@@ -144,8 +144,8 @@ namespace P4TableManagement
         {
             bool doneDrawingBackground = false;
             int nextX = 0, nextY = 0;
-            int rowCounter = 0;
-            bool _nextIsOdd = false;
+            int rowCounter = 0; // If _nextIsOdd is not being used, then same for this boy
+            bool _nextIsOdd = false; //Not being used we only set it all the time?
             int x = 1;
             int y = 1;
             int tableID = 1;
@@ -848,6 +848,15 @@ namespace P4TableManagement
             tableManagementSystem.ReservationList.Remove(tableManagementSystem.ReservationList.Find(x => x.id == selectedBooking.id));
 
             ReservationListView.Items.Refresh();
+        }
+
+        // Map Editor click event
+        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
+        {
+            MapEditorWindow mapEditorWindow = new MapEditorWindow();
+            mapEditorWindow.ShowDialog();
+
+            // Vil nok gerne lukke MainWindow og starte det igen når mapEditorWindow lukkes igen, så mappet tegnes ud fra hvad der blev valgt i mapEditorWindow.
         }
     }
 }
