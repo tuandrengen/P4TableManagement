@@ -1,0 +1,90 @@
+﻿<Window x:Class="P4TableManagement.MapSectionEditor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:P4TableManagement"
+        mc:Ignorable="d"
+        WindowState="Maximized"
+        WindowStyle="None"
+        Title="MapSectionEditor" Height="450" Width="800">
+    
+    <!--Here we define our ControlTemplate for a button where we make it round.-->
+    <Window.Resources>
+        <ControlTemplate x:Key="roundButton" TargetType="Button">
+            <Grid>
+                <Ellipse Fill="{TemplateBinding Background}" Stroke="{TemplateBinding Foreground}"></Ellipse>
+                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"></ContentPresenter>
+            </Grid>
+        </ControlTemplate>
+    </Window.Resources>
+    
+    
+    <!--NOTE: Mangler vi ikke en "Save" knap? annullere knap osv?-->
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.8*"/>
+            <ColumnDefinition Width="200"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.2*"/>
+            <RowDefinition Height="0.8*"/>
+        </Grid.RowDefinitions>
+        
+        <DockPanel Grid.Row="0" Grid.Column="0" Width="800" Height="100" HorizontalAlignment="Left">
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" VerticalAlignment="Center">
+                <Menu HorizontalAlignment="Center" Background="White" Height="50" Width="60">
+                    <MenuItem BorderThickness="0">
+                        <MenuItem.Header>
+                            <Image Width="50" Height="60" Source="C:\P4\hamburger1.png"/>
+                        </MenuItem.Header>
+                        <MenuItem Header="Main screen QUESTION MARK"/>
+                        <MenuItem Header="Help"/>
+                        <MenuItem Header="Settings"/>
+                        <MenuItem Header="Contact us"/>
+                    </MenuItem>
+                </Menu>
+                <Label x:Name="LabelTitle" Content="Map Editor - Section X" FontSize="25" Margin="5"/>
+                <Button Content="Combine" Width="100" Height="25" Margin="0,40,0,0"/>
+            </StackPanel>
+        </DockPanel>
+
+        <Canvas x:Name="Canvas" Grid.Row="1" Grid.Column="0" Background="LightGray"></Canvas>
+
+        <ScrollViewer Grid.Row="1" Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Center">
+
+                <StackPanel Orientation="Vertical">
+                <Label Content="Map Elements" FontSize="20" HorizontalAlignment="Center"/>
+                <StackPanel Height="75" Orientation="Horizontal">
+                    <Button Height="50" Width="75" Content="Small Table" Margin="5"></Button>
+                    <Button Height="50" Width="75" Content="Large Table" Margin="5"></Button>
+                </StackPanel>
+
+                <StackPanel Height="100" Orientation="Horizontal">
+                    <Button Template="{StaticResource roundButton}" Background="Aqua" Height="75" Width="75" Content="Window" Margin="5"/>
+                    <Button Template="{StaticResource roundButton}" Background="Aqua" Height="75" Width="75" Content="Bar" Margin="5"/>
+                </StackPanel>
+                
+                <StackPanel Height="100" Orientation="Horizontal">
+                    <Button Template="{StaticResource roundButton}" Background="Aqua" Height="75" Width="75" Content="Aquarium" Margin="5"/>
+                    <Button Template="{StaticResource roundButton}" Background="Aqua" Height="75" Width="75" Content="Softice" Margin="5"/>
+                </StackPanel>
+                
+                <StackPanel Height="100" Orientation="Horizontal">
+                    <Button Template="{StaticResource roundButton}" Background="Aqua" Height="75" Width="75" Content="Kitchen" Margin="5"/>
+                </StackPanel>
+
+            </StackPanel>
+
+        </ScrollViewer>
+
+        <DockPanel Grid.Column="1" Grid.Row="1">
+            <Button DockPanel.Dock="Bottom" Template="{StaticResource roundButton}" Height="50" Width="50" Margin="0,0,10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                <Image Source="C:\P4\plus.png"></Image>
+            </Button>
+        </DockPanel>
+        
+
+    </Grid>
+</Window>
