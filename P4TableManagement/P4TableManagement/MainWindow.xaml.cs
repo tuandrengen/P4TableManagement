@@ -857,6 +857,7 @@ namespace P4TableManagement
             mapEditorWindow.ShowDialog();
 
             // Vil nok gerne lukke MainWindow og starte det igen når mapEditorWindow lukkes igen, så mappet tegnes ud fra hvad der blev valgt i mapEditorWindow.
+            this.Close();
         }
     }
 }

@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         WindowState="Maximized"
         WindowStyle="None"
-        Title="MapSectionEditor" Height="450" Width="800">
+        Title="MapSectionEditor" Height="450" Width="800" ContentRendered="Window_ContentRendered">
     
     <!--Here we define our ControlTemplate for a button where we make it round.-->
     <Window.Resources>
@@ -50,7 +50,7 @@
             </StackPanel>
         </DockPanel>
 
-        <Canvas x:Name="Canvas" Grid.Row="1" Grid.Column="0" Background="LightGray"></Canvas>
+        <Canvas x:Name="Canvas" Grid.Row="1" Grid.Column="0" Background="LightGray" Margin="5"></Canvas>
 
         <ScrollViewer Grid.Row="1" Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Center">
 

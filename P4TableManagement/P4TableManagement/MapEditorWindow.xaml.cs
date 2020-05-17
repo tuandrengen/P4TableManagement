@@ -46,21 +46,21 @@ namespace P4TableManagement
             // Først skal der tegnes de eksisterende map sections, derefter kommer CreateMapSection knappen.
             //while (!doneDrawing)
             //{
-                // Draw map sections from file
-                // create button for each map section yada yada
+            // Draw map sections from file
+            // create button for each map section yada yada
 
-                // Makes sure we don't continue drawing to the right when we have reached the end of the canvas
-                // resets the nextX value so we draw 
-                //if (nextX >= MapSectionsCanvas.ActualWidth)
-                //{
-                //    nextX = Margin;
-                //    nextY += squareSize;
-                //}
-                // When we have drawn a button for each map section that exists from the given file, then we stop.
-                //if (end of line = true)
-                //{
-                //  doneDrawing = true;
-                //}
+            // Makes sure we don't continue drawing to the right when we have reached the end of the canvas
+            // resets the nextX value so we draw 
+            //if (nextX >= MapSectionsCanvas.ActualWidth)
+            //{
+            //    nextX = Margin;
+            //    nextY += squareSize;
+            //}
+            // When we have drawn a button for each map section that exists from the given file, then we stop.
+            //if (end of line = true)
+            //{
+            //  doneDrawing = true;
+            //}
             //}
 
 
@@ -70,7 +70,10 @@ namespace P4TableManagement
                 Width = squareSize,
                 Height = squareSize,
                 Background = Brushes.White,
-                Content = "plus icon" // Vi skal implementere et billede her af et plus icon ._.
+                Content = new Image
+                {
+                    Source = new BitmapImage(new Uri("C:/P4/plus.png"))
+                }
             };
 
             // Sets position
@@ -93,7 +96,9 @@ namespace P4TableManagement
         // Event for creating a new map section
         private void CreateMapSection(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            MapSectionEditor mapSectionEditor = new MapSectionEditor();
+            mapSectionEditor.ShowDialog();
+            this.Close();
         }
     }
 }

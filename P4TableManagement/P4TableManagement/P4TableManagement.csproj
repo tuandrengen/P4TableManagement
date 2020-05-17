@@ -86,6 +86,9 @@
     </Compile>
     <Compile Include="MapElement.cs" />
     <Compile Include="MapSection.cs" />
+    <Compile Include="MapSectionEditorWindow.xaml.cs">
+      <DependentUpon>MapSectionEditorWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Reservation.cs" />
     <Compile Include="ReservationList.cs" />
     <Compile Include="SmallTable.cs" />
@@ -121,6 +124,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="MapEditorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MapSectionEditorWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

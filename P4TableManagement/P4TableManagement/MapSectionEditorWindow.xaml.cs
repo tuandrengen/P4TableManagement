@@ -22,10 +22,16 @@ namespace P4TableManagement
         public MapSectionEditor()
         {
             InitializeComponent();
-            DrawCanvas();
+            //DrawCanvas();
         }
 
+
         private readonly List<Rectangle> AllRectangles = new List<Rectangle>();
+
+        private void Window_ContentRendered(object sender, EventArgs e)
+        {
+            DrawCanvas();
+        }
 
         private void DrawCanvas()
         {
@@ -36,12 +42,10 @@ namespace P4TableManagement
             // Drawing the grid of rectangles
             while (!doneDrawingBackground)
             {
-                //string name = "_1";
                 Rectangle rectangle = new Rectangle
                 {
                     Width = SquareSize,
                     Height = SquareSize,
-                    //Background = Brushes.White,
                     Stroke = Brushes.Black,
                     Fill = Brushes.White
                 };
@@ -52,7 +56,7 @@ namespace P4TableManagement
                 Canvas.SetLeft(rectangle, nextX);
 
                 nextX += SquareSize;
-                if (nextX >= Canvas.ActualWidth)
+                if (nextX >= Canvas.ActualWidth - SquareSize)
                 {
                     nextX = 0;
                     nextY += SquareSize;
