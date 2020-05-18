@@ -17,6 +17,13 @@ namespace P4TableManagement
     /// <summary>
     /// Interaction logic for MapEditorWindow.xaml
     /// </summary>
+    /// 
+    /// TODO:
+    /// 1. Save table placement for that map section
+    ///     - Save the tables in a list, and return it to the main window.
+    ///     - Eventually save the table placement to a .csv file, and load the table placement from that when the system starts.
+    /// 2. Load the table placement in the main window
+    /// 
     public partial class MapEditorWindow : Window
     {
         public MapEditorWindow()
@@ -85,12 +92,6 @@ namespace P4TableManagement
 
             // Subscribes the click event
             button.Click += new RoutedEventHandler(CreateMapSection);
-
-            
-
-
-
-
         } //end of DrawCanvas
 
         // Event for creating a new map section

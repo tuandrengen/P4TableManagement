@@ -88,9 +88,7 @@
             </Button>
         </StackPanel>
 
-
         <Canvas x:Name="Area" ClipToBounds="True" Margin="18,13" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2"  MouseDown="Area_MouseDown"/>
-
 
         <Label Grid.Column="1" Content="Reservation List" HorizontalAlignment="Center" FontSize="30"/>
 

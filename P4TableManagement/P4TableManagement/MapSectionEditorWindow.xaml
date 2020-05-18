@@ -7,29 +7,29 @@
         mc:Ignorable="d"
         WindowState="Maximized"
         WindowStyle="None"
-        Title="MapSectionEditor" Height="450" Width="800" ContentRendered="Window_ContentRendered">
+        Title="MapSectionEditor" Height="1080" Width="1920" ContentRendered="Window_ContentRendered">
     
     <!--Here we define our ControlTemplate for a button where we make it round.-->
     <Window.Resources>
         <ControlTemplate x:Key="roundButton" TargetType="Button">
             <Grid>
-                <Ellipse Fill="{TemplateBinding Background}" Stroke="{TemplateBinding Foreground}"></Ellipse>
-                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"></ContentPresenter>
+                <Ellipse Fill="{TemplateBinding Background}" Stroke="{TemplateBinding Foreground}"/>
+                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Grid>
         </ControlTemplate>
     </Window.Resources>
-    
-    
+
     <!--NOTE: Mangler vi ikke en "Save" knap? annullere knap osv?-->
     <Grid>
-
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.8*"/>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="0.2*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.2*"/>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.1*"/>
             <RowDefinition Height="0.8*"/>
+            <RowDefinition Height="0.4*"/>
         </Grid.RowDefinitions>
         
         <DockPanel Grid.Row="0" Grid.Column="0" Width="800" Height="100" HorizontalAlignment="Left">
@@ -45,43 +45,43 @@
                         <MenuItem Header="Contact us"/>
                     </MenuItem>
                 </Menu>
-                <Label x:Name="LabelTitle" Content="Map Editor - Section X" FontSize="25" Margin="5"/>
-                <Button Content="Combine" Width="100" Height="25" Margin="0,40,0,0"/>
+                <Label x:Name="LabelTitle" Content="Map Editor - Section X" FontSize="45" Margin="5"/>
+                <Button Content="Combine" Width="100" Height="25"/>
             </StackPanel>
         </DockPanel>
 
-        <Canvas x:Name="Canvas" Grid.Row="1" Grid.Column="0" Background="LightGray" Margin="5"></Canvas>
+        <!--<Canvas x:Name="Canvas" Grid.Row="1" Grid.Column="0" Background="LightGray" Margin="5"/>-->
+        <Canvas x:Name="Canvas" ClipToBounds="True" Margin="18,13" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2"/>
 
-        <ScrollViewer Grid.Row="1" Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Center">
-
-                <StackPanel Orientation="Vertical">
-                <Label Content="Map Elements" FontSize="20" HorizontalAlignment="Center"/>
-                <StackPanel Height="75" Orientation="Horizontal">
-                    <Button Height="50" Width="75" Content="Small Table" Margin="5"></Button>
-                    <Button Height="50" Width="75" Content="Large Table" Margin="5"></Button>
+        <ScrollViewer Grid.Row="2" Grid.Column="1" VerticalScrollBarVisibility="Auto" Grid.RowSpan="2" Margin="0,0,0,20">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                <Label Content="Map Elements" FontSize="36" HorizontalAlignment="Center"/>
+                <StackPanel Height="auto" Margin="25,10,25,0" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Height="75" Width="100" Content="Small Table" Margin="5"/>
+                    <Button Height="75" Width="100" Content="Large Table" Margin="5"/>
                 </StackPanel>
 
-                <StackPanel Height="100" Orientation="Horizontal">
-                    <Button Template="{StaticResource roundButton}" Background="Aqua" Height="75" Width="75" Content="Window" Margin="5"/>
-                    <Button Template="{StaticResource roundButton}" Background="Aqua" Height="75" Width="75" Content="Bar" Margin="5"/>
-                </StackPanel>
-                
-                <StackPanel Height="100" Orientation="Horizontal">
-                    <Button Template="{StaticResource roundButton}" Background="Aqua" Height="75" Width="75" Content="Aquarium" Margin="5"/>
-                    <Button Template="{StaticResource roundButton}" Background="Aqua" Height="75" Width="75" Content="Softice" Margin="5"/>
-                </StackPanel>
-                
-                <StackPanel Height="100" Orientation="Horizontal">
-                    <Button Template="{StaticResource roundButton}" Background="Aqua" Height="75" Width="75" Content="Kitchen" Margin="5"/>
+                <StackPanel Height="auto" Margin="25,10,25,0" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Template="{ StaticResource roundButton }" Background="Aqua" Height="100" Width="100" Content="Window" Margin="5"/>
+                    <Button Template="{ StaticResource roundButton }" Background="Aqua" Height="100" Width="100" Content="Bar" Margin="5"/>
                 </StackPanel>
 
+                <StackPanel Height="auto" Margin="25,10,25,0" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Template="{ StaticResource roundButton }" Background="Aqua" Height="100" Width="100" Content="Aquarium" Margin="5"/>
+                    <Button Template="{ StaticResource roundButton }" Background="Aqua" Height="100" Width="100" Content="Softice" Margin="5"/>
+                </StackPanel>
+
+                <StackPanel Height="auto" Margin="25,10,25,0" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Template="{ StaticResource roundButton }" Background="Aqua" Height="100" Width="100" Content="Kitchen" Margin="5"/>
+                    <Button Template="{ StaticResource roundButton }" Background="Aqua" Height="100" Width="100" Content="Kitchen" Margin="5"/>
+                </StackPanel>
             </StackPanel>
 
         </ScrollViewer>
 
-        <DockPanel Grid.Column="1" Grid.Row="1">
-            <Button DockPanel.Dock="Bottom" Template="{StaticResource roundButton}" Height="50" Width="50" Margin="0,0,10,10" HorizontalAlignment="Right" VerticalAlignment="Bottom">
-                <Image Source="C:\P4\plus.png"></Image>
+        <DockPanel Grid.Column="1" Grid.Row="2" Grid.RowSpan="2">
+            <Button DockPanel.Dock="Bottom" Template="{ StaticResource roundButton }" Height="50" Width="50" Margin="0,0,20,20" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                <Image Source="C:\P4\plus.png"/>
             </Button>
         </DockPanel>
         
