@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -122,8 +123,6 @@ namespace P4TableManagement
         {
             foreach (Button button in Area.Children.OfType<Button>())
             {
-                // Kontrolstruktur der afgør om det er et SmallTable eller LargeTable
-
                 SmallTable smallTable = new SmallTable(button.ActualWidth, button.ActualHeight, Canvas.GetLeft(button), Canvas.GetTop(button));
 
                 button.ToolTip = $"Table: { smallTable.tableNumber }" +
@@ -134,8 +133,6 @@ namespace P4TableManagement
                         $"\n BookingID: {smallTable.bookingID}";
 
                 tableManagementSystem.AddTableToList(smallTable);
-
-                //LargeTable largeTable = new LargeTable();
             }
         }
         
@@ -148,13 +145,9 @@ namespace P4TableManagement
             bool _nextIsOdd = false; //Not being used we only set it all the time?
             int x = 1;
             int y = 1;
-            int tableID = 1;
-            bool _firstButtonDrawn = true;
-            bool _tableIsDone = false;
             Random rand = new Random();
-            int random = 0;
 
-            // Drawing the grid of rectangles
+            //Drawing the grid of rectangles
             while (!doneDrawingBackground)
             {
                 //string name = "_1";
@@ -165,12 +158,10 @@ namespace P4TableManagement
                     //Background = Brushes.White,
                     Stroke = Brushes.Black,
                     Fill = Brushes.White,
-                    Name = $"_{ x }_{ y }"
+                    Name = $"_{ x }_{ y }",
+                    Opacity = 0.2
                 };
                 x++;
-
-                //ID++;
-                //letter++;
 
                 Area.Children.Add(rectangle);
                 AllRectangles.Add(rectangle);
@@ -196,90 +187,39 @@ namespace P4TableManagement
                 }
             }
             // Drawing tables
-            while (!_tableIsDone)
+
+            string path = @"C:\P4\Tables.csv";
+            List<string[]> tables = new List<string[]>();
+
+            using (var reader = new StreamReader(path))
+            {
+                reader.ReadLine();
+                while (!reader.EndOfStream)
+                {
+                    var line = reader.ReadLine();
+                    var table = line.Split(';');
+
+                    tables.Add(table);
+                }
+            }
+
+            foreach (var table in tables)
             {
                 Button button = new Button()
                 {
                     Width = tableSize,
                     Height = tableSize,
-                    ToolTip = $"Table: { tableID }" +
-                        $"\nSeats: 4" +
-                        $"\nStatus: Unassigned" +
-                        $"\nX: { nextX }" +
-                        $"\nY: { nextY }",
-                    Content = $"Table { tableID }"
+                    Content = $"Table { table[0] }",
+                    Background = Brushes.White,
+                    BorderThickness = new Thickness(2.0)
                 };
 
-                if (_firstButtonDrawn)
-                {
-                    Canvas.SetTop(button, tableCoordinate);
-                    Canvas.SetLeft(button, tableCoordinate);
-                    _firstButtonDrawn = false;
-                    nextY = 0;
-                    nextY += tableCoordinate;
-                    nextX = tableCoordinate;
-
-                }
-                else
-                {
-                    Canvas.SetTop(button, nextY);
-                    Canvas.SetLeft(button, nextX);
-                }
-                
-                random = rand.Next(1, 4);
-                if (random == 1)
-                {
-                    nextX += 200;
-                }
-                else if (random == 2)
-                {
-                    nextX += 400;
-                }
-                else if (random == 3)
-                {
-                    nextX += 100;
-                }
+                Canvas.SetTop(button, int.Parse(table[2]));
+                Canvas.SetLeft(button, int.Parse(table[1]));
 
                 Area.Children.Add(button);
                 AllButtons.Add(button);
-                button.Click += new RoutedEventHandler(Button_Click); // We assign which method that handles the event
-                //tableManagementSystem.TableList.Add(smallTable); // tilgået korrekt?
-                tableID++;
-
-                _nextIsOdd = !_nextIsOdd;
-                //nextX += 100;
-                if (nextX >= Area.ActualWidth)
-                {
-                    nextX = 10;
-                    if (random == 1)
-                    {
-                        nextX += 200;
-                        
-                    }
-                    else if (random == 2)
-                    {
-                        nextX += 400;
-                        
-                    }
-                    else if (random == 3)
-                    {
-                        nextX += 100;
-                        
-                    }
-                    nextY += 100;
-                    rowCounter++;
-                    _nextIsOdd = (rowCounter % 2 != 0);
-                    x = 1;
-                    y++;
-                    //ID++;
-                    //name = $"{letter}{ID}".ToString();
-                }
-
-                if (nextY >= Area.ActualHeight - tableSize)
-                {
-                    _tableIsDone = true;
-                }
-
+                button.Click += new RoutedEventHandler(Button_Click);
             }
         }
 
@@ -293,7 +233,6 @@ namespace P4TableManagement
         {
             // We get the button we clicked on from the sender
             Button clickedButton = (Button)sender;
-            
 
             // Assign event has been triggered
             if (assignEventActivated)

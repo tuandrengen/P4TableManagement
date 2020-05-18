@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -84,6 +85,66 @@ namespace P4TableManagement
                     _nextIsOdd = false;
                 }
             }
+        }
+
+        void LoadMapElements()
+        {
+            LoadTables();
+            LoadDecorationElements();
+        }
+
+        void LoadTables()
+        {
+
+        }
+
+        void LoadDecorationElements()
+        {
+
+        }
+
+        void SaveMapElements()
+        {
+            SaveTables();
+            SaveDecorationElements();
+        }
+
+        void SaveTables()
+        {
+            string path = @"C:\P4\Tables.csv";
+            using(var writer = new StreamWriter(path, false))
+            {
+                foreach (Button button in Canvas.Children)
+                {
+                    string[] category = button.Content.ToString().Split('L', 'S', 'C');
+                    string log;
+
+                    if (category[0] == "L")
+                    {
+                        log = $"{ category[1] };{ category[0] };{ Canvas.GetLeft(button) };{ Canvas.GetTop(button) };{ button.Height };{ button.Width }";
+                    }
+                    else if (category[0] == "S")
+                    {
+                        log = $"{ category[1] };{ category[0] };{ Canvas.GetLeft(button) };{ Canvas.GetTop(button) };{ button.Height };{ button.Width }";
+                    }
+                    else if (category[0] == "C")
+                    {
+                        log = $"{ category[1] };{ category[0] };{ Canvas.GetLeft(button) };{ Canvas.GetTop(button) };{ button.Height };{ button.Width }";
+                    }
+                    else
+                    {
+                        throw new Exception();
+                    }
+                    
+                    writer.WriteLine(log);
+                    writer.Close();
+                }
+            }
+        }
+
+        void SaveDecorationElements()
+        {
+
         }
 
     }
