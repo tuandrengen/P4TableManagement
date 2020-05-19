@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.Win32;
+using System;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace P4TableManagement
 {
@@ -35,6 +31,8 @@ namespace P4TableManagement
             // ...
 
         }
+
+        string filePath = @"C:\P4\MapSections";
 
         private void DrawCanvas()
         {
@@ -69,10 +67,34 @@ namespace P4TableManagement
             //  doneDrawing = true;
             //}
             //}
+            
+            string[] filePaths = Directory.GetFiles(filePath);
 
+            foreach (var file in filePaths)
+            {
+                Button mapSectionButton = new Button()
+                {
+                    Width = squareSize,
+                    Height = squareSize,
+                    Background = Brushes.White,
+                    Content = Path.GetFileNameWithoutExtension(file)
+                };
+
+                Canvas.SetTop(mapSectionButton, nextY + Margin);
+                Canvas.SetLeft(mapSectionButton, nextX + Margin);
+                //nextY += squareSize;
+                nextX += squareSize+20;
+
+                MapSectionsCanvas.Children.Add(mapSectionButton);
+            }
+
+            foreach (Button button in MapSectionsCanvas.Children.OfType<Button>())
+            {
+                button.Click += new RoutedEventHandler(EnterMapSection);
+            }
 
             // We make the "plus icon" button
-            Button button = new Button()
+            Button addMapSection = new Button()
             {
                 Width = squareSize,
                 Height = squareSize,
@@ -84,20 +106,51 @@ namespace P4TableManagement
             };
 
             // Sets position
-            Canvas.SetTop(button, nextY + Margin);
-            Canvas.SetLeft(button, nextX + Margin);
+            Canvas.SetTop(addMapSection, nextY + Margin);
+            Canvas.SetLeft(addMapSection, nextX + Margin);
 
             // Adds it to the Canvas
-            MapSectionsCanvas.Children.Add(button);
-
+            MapSectionsCanvas.Children.Add(addMapSection);
             // Subscribes the click event
-            button.Click += new RoutedEventHandler(CreateMapSection);
+            addMapSection.Click += new RoutedEventHandler(CreateMapSection);
+
+
         } //end of DrawCanvas
 
         // Event for creating a new map section
         private void CreateMapSection(object sender, RoutedEventArgs e)
         {
-            MapSectionEditor mapSectionEditor = new MapSectionEditor();
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.FileName = "NewMapSection";
+            dlg.DefaultExt = ".csv";
+            dlg.Filter = "Text documents(.csv)|*.csv";
+            dlg.InitialDirectory = filePath;
+
+            Nullable<bool> result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+                MapSectionEditor mapSectionEditor = new MapSectionEditor(Path.GetFileNameWithoutExtension(dlg.FileName));
+                using (FileStream fw = File.Create(dlg.FileName))
+                {
+                    fw.Close();
+                }
+
+                using (var writer = new StreamWriter(dlg.FileName))
+                {
+                    writer.WriteLine("no;x;y");
+                    writer.Close();
+                }
+
+                mapSectionEditor.ShowDialog();
+                this.Close();
+            }
+        }
+
+        private void EnterMapSection(object sender, RoutedEventArgs e)
+        {
+            var button = (Button)sender;
+            MapSectionEditor mapSectionEditor = new MapSectionEditor(button.Content.ToString());
             mapSectionEditor.ShowDialog();
             this.Close();
         }

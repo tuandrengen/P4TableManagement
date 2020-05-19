@@ -2,15 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
 namespace P4TableManagement
@@ -20,14 +15,17 @@ namespace P4TableManagement
     /// </summary>
     public partial class MapSectionEditor : Window
     {
-        public MapSectionEditor()
+        public string filePath { get; set; }
+        public MapSectionEditor(string fileName)
         {
             InitializeComponent();
-            //DrawCanvas();
+
+            filePath = $@"C:\P4\MapSections\{fileName}.csv";
         }
 
 
         private readonly List<Rectangle> AllRectangles = new List<Rectangle>();
+        private static int _tableno = 0;
 
         private void Window_ContentRendered(object sender, EventArgs e)
         {
@@ -84,6 +82,8 @@ namespace P4TableManagement
                     doneDrawingBackground = true;
                     _nextIsOdd = false;
                 }
+
+                LoadMapElements();
             }
         }
 
@@ -93,9 +93,42 @@ namespace P4TableManagement
             LoadDecorationElements();
         }
 
+        int tableSize = 80;
+
         void LoadTables()
         {
+            List<string[]> tables = new List<string[]>();
 
+            using (var reader = new StreamReader(filePath))
+            {
+                reader.ReadLine();
+                while (!reader.EndOfStream)
+                {
+                    var line = reader.ReadLine();
+                    var table = line.Split(';');
+
+                    tables.Add(table);
+                }
+                reader.Close();
+            }
+
+            foreach (var table in tables)
+            {
+                Button button = new Button()
+                {
+                    Width = tableSize,
+                    Height = tableSize,
+                    Content = $"Table { table[0] }",
+                    Background = Brushes.White,
+                    BorderThickness = new Thickness(2.0)
+                };
+
+                Canvas.SetTop(button, int.Parse(table[2]));
+                Canvas.SetLeft(button, int.Parse(table[1]));
+
+                Canvas.Children.Add(button);
+                _tableno++;
+            }
         }
 
         void LoadDecorationElements()
@@ -111,31 +144,16 @@ namespace P4TableManagement
 
         void SaveTables()
         {
-            string path = @"C:\P4\Tables.csv";
-            using(var writer = new StreamWriter(path, false))
+            using (var writer = new StreamWriter(filePath, false))
             {
-                foreach (Button button in Canvas.Children)
-                {
-                    string[] category = button.Content.ToString().Split('L', 'S', 'C');
-                    string log;
+                writer.WriteLine("no;x;y");
 
-                    if (category[0] == "L")
-                    {
-                        log = $"{ category[1] };{ category[0] };{ Canvas.GetLeft(button) };{ Canvas.GetTop(button) };{ button.Height };{ button.Width }";
-                    }
-                    else if (category[0] == "S")
-                    {
-                        log = $"{ category[1] };{ category[0] };{ Canvas.GetLeft(button) };{ Canvas.GetTop(button) };{ button.Height };{ button.Width }";
-                    }
-                    else if (category[0] == "C")
-                    {
-                        log = $"{ category[1] };{ category[0] };{ Canvas.GetLeft(button) };{ Canvas.GetTop(button) };{ button.Height };{ button.Width }";
-                    }
-                    else
-                    {
-                        throw new Exception();
-                    }
-                    
+                foreach (Button button in Canvas.Children.OfType<Button>())
+                {
+                    string id = button.Content.ToString().Replace("Table ", "");
+                    //string id = button.Content.
+                    string log = $"{ id };{ Canvas.GetLeft(button) };{ Canvas.GetTop(button) }";
+
                     writer.WriteLine(log);
                     writer.Close();
                 }
@@ -147,5 +165,27 @@ namespace P4TableManagement
 
         }
 
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            //SaveMapElements();
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.ShowDialog();
+            this.Close();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = new Button()
+            {
+                Height = tableSize,
+                Width = tableSize,
+                Content = $"Table { _tableno }"
+            };
+            
+            // Change to dynamic location (Drag and drop)
+            Canvas.SetLeft(button, 410);
+            Canvas.SetTop(button, 210);
+            Canvas.Children.Add(button);
+        }
     }
 }

@@ -188,7 +188,7 @@ namespace P4TableManagement
             }
             // Drawing tables
 
-            string path = @"C:\P4\Tables.csv";
+            string path = $@"C:\P4\MapSections\Section1.csv";
             List<string[]> tables = new List<string[]>();
 
             using (var reader = new StreamReader(path))
@@ -201,6 +201,7 @@ namespace P4TableManagement
 
                     tables.Add(table);
                 }
+                reader.Close();
             }
 
             foreach (var table in tables)
@@ -286,17 +287,14 @@ namespace P4TableManagement
                 // Sets the second table and combines it with the source table if the source table already has been set and it isn't the one we clicked on
                 if (combineTableSource != tableManagementSystem.TableList.Find(x => $"Table { x.tableNumber }" == (string)clickedButton.Content) && combineTableSource != default)
                 {
-                    
                     combineTableSecond = tableManagementSystem.TableList.Find(x => $"Table { x.tableNumber }" == (string)clickedButton.Content);
                     MessageBox.Show($"Table { combineTableSecond.tableNumber } er nu Second table");
                     currentCombinedTable = tableManagementSystem.CombineTables(combineTableSource, combineTableSecond);
                     AllCombinedTables.Add(currentCombinedTable);
-
                     
                     // Hjælpefunktion der tjekker SourceTable's naboer (rektangler) og farver dem som er ledige
                     CheckNeighbours(sourceButton);
                     
-
                     //foreach (var item in currentCombinedTable.combinedTables)
                     //{
                     //    MessageBox.Show($"Combined Table exist of Table {item.tableNumber}");
