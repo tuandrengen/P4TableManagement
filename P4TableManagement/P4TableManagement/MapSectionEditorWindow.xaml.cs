@@ -25,7 +25,6 @@ namespace P4TableManagement
 
 
         private readonly List<Rectangle> AllRectangles = new List<Rectangle>();
-        private static int _tableno = 0;
 
         private void Window_ContentRendered(object sender, EventArgs e)
         {
@@ -81,8 +80,8 @@ namespace P4TableManagement
                     _nextIsOdd = false;
                 }
 
-                LoadMapElements();
             }
+            LoadMapElements();
         }
 
         void LoadMapElements()
@@ -125,7 +124,6 @@ namespace P4TableManagement
                 Canvas.SetLeft(button, int.Parse(table[1]));
 
                 Canvas.Children.Add(button);
-                _tableno++;
             }
         }
 
@@ -177,7 +175,7 @@ namespace P4TableManagement
             {
                 Height = tableSize,
                 Width = tableSize,
-                Content = $"Table { _tableno }"
+                Content = $"Table "
             };
             
             // Change to dynamic location (Drag and drop)
@@ -185,5 +183,124 @@ namespace P4TableManagement
             Canvas.SetTop(button, 210);
             Canvas.Children.Add(button);
         }
+
+        private void Button_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Button button = (Button)sender;
+            DataObject dataObj = new DataObject(new Button() { Content = "Table", Width = tableSize, Height = tableSize, BorderThickness = new Thickness(2), Background = Brushes.White });
+            DragDrop.DoDragDrop(button, dataObj, DragDropEffects.Copy);
+        }
+
+        private void Canvas_Drop(object sender, DragEventArgs e)
+        {
+            var button = (Button)e.Data.GetData(typeof(Button));
+
+            FindHit(Mouse.GetPosition(Canvas));
+
+            if (_hitRectangle is Rectangle)
+            {
+                Canvas.GetTop(_hitRectangle);
+                Canvas.GetLeft(_hitRectangle);
+
+                Canvas.Children.Add(button);
+            }
+
+            if (_mouseHitType == HitType.None) return;
+
+            if (HitButton is Button)
+            {
+
+            }
+            //var x = Mouse.GetPosition(Canvas);
+
+            //Canvas.SetLeft(button, Mouse.GetPosition(Canvas).X);
+            //Canvas.SetTop(button, Mouse.GetPosition(Canvas).Y);
+            ////Canvas.SetLeft(button, );
+            ////Canvas.SetTop(button, Mouse.GetPosition(Canvas));
+
+            //Canvas.SetLeft(button, 410);
+            //Canvas.SetTop(button, 210);
+
+            //Canvas.Children.Add(button);
+        }
+
+        private void FindHit(Point point)
+        {
+            _hitRectangle = null;
+            HitButton = null;
+            _mouseHitType = HitType.None;
+
+            foreach (Button button in Canvas.Children.OfType<Button>())
+            {
+                _mouseHitType = SetHitType(button, point);
+                if (_mouseHitType != HitType.None)
+                {
+                    HitButton = button;
+                    //return;
+                }
+            }
+
+            foreach (Rectangle rectangle in AllRectangles)
+            {
+                _mouseHitType = SetHitType(rectangle, point);
+                if (_mouseHitType != HitType.None)
+                {
+                    _hitRectangle = rectangle;
+                    return;
+                }
+            }
+
+            // We didn't find a hit.
+            return;
+        }
+
+        private HitType SetHitType(Button button, Point point)
+        {
+            double left = Canvas.GetLeft(button);
+            double top = Canvas.GetTop(button);
+            double right = left + button.Width;
+            double bottom = top + button.Height;
+            if (point.X < left) return HitType.None;
+            if (point.X > right) return HitType.None;
+            if (point.Y < top) return HitType.None;
+            if (point.Y > bottom) return HitType.None;
+
+            const double GAP = 10;
+
+            if (bottom - point.Y < GAP) return HitType.B;
+            return HitType.Body;
+        }
+
+        private HitType SetHitType(Rectangle rectangle, Point point)
+        {
+            double left = Canvas.GetLeft(rectangle);
+            double top = Canvas.GetTop(rectangle);
+            double right = left + rectangle.Width;
+            double bottom = top + rectangle.Height;
+            if (point.X < left) return HitType.None;
+            if (point.X > right) return HitType.None;
+            if (point.Y < top) return HitType.None;
+            if (point.Y > bottom) return HitType.None;
+
+            const double GAP = 10;
+
+            if (bottom - point.Y < GAP) return HitType.B;
+            return HitType.Body;
+        }
+
+        private enum HitType
+        {
+            None, Body, UL, UR, LR, LL, L, R, T, B
+        };
+
+        private HitType _mouseHitType = HitType.None;
+
+        // The Rectangle that was hit.
+        private Rectangle _hitRectangle = null;
+
+        public Button HitButton = null;
+
+        // The Rectangles that the user can move and resize.
+        private readonly List<Rectangle> Rectangles = new List<Rectangle>();
     }
 }

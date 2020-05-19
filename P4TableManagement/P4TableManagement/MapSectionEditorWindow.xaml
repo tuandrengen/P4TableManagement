@@ -51,13 +51,13 @@
         </DockPanel>
 
         <!--<Canvas x:Name="Canvas" Grid.Row="1" Grid.Column="0" Background="LightGray" Margin="5"/>-->
-        <Canvas x:Name="Canvas" ClipToBounds="True" Margin="18,13" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" AllowDrop="True"/>
+        <Canvas x:Name="Canvas" ClipToBounds="True" Margin="18,13" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" AllowDrop="true" Drop="Canvas_Drop"/>
 
         <ScrollViewer Grid.Row="2" Grid.Column="1" VerticalScrollBarVisibility="Auto" Grid.RowSpan="2" Margin="0,0,0,20">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                 <Label Content="Map Elements" FontSize="36" HorizontalAlignment="Center"/>
                 <StackPanel Height="auto" Margin="25,10,25,0" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Height="75" Width="100" Content="Small Table" Margin="5"/>
+                    <Button Height="75" Width="100" Content="Small Table" Margin="5" MouseDown="Button_MouseDown"/>
                     <Button Height="75" Width="100" Content="Large Table" Margin="5" Click="Button_Click"/>
                 </StackPanel>
 
