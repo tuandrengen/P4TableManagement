@@ -31,7 +31,7 @@
                         <MenuItem.Header>
                             <Image Width="50" Height="60" Source="C:\P4\hamburger1.png"/>
                         </MenuItem.Header>
-                        <MenuItem Header="Main screen QUESTION MARK"/>
+                        <MenuItem Header="Main screen" Click="MenuItem_Click"/>
                         <MenuItem Header="Help"/>
                         <MenuItem Header="Settings"/>
                         <MenuItem Header="Contact us"/>

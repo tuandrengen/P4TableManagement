@@ -20,9 +20,10 @@ namespace P4TableManagement
         {
             InitializeComponent();
 
+            LabelTitle.Content = fileName;
             filePath = $@"C:\P4\MapSections\{fileName}.csv";
+            
         }
-
 
         private readonly List<Rectangle> AllRectangles = new List<Rectangle>();
 
@@ -44,12 +45,10 @@ namespace P4TableManagement
             // Drawing the grid of rectangles
             while (!doneDrawingBackground)
             {
-                //string name = "_1";
                 Rectangle rectangle = new Rectangle
                 {
                     Width = SquareSize,
                     Height = SquareSize,
-                    //Background = Brushes.White,
                     Stroke = Brushes.Black,
                     Fill = Brushes.White,
                     Name = $"_{ x }_{ y }",
@@ -123,8 +122,20 @@ namespace P4TableManagement
                 Canvas.SetTop(button, int.Parse(table[2]));
                 Canvas.SetLeft(button, int.Parse(table[1]));
 
+                button.MouseDown += MoveExistingTableEvent;
+
                 Canvas.Children.Add(button);
+
+                tableid++;
             }
+        }
+
+        private void MoveExistingTableEvent(object sender, MouseButtonEventArgs e)
+        {
+            Button button = (Button)sender;
+            Canvas.Children.Remove(button);
+            DataObject dataObj = new DataObject(button);
+            DragDrop.DoDragDrop(button, dataObj, DragDropEffects.Move);
         }
 
         void LoadDecorationElements()
@@ -151,8 +162,8 @@ namespace P4TableManagement
                     string log = $"{ id };{ Canvas.GetLeft(button) };{ Canvas.GetTop(button) }";
 
                     writer.WriteLine(log);
-                    writer.Close();
                 }
+                writer.Close();
             }
         }
 
@@ -161,37 +172,28 @@ namespace P4TableManagement
 
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void MainWindow_ClickEvent(object sender, RoutedEventArgs e)
         {
-            //SaveMapElements();
             MainWindow mainWindow = new MainWindow();
-            mainWindow.ShowDialog();
-            this.Close();
+            mainWindow.Show();
+            SaveMapElements();
+            mainWindow.Closed += (s, args) => this.Close();
+            this.Hide();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Button button = new Button()
-            {
-                Height = tableSize,
-                Width = tableSize,
-                Content = $"Table "
-            };
-            
-            // Change to dynamic location (Drag and drop)
-            Canvas.SetLeft(button, 410);
-            Canvas.SetTop(button, 210);
-            Canvas.Children.Add(button);
-        }
+        static int tableid = 1;
 
         private void Button_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Button button = (Button)sender;
-            DataObject dataObj = new DataObject(new Button() { Content = "Table", Width = tableSize, Height = tableSize, BorderThickness = new Thickness(2), Background = Brushes.White });
+            Button newButton = new Button() { Content = $"Table { tableid }", Width = tableSize, Height = tableSize, BorderThickness = new Thickness(2), Background = Brushes.White };
+            newButton.MouseDown += MoveExistingTableEvent;
+            DataObject dataObj = new DataObject(newButton);
             DragDrop.DoDragDrop(button, dataObj, DragDropEffects.Copy);
+            tableid++;
         }
 
-        private void Canvas_Drop(object sender, DragEventArgs e)
+        private void CanvasDropEvent(object sender, DragEventArgs e)
         {
             var button = (Button)e.Data.GetData(typeof(Button));
 
@@ -211,17 +213,6 @@ namespace P4TableManagement
             {
 
             }
-            //var x = Mouse.GetPosition(Canvas);
-
-            //Canvas.SetLeft(button, Mouse.GetPosition(Canvas).X);
-            //Canvas.SetTop(button, Mouse.GetPosition(Canvas).Y);
-            ////Canvas.SetLeft(button, );
-            ////Canvas.SetTop(button, Mouse.GetPosition(Canvas));
-
-            //Canvas.SetLeft(button, 410);
-            //Canvas.SetTop(button, 210);
-
-            //Canvas.Children.Add(button);
         }
 
         private void FindHit(Point point)
@@ -249,7 +240,6 @@ namespace P4TableManagement
                     return;
                 }
             }
-
             // We didn't find a hit.
             return;
         }

@@ -791,10 +791,11 @@ namespace P4TableManagement
         private void MenuItem_Click_2(object sender, RoutedEventArgs e)
         {
             MapEditorWindow mapEditorWindow = new MapEditorWindow();
-            mapEditorWindow.ShowDialog();
+            mapEditorWindow.Show();
+            mapEditorWindow.Closed += (s, args) => this.Close();
 
             // Vil nok gerne lukke MainWindow og starte det igen når mapEditorWindow lukkes igen, så mappet tegnes ud fra hvad der blev valgt i mapEditorWindow.
-            this.Close();
+            this.Hide();
         }
     }
 }

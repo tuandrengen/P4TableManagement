@@ -39,26 +39,26 @@
                         <MenuItem.Header>
                             <Image Width="50" Height="60" Source="C:\P4\hamburger1.png"/>
                         </MenuItem.Header>
-                        <MenuItem Header="Main screen QUESTION MARK" Click="MenuItem_Click"/>
+                        <MenuItem Header="Main screen" Click="MainWindow_ClickEvent"/>
                         <MenuItem Header="Help"/>
                         <MenuItem Header="Settings"/>
                         <MenuItem Header="Contact us"/>
                     </MenuItem>
                 </Menu>
-                <Label x:Name="LabelTitle" Content="Map Editor - Section X" FontSize="45" Margin="5"/>
+                <Label x:Name="LabelTitle" FontSize="45" Margin="5"/>
                 <Button Content="Combine" Width="100" Height="25"/>
             </StackPanel>
         </DockPanel>
 
         <!--<Canvas x:Name="Canvas" Grid.Row="1" Grid.Column="0" Background="LightGray" Margin="5"/>-->
-        <Canvas x:Name="Canvas" ClipToBounds="True" Margin="18,13" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" AllowDrop="true" Drop="Canvas_Drop"/>
+        <Canvas x:Name="Canvas" ClipToBounds="True" Margin="18,13" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" AllowDrop="true" Drop="CanvasDropEvent"/>
 
         <ScrollViewer Grid.Row="2" Grid.Column="1" VerticalScrollBarVisibility="Auto" Grid.RowSpan="2" Margin="0,0,0,20">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
                 <Label Content="Map Elements" FontSize="36" HorizontalAlignment="Center"/>
                 <StackPanel Height="auto" Margin="25,10,25,0" Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button Height="75" Width="100" Content="Small Table" Margin="5" MouseDown="Button_MouseDown"/>
-                    <Button Height="75" Width="100" Content="Large Table" Margin="5" Click="Button_Click"/>
+                    <Button Height="75" Width="100" Content="Large Table" Margin="5"/>
                 </StackPanel>
 
                 <StackPanel Height="auto" Margin="25,10,25,0" Orientation="Horizontal" HorizontalAlignment="Center">

@@ -130,6 +130,7 @@ namespace P4TableManagement
 
             if (result == true)
             {
+                this.Hide();
                 MapSectionEditor mapSectionEditor = new MapSectionEditor(Path.GetFileNameWithoutExtension(dlg.FileName));
                 using (FileStream fw = File.Create(dlg.FileName))
                 {
@@ -142,17 +143,27 @@ namespace P4TableManagement
                     writer.Close();
                 }
 
-                mapSectionEditor.ShowDialog();
-                this.Close();
+                mapSectionEditor.Closed += (s, args) => this.Close();
+                mapSectionEditor.Show();
             }
         }
 
         private void EnterMapSection(object sender, RoutedEventArgs e)
         {
+            this.Hide();
             var button = (Button)sender;
             MapSectionEditor mapSectionEditor = new MapSectionEditor(button.Content.ToString());
-            mapSectionEditor.ShowDialog();
-            this.Close();
+            mapSectionEditor.Closed += (s, args) => this.Close();
+            mapSectionEditor.Show();
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow main = new MainWindow();
+            main.Show();
+            main.Closed += (s, args) => this.Close();
+            this.Hide();
+
         }
     }
 }
