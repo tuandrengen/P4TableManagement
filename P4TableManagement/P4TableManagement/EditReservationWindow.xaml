@@ -1,0 +1,140 @@
+﻿<Window x:Class="P4TableManagement.EditReservationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:P4TableManagement"
+        mc:Ignorable="d"
+        Title="EditReservationWindow" BorderThickness="1" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" ShowInTaskbar="False" WindowStyle="None" ResizeMode="NoResize">
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="75*"></RowDefinition>
+            <RowDefinition Height="100*"></RowDefinition>
+            <RowDefinition Height="100*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <!--<Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>-->
+
+        <!--Row 1 Title and exit button-->
+
+        <Label Content="Edit reservation" Padding="0,5,0,1" FontSize="30" Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,0,0,0"></Label>
+
+        <DockPanel Grid.Row="0" Margin="0,0,0,0" HorizontalAlignment="Right">
+            <Canvas MinWidth="30" MinHeight="30" >
+                <Button BorderBrush="{x:Null}" MinWidth="30" MinHeight="30" BorderThickness="0" Opacity="1" Click="Button_Click" >
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="White"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Border Background="{TemplateBinding Background}" BorderThickness="0">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+
+                            <!--<Setter Property="Background" Value="White"/>-->
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="Red"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                    <Path x:Name="ButtonPath" Margin="3" Stroke="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" StrokeThickness="1.5" StrokeStartLineCap="Square" StrokeEndLineCap="Square" Stretch="Uniform">
+                        <Path.Data>
+                            <PathGeometry>
+                                <PathGeometry.Figures>
+                                    <PathFigure StartPoint="0,0">
+                                        <LineSegment Point="10,10"/>
+                                    </PathFigure>
+                                    <PathFigure StartPoint="0,10">
+                                        <LineSegment Point="10,0"/>
+                                    </PathFigure>
+                                </PathGeometry.Figures>
+                            </PathGeometry>
+                        </Path.Data>
+                    </Path>
+                </Button>
+            </Canvas>
+        </DockPanel>
+
+        <!--Row 1 RichTextBox + Calendar-->
+        <StackPanel Orientation="Horizontal" Grid.Row="1">
+
+             <!--Instead of 1 textbox we could also divide them into several.-->
+            <StackPanel Orientation="Vertical" Margin="20,10">
+                <Label Content="Number of guests" FontWeight="Bold" Padding="0,5,0,1"></Label>
+                <RichTextBox x:Name="NumberOfGuestText" MinWidth="100" MinHeight="20" HorizontalAlignment="Left" HorizontalScrollBarVisibility="Auto"></RichTextBox>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="20,10">
+                <Label Content="Time" FontWeight="Bold" Padding="0,5,0,1"></Label>
+                <RichTextBox MinWidth="50" MinHeight="20" HorizontalAlignment="Left" HorizontalScrollBarVisibility="Auto"></RichTextBox>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="20,10">
+                <Label Content="Name" FontWeight="Bold" Padding="0,5,0,1"></Label>
+                <RichTextBox MinWidth="100" MinHeight="20" HorizontalAlignment="Left" HorizontalScrollBarVisibility="Auto"></RichTextBox>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="20,10">
+                <Label Content="Telephone number" FontWeight="Bold" Padding="0,5,0,1"></Label>
+                <RichTextBox MinWidth="100" MinHeight="20" HorizontalAlignment="Left" HorizontalScrollBarVisibility="Auto"></RichTextBox>
+            </StackPanel>
+
+        </StackPanel>
+
+        <!--<StackPanel Orientation="Vertical" Margin="20,10,4,10">
+            <Label Content="Number of guests, Time, Name, Tel." FontWeight="Bold" Padding="0,5,0,1"></Label>
+            <RichTextBox MinWidth="250" MinHeight="20" HorizontalAlignment="Left" HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True"></RichTextBox>
+        </StackPanel>
+        <StackPanel Orientation="Vertical" Margin="20,10,5,10">
+            <Label Content="Date" FontWeight="Bold" Padding="0,5,0,1"></Label>
+            <RichTextBox MinWidth="75" MinHeight="20" HorizontalAlignment="Left" HorizontalScrollBarVisibility="Auto"></RichTextBox>
+        </StackPanel>
+
+        <Button Background="White" BorderThickness="0" Height="50" Width="50">
+            <Image Source="C:\P4\calendar_logo.png" Height="50" Width="50"/>
+        </Button>-->
+
+
+
+        <!--Row 2 checkbox-->
+
+        <StackPanel  Orientation="Vertical" Grid.Row="2">
+            <Label Content="Parameters" FontWeight="Bold" Padding="0" Margin="20,15,20,5"></Label>
+            <StackPanel Orientation="Horizontal" Margin="20,5">
+                <CheckBox Content="Close to aquarium" Margin="0,0,20,0" Padding="4,0,0,0"></CheckBox>
+                <CheckBox Content="Next to window" Margin="0,0,20,0"></CheckBox>
+                <CheckBox Content="Flag" Margin="13,0,20,0"></CheckBox>
+                <CheckBox Content="Gap Booking" Margin="25,0,20,0"></CheckBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="20,5">
+                <CheckBox Content="Close to buffet" Margin="0,0,39,0" Padding="4,0,0,0"></CheckBox>
+                <CheckBox Content="Close to playroom" Margin="0,0,20,0"></CheckBox>
+                <CheckBox Content="Babychair" Margin="0,0,20,0"></CheckBox>
+            </StackPanel>
+        </StackPanel>
+
+
+
+        <!--Row 3 Comments and Add button-->
+
+
+        <StackPanel Orientation="Vertical" Margin="20" Width="250" Grid.Row="3" HorizontalAlignment="Left">
+            <Label Content="Comments" FontWeight="Bold" Padding="0,5,0,1"></Label>
+            <RichTextBox Height="50"></RichTextBox>
+        </StackPanel>
+
+        <Button Grid.Row="3" Width="100" Height="50" Content="Confirm" BorderThickness="1,1,2,2" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10,10,20,20"></Button>
+
+
+
+    </Grid>
+</Window>

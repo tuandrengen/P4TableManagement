@@ -5,8 +5,169 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:P4TableManagement"
         mc:Ignorable="d"
-        Title="MainWindow" Height="1080" Width="1920">
-    <Grid>
+        WindowState="Maximized"
+        WindowStyle="None"
         
+        Title="Table Management System" Height="1080" Width="1920" ContentRendered="Window_ContentRendered">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.8*"/>
+            <ColumnDefinition Width="0.2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.8*"/>
+            <RowDefinition Height="0.4*"/>
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0" Grid.Column="0" Width="800" Height="100" HorizontalAlignment="Left">
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" VerticalAlignment="Center">
+                <Menu HorizontalAlignment="Center" Background="White" Height="50" Width="60">
+                    <MenuItem BorderThickness="0">
+                        <MenuItem.Header>
+                            <Image Width="50" Height="60" Source="C:\P4\hamburger1.png"/>
+                        </MenuItem.Header>
+                        <MenuItem Header="Map Editor" Click="MenuItem_Click_2"/>
+                        <MenuItem Header="Help" Click="MenuItem_Click"/>
+                        <MenuItem Header="Settings"/>
+                        <MenuItem Header="Contact us"/>
+                    </MenuItem>
+                </Menu>
+                <Label x:Name="helper_headline" Content="Table Map" FontSize="45" Margin="5"/>
+            </StackPanel>
+        </DockPanel>
+
+        <!--<Label x:Name="helper_headline" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Content="Default state" FontSize="10" Margin="0" VerticalAlignment="Top" />-->
+
+        <Button BorderThickness="1,1,2,2" Content="Restart system" Width="100" Height="35" HorizontalAlignment="Right" Margin="18,0" VerticalAlignment="Bottom" Click="Button_Click_3"/>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right">
+            <Button x:Name="assignbtn" Content="Assign" Width="100" Height="35" Margin="0,10" VerticalAlignment="Bottom" HorizontalAlignment="Center" Click="Button_Click_1">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="White"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{ x:Type Button }">
+                                    <Border Background="{ TemplateBinding Background }" BorderThickness="1,1,2,2" BorderBrush="LightCoral">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="LightCoral"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button x:Name="combinebtn" Content="Combine" Width="100" Height="35" Margin="18,10" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Button_Click_2">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="White"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{ x:Type Button }">
+                                    <Border Background="{ TemplateBinding Background }" BorderThickness="1,1,2,2" BorderBrush="LightCoral">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="LightCoral"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+        </StackPanel>
+
+        <Canvas x:Name="Area" ClipToBounds="True" Margin="18,13" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2"  MouseDown="Area_MouseDown"/>
+
+        <Label Grid.Column="1" Content="Reservation List" HorizontalAlignment="Center" FontSize="30"/>
+
+        <ListView Margin="0,50,0,0" x:Name="ReservationListView" Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" MouseLeftButtonDown="ListView_MouseLeftButtonDown" MouseDown="ListView_MouseDown">
+            <ListView.ContextMenu>
+                <ContextMenu Name="Test" StaysOpen="True" Background="Red">
+                    <MenuItem Header="Edit" Name="EditReservationListView" Click="EditReservationListView_Click"></MenuItem>
+                    <MenuItem Header="Delete" Name="DeleteReservationListView" Click="DeleteReservationListView_Click"></MenuItem>
+                </ContextMenu>
+            </ListView.ContextMenu>
+            <ListView.View>
+                <GridView>
+                    <GridView.ColumnHeaderContainerStyle>
+                        <Style>
+                            <Setter Property="TextElement.FontSize" Value="8" />
+                        </Style>
+                    </GridView.ColumnHeaderContainerStyle>
+                    <GridViewColumn Header="Guests" Width="auto" DisplayMemberBinding="{ Binding numberOfGuests }"/>
+                    <GridViewColumn Header="Time" Width="auto" DisplayMemberBinding="{ Binding stringTime }"/>
+                    <GridViewColumn Header="Name" Width="auto" DisplayMemberBinding="{ Binding name }"/>
+                    <GridViewColumn Header="Phone Number" Width="auto" DisplayMemberBinding="{ Binding phoneNumber }"/>
+                    <GridViewColumn Header="Parameter" Width="auto" DisplayMemberBinding="{ Binding parameter }"/>
+                    <GridViewColumn Header="ID" Width="auto" DisplayMemberBinding="{ Binding id }"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <StackPanel Orientation="Vertical" Grid.Row="4" Grid.Column="1">
+            <Label Content="Assigned reservations" HorizontalAlignment="Center" FontSize="20"/>
+            <ListView MinHeight="190" Margin="10" x:Name="AssignedReservationListView">
+                <ListView.View>
+                    <GridView>
+                        <GridView.ColumnHeaderContainerStyle>
+                            <Style>
+                                <Setter Property="TextElement.FontSize" Value="8"/>
+                            </Style>
+                        </GridView.ColumnHeaderContainerStyle>
+                        <GridViewColumn Header="Guests" Width="auto" DisplayMemberBinding="{ Binding numberOfGuests }"/>
+                        <GridViewColumn Header="Time" Width="auto" DisplayMemberBinding="{ Binding stringTime }"/>
+                        <GridViewColumn Header="Name" Width="auto" DisplayMemberBinding="{ Binding name }"/>
+                        <GridViewColumn Header="Phone Number" Width="auto" DisplayMemberBinding="{ Binding phoneNumber }"/>
+                        <GridViewColumn Header="Parameter" Width="auto" DisplayMemberBinding="{ Binding parameter }"/>
+                        <GridViewColumn Header="ID" Width="auto" DisplayMemberBinding="{ Binding id }"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <Menu Height="50" x:Name="AddBookingMenu" Margin="10,0">
+                <MenuItem Padding="0">
+                    <MenuItem.Header>
+                        <Image Source="C:\P4\plus.png" Height="{Binding ActualHeight, ElementName=AddBookingMenu}" Width="{Binding ActualWidth, ElementName=AddBookingMenu}"></Image>
+                    </MenuItem.Header>
+                    <MenuItem Header="Reservation" Background="White" Click="AddReservationbtn_Click" BorderBrush="White" Height="50">
+                        <MenuItem.Icon>
+                            <Image Source="C:\P4\reservation.png" Margin="0,-15,-9,-15"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Walk-in" Background="White" Click="Walk_in_Click" BorderBrush="White" Height="50">
+                        <MenuItem.Icon>
+                            <Image Source="C:\P4\walker.png" Margin="0,-15,-15,-15" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+            </Menu>
+        </StackPanel>
     </Grid>
+
+
+    <!--<Canvas x:Name="Area" ClipToBounds="True" Width="800" Height="400" Grid.Column="1">
+            <Button x:Name="AddReservationbtn" Height="50" Content="Add new reservation" FontSize="20" Margin="5,0" Click="AddReservationbtn_Click"/>
+<TextBlock Text="Add new booking" Height="{Binding ActualHeight, ElementName=AddBookingMenu}" Width="{Binding ActualWidth, ElementName=AddBookingMenu}"></TextBlock>
+
+    </Canvas>-->
+
+
+
 </Window>
+<!--How to go about creating a chess game
+    https://stackoverflow.com/questions/20560519/wpf-controls-needed-to-build-chess-application/20563181-->
+
+<!--SizeToContent="WidthAndHeight"  ContentRendered="Window_ContentRendered"-->
+
+<!--Add this for no topbar: WindowStyle="None"-->

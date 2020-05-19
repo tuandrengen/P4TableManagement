@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Office.Interop.Excel;
 using _Excel = Microsoft.Office.Interop.Excel;
 
-namespace TableManagementConsole
+namespace P4TableManagement
 {
     public class ReservationList
         // mangler metoder som skaber ny sheet for hver dag
