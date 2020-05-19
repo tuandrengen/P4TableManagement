@@ -51,7 +51,7 @@
         </DockPanel>
 
         <!--<Canvas x:Name="Canvas" Grid.Row="1" Grid.Column="0" Background="LightGray" Margin="5"/>-->
-        <Canvas x:Name="Canvas" ClipToBounds="True" Margin="18,13" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" AllowDrop="True" Drop="Canvas_Drop"/>
+        <Canvas x:Name="Canvas" ClipToBounds="True" Margin="18,13" Grid.Column="0" Grid.Row="2" Grid.RowSpan="2" AllowDrop="True"/>
 
         <ScrollViewer Grid.Row="2" Grid.Column="1" VerticalScrollBarVisibility="Auto" Grid.RowSpan="2" Margin="0,0,0,20">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center">

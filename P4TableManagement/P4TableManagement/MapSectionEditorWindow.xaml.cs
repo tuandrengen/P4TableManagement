@@ -53,12 +53,10 @@ namespace P4TableManagement
                     //Background = Brushes.White,
                     Stroke = Brushes.Black,
                     Fill = Brushes.White,
-                    Name = $"_{ x }_{ y }"
+                    Name = $"_{ x }_{ y }",
+                    Opacity = 0.2
                 };
                 x++;
-
-                //ID++;
-                //letter++;
 
                 Canvas.Children.Add(rectangle);
                 AllRectangles.Add(rectangle);
