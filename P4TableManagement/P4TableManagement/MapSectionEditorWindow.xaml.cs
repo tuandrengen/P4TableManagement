@@ -195,12 +195,12 @@ namespace P4TableManagement
         {
             var button = (Button)e.Data.GetData(typeof(Button));
 
-            FindHit(Mouse.GetPosition(Canvas));
+            FindHit(e.GetPosition(Canvas));
 
             if (_hitRectangle is Rectangle)
-            {
-                Canvas.GetTop(_hitRectangle);
-                Canvas.GetLeft(_hitRectangle);
+            {  
+                Canvas.SetTop(button, Canvas.GetTop(_hitRectangle) + 10);
+                Canvas.SetLeft(button, Canvas.GetLeft(_hitRectangle) + 10);
 
                 Canvas.Children.Add(button);
             }
@@ -240,7 +240,7 @@ namespace P4TableManagement
                 }
             }
 
-            foreach (Rectangle rectangle in AllRectangles)
+            foreach (Rectangle rectangle in Canvas.Children.OfType<Rectangle>())
             {
                 _mouseHitType = SetHitType(rectangle, point);
                 if (_mouseHitType != HitType.None)
