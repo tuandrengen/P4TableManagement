@@ -30,6 +30,7 @@ namespace P4TableManagement
         private void Window_ContentRendered(object sender, EventArgs e)
         {
             DrawCanvas();
+            LoadMapElements();
         }
 
         private void DrawCanvas()
@@ -80,7 +81,6 @@ namespace P4TableManagement
                 }
 
             }
-            LoadMapElements();
         }
 
         void LoadMapElements()
@@ -112,17 +112,25 @@ namespace P4TableManagement
             {
                 Button button = new Button()
                 {
-                    Width = tableSize,
-                    Height = tableSize,
-                    Content = $"Table { table[0] }",
+                    Content = $"{ table[1] };Table { table[0] }",
                     Background = Brushes.White,
                     BorderThickness = new Thickness(2.0)
                 };
+                if (table[1] == "S")
+                {
+                    button.Width = tableSize;
+                    button.Height = tableSize;
+                }
+                else if (table[1] == "L")
+                {
+                    button.Width = tableSize * 2 + 20;
+                    button.Height = tableSize;
+                }
 
-                Canvas.SetTop(button, int.Parse(table[2]));
-                Canvas.SetLeft(button, int.Parse(table[1]));
+                Canvas.SetTop(button, int.Parse(table[3]));
+                Canvas.SetLeft(button, int.Parse(table[2]));
 
-                button.MouseDown += MoveExistingTableEvent;
+                button.MouseDown += MoveExistingTable_Event;
 
                 Canvas.Children.Add(button);
 
@@ -130,12 +138,16 @@ namespace P4TableManagement
             }
         }
 
-        private void MoveExistingTableEvent(object sender, MouseButtonEventArgs e)
+        private void MoveExistingTable_Event(object sender, MouseButtonEventArgs e)
         {
             Button button = (Button)sender;
             Canvas.Children.Remove(button);
             DataObject dataObj = new DataObject(button);
-            DragDrop.DoDragDrop(button, dataObj, DragDropEffects.Move);
+            DragDrop.DoDragDrop(button, dataObj, DragDropEffects.Copy);
+            if (_dropFailed)
+            {
+                Canvas.Children.Add(button);
+            }
         }
 
         void LoadDecorationElements()
@@ -157,9 +169,10 @@ namespace P4TableManagement
 
                 foreach (Button button in Canvas.Children.OfType<Button>())
                 {
-                    string id = button.Content.ToString().Replace("Table ", "");
-                    //string id = button.Content.
-                    string log = $"{ id };{ Canvas.GetLeft(button) };{ Canvas.GetTop(button) }";
+                    string[] yes = button.Content.ToString().Split(';');
+                    string category = yes[0];
+                    string id = yes[1].Replace("Table ", "");
+                    string log = $"{ id };{ category };{ Canvas.GetLeft(button) };{ Canvas.GetTop(button) }";
 
                     writer.WriteLine(log);
                 }
@@ -183,21 +196,36 @@ namespace P4TableManagement
 
         static int tableid = 1;
 
-        private void Button_MouseDown(object sender, MouseButtonEventArgs e)
+        private void DragElement_Event(object sender, MouseButtonEventArgs e)
         {
             Button button = (Button)sender;
-            Button newButton = new Button() { Content = $"Table { tableid }", Width = tableSize, Height = tableSize, BorderThickness = new Thickness(2), Background = Brushes.White };
-            newButton.MouseDown += MoveExistingTableEvent;
+            Button newButton = new Button() { 
+                Content = $"Table { tableid }", 
+                Width = tableSize, 
+                Height = tableSize, 
+                BorderThickness = new Thickness(2), 
+                Background = Brushes.White };
+            newButton.MouseDown += MoveExistingTable_Event;
             DataObject dataObj = new DataObject(newButton);
-            DragDrop.DoDragDrop(button, dataObj, DragDropEffects.Copy);
+            DragDrop.DoDragDrop(button, dataObj, DragDropEffects.Move);
             tableid++;
         }
 
-        private void CanvasDropEvent(object sender, DragEventArgs e)
+        bool _dropFailed = false;
+        private void CanvasDrop_Event(object sender, DragEventArgs e)
         {
             var button = (Button)e.Data.GetData(typeof(Button));
+            _dropFailed = false;
+
 
             FindHit(e.GetPosition(Canvas));
+
+            if (HitButton is Button)
+            {
+                System.Windows.Forms.MessageBox.Show("Table cannot be placed on top of another table!");
+                _dropFailed = true;
+                return;
+            }
 
             if (_hitRectangle is Rectangle)
             {  
@@ -209,10 +237,6 @@ namespace P4TableManagement
 
             if (_mouseHitType == HitType.None) return;
 
-            if (HitButton is Button)
-            {
-
-            }
         }
 
         private void FindHit(Point point)
@@ -227,7 +251,7 @@ namespace P4TableManagement
                 if (_mouseHitType != HitType.None)
                 {
                     HitButton = button;
-                    //return;
+                    return;
                 }
             }
 
@@ -292,5 +316,39 @@ namespace P4TableManagement
 
         // The Rectangles that the user can move and resize.
         private readonly List<Rectangle> Rectangles = new List<Rectangle>();
+
+        private void SmallTable_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Button button = (Button)sender;
+            Button newButton = new Button()
+            {
+                Content = $"S;Table { tableid }",
+                Width = tableSize,
+                Height = tableSize,
+                BorderThickness = new Thickness(2),
+                Background = Brushes.White
+            };
+            newButton.MouseDown += MoveExistingTable_Event;
+            DataObject dataObj = new DataObject(newButton);
+            DragDrop.DoDragDrop(button, dataObj, DragDropEffects.Copy);
+            tableid++;
+        }
+
+        private void LargeTable_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Button button = (Button)sender;
+            Button newButton = new Button()
+            {
+                Content = $"L;Table { tableid }",
+                Width = tableSize+tableSize+20,
+                Height = tableSize,
+                BorderThickness = new Thickness(2),
+                Background = Brushes.White
+            };
+            newButton.MouseDown += MoveExistingTable_Event;
+            DataObject dataObj = new DataObject(newButton);
+            DragDrop.DoDragDrop(button, dataObj, DragDropEffects.Copy);
+            tableid++;
+        }
     }
 }

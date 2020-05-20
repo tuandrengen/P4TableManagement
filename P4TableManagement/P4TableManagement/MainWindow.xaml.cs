@@ -208,15 +208,23 @@ namespace P4TableManagement
             {
                 Button button = new Button()
                 {
-                    Width = tableSize,
-                    Height = tableSize,
                     Content = $"Table { table[0] }",
                     Background = Brushes.White,
                     BorderThickness = new Thickness(2.0)
                 };
+                if (table[1] == "S")
+                {
+                    button.Width = tableSize;
+                    button.Height = tableSize;
+                }
+                else if (table[1] == "L")
+                {
+                    button.Width = tableSize * 2 + 20;
+                    button.Height = tableSize;
+                }
 
-                Canvas.SetTop(button, int.Parse(table[2]));
-                Canvas.SetLeft(button, int.Parse(table[1]));
+                Canvas.SetTop(button, int.Parse(table[3]));
+                Canvas.SetLeft(button, int.Parse(table[2]));
 
                 Area.Children.Add(button);
                 AllButtons.Add(button);
