@@ -139,7 +139,7 @@ namespace P4TableManagement
 
                 using (var writer = new StreamWriter(dlg.FileName))
                 {
-                    writer.WriteLine("no;x;y");
+                    writer.WriteLine("no;category;x;y");
                     writer.Close();
                 }
 
@@ -163,7 +163,6 @@ namespace P4TableManagement
             main.Show();
             main.Closed += (s, args) => this.Close();
             this.Hide();
-
         }
     }
 }

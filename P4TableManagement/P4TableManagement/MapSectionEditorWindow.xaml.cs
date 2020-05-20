@@ -165,7 +165,7 @@ namespace P4TableManagement
         {
             using (var writer = new StreamWriter(filePath, false))
             {
-                writer.WriteLine("no;x;y");
+                writer.WriteLine("no;category;x;y");
 
                 foreach (Button button in Canvas.Children.OfType<Button>())
                 {
