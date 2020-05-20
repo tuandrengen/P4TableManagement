@@ -71,17 +71,17 @@
             <!--Row 1 RichTextBox Number of guests -->
             <StackPanel Orientation="Vertical" Margin="20,10,4,10" Grid.Row="1">
                 <Label Content="Number of guests" FontWeight="Bold" Padding="0,5,0,1"></Label>
-                <RichTextBox Width="200" HorizontalAlignment="Left"></RichTextBox>
+                <RichTextBox x:Name="NumberOfGuestRich" Width="200" HorizontalAlignment="Left"></RichTextBox>
             </StackPanel>
 
 
             <!--Row 2 checkbox-->
             <StackPanel  Orientation="Vertical" Grid.Row="2" Margin="20,5">
                 <Label Content="Parameter" FontWeight="Bold" Padding="0"></Label>
-                <CheckBox Content="Gap Booking" Margin="0,5,0,0" Padding="4,0,0,0"></CheckBox>
+                <CheckBox x:Name="GapCheckBox" Content="Gap Booking" Margin="0,5,0,0" Padding="4,0,0,0"></CheckBox>
             </StackPanel>
 
-        <Button Grid.Row="3" Width="100" Height="50" Content="Add" BorderThickness="1,1,2,2" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10,10,20,20"></Button>
+        <Button x:Name="AddButton" Grid.Row="3" Width="100" Height="50" Content="Add" BorderThickness="1,1,2,2" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10,10,20,20" Click="Button_Click_1"></Button>
 
 
     </Grid>
