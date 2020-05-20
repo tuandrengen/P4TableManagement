@@ -199,7 +199,12 @@ namespace P4TableManagement
                 }
             }
             // Drawing tables
+            LoadTables();
+            LoadDecorationElements();
+        }
 
+        void LoadTables()
+        {
             string path = $@"C:\P4\MapSections\Section1.csv";
             List<string[]> tables = new List<string[]>();
 
@@ -241,6 +246,44 @@ namespace P4TableManagement
                 Area.Children.Add(button);
                 AllButtons.Add(button);
                 button.Click += new RoutedEventHandler(Button_Click);
+            }
+        }
+
+        void LoadDecorationElements()
+        {
+            string path = $@"C:\P4\DecorationElements\Section1.csv";
+            List<string[]> de = new List<string[]>();
+
+            using (var reader = new StreamReader(path))
+            {
+                reader.ReadLine();
+                while (!reader.EndOfStream)
+                {
+                    var line = reader.ReadLine();
+                    var element = line.Split(';');
+
+                    de.Add(element);
+                }
+                reader.Close();
+            }
+
+            foreach (var element in de)
+            {
+                Ellipse ellipse = new Ellipse()
+                {
+                    Width = 100,
+                    Height = 100,
+                    Name = $"{ element[1] }_{ element[0] }"
+                };
+                if (element[1] == "Window")
+                {
+                    ellipse.Fill = Brushes.Aqua;
+                }
+
+                Canvas.SetTop(ellipse, int.Parse(element[3]));
+                Canvas.SetLeft(ellipse, int.Parse(element[2]));
+
+                Area.Children.Add(ellipse);
             }
         }
 

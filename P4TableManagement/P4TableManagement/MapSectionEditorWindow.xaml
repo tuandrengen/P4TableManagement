@@ -62,18 +62,18 @@
                 </StackPanel>
 
                 <StackPanel Height="auto" Margin="25,10,25,0" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Template="{ StaticResource roundButton }" Background="Aqua" Height="100" Width="100" Content="Window" Margin="5"/>
-                    <Button Template="{ StaticResource roundButton }" Background="Aqua" Height="100" Width="100" Content="Bar" Margin="5"/>
+                    <Button Template="{ StaticResource roundButton }" Background="Aqua" Height="100" Width="100" Content="Window" Margin="5" MouseDown="Button_MouseDown"/>
+                    <Button Template="{ StaticResource roundButton }" Background="Green" Height="100" Width="100" Content="Bar" Margin="5"/>
                 </StackPanel>
 
                 <StackPanel Height="auto" Margin="25,10,25,0" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Template="{ StaticResource roundButton }" Background="Aqua" Height="100" Width="100" Content="Aquarium" Margin="5"/>
-                    <Button Template="{ StaticResource roundButton }" Background="Aqua" Height="100" Width="100" Content="Softice" Margin="5"/>
+                    <Button Template="{ StaticResource roundButton }" Background="Chartreuse" Height="100" Width="100" Content="Aquarium" Margin="5"/>
+                    <Button Template="{ StaticResource roundButton }" Background="Beige" Height="100" Width="100" Content="Softice" Margin="5"/>
                 </StackPanel>
 
                 <StackPanel Height="auto" Margin="25,10,25,0" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Template="{ StaticResource roundButton }" Background="Aqua" Height="100" Width="100" Content="Kitchen" Margin="5"/>
-                    <Button Template="{ StaticResource roundButton }" Background="Aqua" Height="100" Width="100" Content="Kitchen" Margin="5"/>
+                    <Button Template="{ StaticResource roundButton }" Background="Tomato" Height="100" Width="100" Content="Kitchen" Margin="5"/>
+                    <Button Template="{ StaticResource roundButton }" Background="BurlyWood" Height="100" Width="100" Content="Buffet" Margin="5"/>
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>
