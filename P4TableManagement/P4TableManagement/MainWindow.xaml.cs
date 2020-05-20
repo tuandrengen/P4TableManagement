@@ -85,6 +85,7 @@ namespace P4TableManagement
         //    return tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}" == (string)clickedButton.Content);
         //}
 
+        // Tik Tok
         private void timer_Tick(object sender, EventArgs e)
         {
             ClockLabel.Content = DateTime.Now.ToLongTimeString();
@@ -119,7 +120,7 @@ namespace P4TableManagement
                 //helper_headline.Content = highlightedReservation.ToString();
                 
                 // Umiddelbar måde til at opdatere listview
-                ICollectionView view = CollectionViewSource.GetDefaultView(tableManagementSystem.ReservationList);
+                ICollectionView view = CollectionViewSource.GetDefaultView(tableManagementSystem.ReservationList); // tror dette er overflødigt
                 view.Refresh();
 
                 MessageBox.Show("SelectedItem from list is: " + selectedBooking.id);
