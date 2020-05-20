@@ -90,11 +90,11 @@
 
             <StackPanel Orientation="Vertical" Margin="20,10,4,10">
                 <Label Content="Number of guests, Time, Name, Tel." FontWeight="Bold" Padding="0,5,0,1"></Label>
-                <RichTextBox MinWidth="250" MinHeight="20" HorizontalAlignment="Left" HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True"></RichTextBox>
+                <RichTextBox x:Name="NumberofguestETCRich" MinWidth="250" MinHeight="20" HorizontalAlignment="Left" HorizontalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True"></RichTextBox>
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="20,10,5,10">
                 <Label Content="Date" FontWeight="Bold" Padding="0,5,0,1"></Label>
-                <RichTextBox MinWidth="75" MinHeight="20" HorizontalAlignment="Left" HorizontalScrollBarVisibility="Auto"></RichTextBox>
+                <RichTextBox x:Name="DateRich" MinWidth="75" MinHeight="20" HorizontalAlignment="Left" HorizontalScrollBarVisibility="Auto"></RichTextBox>
             </StackPanel>
 
             <Button Background="White" BorderThickness="0" Height="50" Width="50">
@@ -107,15 +107,15 @@
             <StackPanel  Orientation="Vertical" Grid.Row="2">
                     <Label Content="Parameters" FontWeight="Bold" Padding="0" Margin="20,15,20,5"></Label>
                         <StackPanel Orientation="Horizontal" Margin="20,5">
-                            <CheckBox Content="Close to aquarium" Margin="0,0,20,0" Padding="4,0,0,0"></CheckBox>
-                            <CheckBox Content="Next to window" Margin="0,0,20,0"></CheckBox>
-                            <CheckBox Content="Flag" Margin="13,0,20,0"></CheckBox>
-                            <CheckBox Content="Gap Booking" Margin="25,0,20,0"></CheckBox>
+                            <CheckBox x:Name="AquariumCheckBox" Content="Close to aquarium" Margin="0,0,20,0" Padding="4,0,0,0"></CheckBox>
+                            <CheckBox x:Name="WindowCheckBox" Content="Next to window" Margin="0,0,20,0"></CheckBox>
+                            <CheckBox x:Name="FlagCheckBox" Content="Flag" Margin="13,0,20,0"></CheckBox>
+                            <CheckBox x:Name="GapCheckBox" Content="Gap Booking" Margin="25,0,20,0"></CheckBox>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="20,5">
-                            <CheckBox Content="Close to buffet" Margin="0,0,39,0" Padding="4,0,0,0"></CheckBox>
-                            <CheckBox Content="Close to playroom" Margin="0,0,20,0"></CheckBox>
-                            <CheckBox Content="Babychair" Margin="0,0,20,0"></CheckBox>
+                            <CheckBox x:Name="BuffetCheckBox" Content="Close to buffet" Margin="0,0,39,0" Padding="4,0,0,0"></CheckBox>
+                            <CheckBox x:Name="PlayroomCheckBox" Content="Close to playroom" Margin="0,0,20,0"></CheckBox>
+                            <CheckBox x:Name="BabychairCheckBox" Content="Babychair" Margin="0,0,20,0"></CheckBox>
                         </StackPanel>
                 </StackPanel>
 
@@ -126,10 +126,12 @@
 
         <StackPanel Orientation="Vertical" Margin="20" Width="250" Grid.Row="3" HorizontalAlignment="Left">
             <Label Content="Comments" FontWeight="Bold" Padding="0,5,0,1"></Label>
-            <RichTextBox Height="50"></RichTextBox>
+            <RichTextBox x:Name="CommentsRich" Height="50"></RichTextBox>
         </StackPanel>
 
-        <Button Grid.Row="3" Width="100" Height="50" Content="Add" BorderThickness="1,1,2,2" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10,10,20,20"></Button>
+        <Button x:Name="AddButton" Grid.Row="3" Width="100" Height="50" Content="Add" BorderThickness="1,1,2,2" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10,10,20,20" Click="Button_Click_1">
+            
+        </Button>
 
         
         
