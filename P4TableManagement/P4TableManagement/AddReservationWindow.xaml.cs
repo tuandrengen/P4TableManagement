@@ -21,7 +21,6 @@ namespace P4TableManagement
     {
         string Parameters;
         readonly TableManagementSystem tableManagementSystem = ((MainWindow)Application.Current.MainWindow).tableManagementSystem;
-        Reservation newReservation;
         private bool IsGap = false;
 
         public AddReservationWindow()
@@ -59,10 +58,8 @@ namespace P4TableManagement
                 MessageBox.Show("du har ikke skrevet i comments");
                 return;
             }
-
             GetParameters();
             CreateReservation(richText1, comment);
-            
         }
 
         private void GetParameters()
@@ -112,13 +109,9 @@ namespace P4TableManagement
             Reservation reservation = new Reservation(8 ,list[2], DateTime.Now, IsGap, Int32.Parse(list[0]), Int32.Parse(list[3]), Parameters, comment);
             reservation.stringTime = list[1];
 
-            //MessageBox.Show($"{list[0]} {list[1]} {list[2]} {list[3]}");
-
-
             tableManagementSystem.ReservationList.Add(reservation);
             ((MainWindow)Application.Current.MainWindow).ReservationListView.Items.Refresh();
             this.Close();
         }
-
     }
 }
