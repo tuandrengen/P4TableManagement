@@ -65,6 +65,12 @@ namespace P4TableManagement
 
             ReservationListView.ItemsSource = tableManagementSystem.ReservationList;
             AssignedReservationListView.ItemsSource = tableManagementSystem.AssignedReservationList;
+
+            // Clock
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += timer_Tick;
+            timer.Start();
         }
 
         private void Window_ContentRendered(object sender, EventArgs e)
@@ -78,6 +84,11 @@ namespace P4TableManagement
 
         //    return tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}" == (string)clickedButton.Content);
         //}
+
+        private void timer_Tick(object sender, EventArgs e)
+        {
+            ClockLabel.Content = DateTime.Now.ToLongTimeString();
+        }
 
         private void ListView_MouseLeftButtonDown (object sender, MouseButtonEventArgs e)
         {
