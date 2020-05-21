@@ -90,25 +90,56 @@ namespace P4TableManagement
         // Tik Tok
         private void timer_Tick(object sender, EventArgs e)
         {
-            ClockLabel.Content = DateTime.Now.ToLongTimeString();
+            var dateNow = DateTime.Now;
+            int hour = dateNow.Hour;
+            int min = dateNow.Minute;
+            string[] seperator = { ":"};
+            Button foundButton;
+
+            ClockLabel.Content = DateTime.Now.ToString("HH:mm");
+            
+
             // Tilføje noget med reservation hvis tiden passer til stringTime så skal bordets farve ændres...
+            foreach (Reservation reservation in tableManagementSystem.AssignedReservationList)
+            {
+
+                string[] list = reservation.stringTime.Split(':');
+
+                int compareStart = DateTime.Compare(reservation.timeStart,DateTime.Now);
+                int compareEnd = DateTime.Compare(reservation.timeEnd, DateTime.Now);
+
+                //MessageBox.Show($"hour: {hour} {list[0]} og {list[1]}");
+
+
+                foreach (Table table in tableManagementSystem.TableList.Where(x => x.state == "Assigned"))
+                {
+                    //if (Int32.Parse(list[0]) >= hour)
+                    //{
+                    // if 
+
+
+
+                       // TimeStart 19:00 - TimeEnd 21:00
+                       // Hvis klokken er 1900 eller senere så rød
+                       // Hvis klokken er 21 eller senere så ikke rød
+
+                        
+                        if (compareStart >= 0)
+                        {
+                            foundButton = AllButtons.Find(x => (string)x.Content == $"Table { table.tableNumber }");
+                            foundButton.Background = Brushes.Red;
+                        }
+                    //}
+                }
+                    
+                
+
+            }
 
         }
 
         private void ListView_MouseLeftButtonDown (object sender, MouseButtonEventArgs e)
         {
-            //string selectedRect;
-
-            //if (e.OriginalSource is Rectangle)
-            //{
-            //    var test = e.Source as FrameworkElement;
-            //    selectedRect = test.Name;
-
-            //    TextBox textBox = new TextBox
-            //    {
-            //        Name = selectedRect
-            //    };
-            //}
 
             ListView listView = sender as ListView;
             var selecteditem = listView.SelectedItem;

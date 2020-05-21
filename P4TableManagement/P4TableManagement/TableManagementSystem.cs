@@ -50,7 +50,7 @@ namespace P4TableManagement
 			//}
 
 			table.bookingID = booking.id;
-			table.state = "Occupied";
+			table.state = "Assigned";
 			//AssignedReservationList.Add(booking);
 
 			MessageBox.Show($"Table #{ table.tableNumber } has been assigned! Booking ID: { table.bookingID }");

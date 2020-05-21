@@ -20,6 +20,7 @@ namespace P4TableManagement
         {
 			this.numberOfGuests = numberOfGuests;
 			this.timeStart = timeStart;
+			timeEnd = timeStart.AddHours(2);
 			isGap = is_gap;
 			//id = System.Threading.Interlocked.Increment(ref _id);
         }
