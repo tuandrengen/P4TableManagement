@@ -78,9 +78,9 @@
         </DockPanel>
 
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" >
-            <RadioButton x:Name="RadioAvailable" Content="Available" Margin="10"></RadioButton>
-            <RadioButton x:Name="RadioOccupied" Content="Occupied" Margin="10"></RadioButton>
-            <RadioButton x:Name="RadioPaid" Content="Paid" Margin="10"></RadioButton>
+            <RadioButton x:Name="RadioAvailable" Checked="RadioAvailable_Checked" Content="Available" Margin="10"></RadioButton>
+            <RadioButton x:Name="RadioOccupied" Checked="RadioOccupied_Checked" Content="Occupied" Margin="10"></RadioButton>
+            <RadioButton x:Name="RadioPaid" Checked="RadioPaid_Checked" Content="Paid" Margin="10"></RadioButton>
         </StackPanel>
 
         <!--<Label Content="INSERT TABLE TEXT" Grid.Row="1" Grid.Column="1" x:Name="LabelText" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12"/>-->
