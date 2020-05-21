@@ -100,36 +100,39 @@ namespace P4TableManagement
             
 
             // Tilføje noget med reservation hvis tiden passer til stringTime så skal bordets farve ændres...
-            foreach (Reservation reservation in tableManagementSystem.AssignedReservationList)
+            foreach (Table table in tableManagementSystem.TableList.Where(x => x.state == "Assigned"))
             {
 
-                string[] list = reservation.stringTime.Split(':');
-
-                int compareStart = DateTime.Compare(reservation.timeStart,DateTime.Now);
-                int compareEnd = DateTime.Compare(reservation.timeEnd, DateTime.Now);
-
-                //MessageBox.Show($"hour: {hour} {list[0]} og {list[1]}");
 
 
-                foreach (Table table in tableManagementSystem.TableList.Where(x => x.state == "Assigned"))
+                foreach (Reservation reservation in tableManagementSystem.AssignedReservationList)
                 {
                     //if (Int32.Parse(list[0]) >= hour)
                     //{
                     // if 
+                    // TimeStart 19:00 - TimeEnd 21:00
+                    // Hvis klokken er 1900 eller senere så rød
+                    // Hvis klokken er 21 eller senere så ikke rød
+
+                    string[] list = reservation.stringTime.Split(':');
+
+                    DateTime datenowtime = DateTime.Parse("30/12/1899 " + DateTime.Now.ToShortTimeString());
+                    //DateTime datemax = DateTime.Parse("30/12/1899 " + max);
+
+                    int compareStart = DateTime.Compare(reservation.timeStart, datenowtime);
+                    int compareEnd = DateTime.Compare(reservation.timeEnd, datenowtime);
+
+                    //MessageBox.Show($"hour: {hour} {list[0]} og {list[1]}");
 
 
-
-                       // TimeStart 19:00 - TimeEnd 21:00
-                       // Hvis klokken er 1900 eller senere så rød
-                       // Hvis klokken er 21 eller senere så ikke rød
-
-                        
-                        if (compareStart >= 0)
+                    if (compareStart <= 0)
                         {
+                            int count = 0;
+                            MessageBox.Show($"time start:  {reservation.timeStart}  time now: {datenowtime} count: {count}");
                             foundButton = AllButtons.Find(x => (string)x.Content == $"Table { table.tableNumber }");
                             foundButton.Background = Brushes.Red;
+                            count++; 
                         }
-                    //}
                 }
                     
                 
