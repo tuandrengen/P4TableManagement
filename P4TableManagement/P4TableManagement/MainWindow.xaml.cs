@@ -102,43 +102,34 @@ namespace P4TableManagement
             // Tilføje noget med reservation hvis tiden passer til stringTime så skal bordets farve ændres...
             foreach (Table table in tableManagementSystem.TableList.Where(x => x.state == "Assigned"))
             {
-
-
-
                 foreach (Reservation reservation in tableManagementSystem.AssignedReservationList)
                 {
-                    //if (Int32.Parse(list[0]) >= hour)
-                    //{
-                    // if 
-                    // TimeStart 19:00 - TimeEnd 21:00
-                    // Hvis klokken er 1900 eller senere så rød
-                    // Hvis klokken er 21 eller senere så ikke rød
+                    if (table.bookingID == reservation.id)
+                    {
+                        string[] list = reservation.stringTime.Split(':');
 
-                    string[] list = reservation.stringTime.Split(':');
+                        DateTime datenowtime = DateTime.Parse("30/12/1899 " + DateTime.Now.ToShortTimeString());
 
-                    DateTime datenowtime = DateTime.Parse("30/12/1899 " + DateTime.Now.ToShortTimeString());
-                    //DateTime datemax = DateTime.Parse("30/12/1899 " + max);
+                        int compareStart = DateTime.Compare(reservation.timeStart, datenowtime);
+                        int compareEnd = DateTime.Compare(reservation.timeEnd, datenowtime);
 
-                    int compareStart = DateTime.Compare(reservation.timeStart, datenowtime);
-                    int compareEnd = DateTime.Compare(reservation.timeEnd, datenowtime);
+                        //MessageBox.Show($"hour: {hour} {list[0]} og {list[1]}");
 
-                    //MessageBox.Show($"hour: {hour} {list[0]} og {list[1]}");
-
-
-                    if (compareStart <= 0)
+                        if (compareStart <= 0)
                         {
-                            int count = 0;
-                            MessageBox.Show($"time start:  {reservation.timeStart}  time now: {datenowtime} count: {count}");
                             foundButton = AllButtons.Find(x => (string)x.Content == $"Table { table.tableNumber }");
                             foundButton.Background = Brushes.Red;
-                            count++; 
+                            table.state = "Occupied";
+                            foundButton.ToolTip = $"Table: { table.tableNumber }" +
+                            $"\nSeats: { table.seats }" +
+                            $"\nStatus: { table.state }" +
+                            $"\nX: { table.placementX }" +
+                            $"\nY: { table.placementY }" +
+                            $"\n BookingID: {table.bookingID}";
                         }
+                    }
                 }
-                    
-                
-
             }
-
         }
 
         private void ListView_MouseLeftButtonDown (object sender, MouseButtonEventArgs e)
@@ -162,10 +153,6 @@ namespace P4TableManagement
                 view.Refresh();
 
                 MessageBox.Show("SelectedItem from list is: " + selectedBooking.id);
-            }
-            else
-            {
-                MessageBox.Show("Hallo min ven  " + selecteditem);
             }
         }
 
@@ -456,10 +443,10 @@ namespace P4TableManagement
                     MessageBox.Show($"Table { combineTableSource.tableNumber } er nu source table");
                 }
             }
-            else
-            {
-                MessageBox.Show("No event has been triggered...");
-            }
+            //else
+            //{
+            //    MessageBox.Show("No event has been triggered...");
+            //}
 
         }
 
@@ -494,7 +481,7 @@ namespace P4TableManagement
                     Height = tableSize,
                     ToolTip = $"{ sourceButton.Content }" +
                         $"\nSeats: { combinedTable.seats }" +
-                        $"\nStatus: Unassigned" +
+                        $"\nStatus: { combinedTable.state }" +
                         $"\nX: { sourceX }" +
                         $"\nY: { sourceY }",
                     Content = $"*{sourceButton.Content}"
@@ -516,7 +503,7 @@ namespace P4TableManagement
                     Height = tableSize,
                     ToolTip = $"{ sourceButton.Content }" +
                         $"\nSeats: { combinedTable.seats }" +
-                        $"\nStatus: Unassigned" +
+                        $"\nStatus: { combinedTable.state }" +
                         $"\nX: { sourceX }" +
                         $"\nY: { sourceY }",
                     Content = $"*{ sourceButton.Content }"
@@ -539,7 +526,7 @@ namespace P4TableManagement
                     Height = tableSize + 100,
                     ToolTip = $"{ sourceButton.Content }" +
                         $"\nSeats: { combinedTable.seats }" +
-                        $"\nStatus: Unassigned" +
+                        $"\nStatus: { combinedTable.state }" +
                         $"\nX: { sourceX }" +
                         $"\nY: { sourceY }",
                     Content = $"*{ sourceButton.Content }"
@@ -562,7 +549,7 @@ namespace P4TableManagement
                     Height = tableSize + 100,
                     ToolTip = $"{ sourceButton.Content }" +
                         $"\nSeats: { combinedTable.seats }" +
-                        $"\nStatus: Unassigned" +
+                        $"\nStatus: { combinedTable.state }" +
                         $"\nX: { sourceX }" +
                         $"\nY: { sourceY }",
                     Content = $"*{sourceButton.Content}"
@@ -788,11 +775,11 @@ namespace P4TableManagement
             }
         }
 
-        private void ListView_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            MessageBox.Show("MOUSEDOWNEVENT: you pressed something");
+        //private void ListView_MouseDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    MessageBox.Show("MOUSEDOWNEVENT: you pressed something");
             
-        }
+        //}
 
         private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -818,10 +805,6 @@ namespace P4TableManagement
                 selectedRectangle.Fill = Brushes.Red;
                 
                 MessageBox.Show("Time to order more copies of: " + selectedRectangle.Name);
-            }
-            else
-            {
-                MessageBox.Show("Hallo min ven " + selecteditem);
             }
             
         }

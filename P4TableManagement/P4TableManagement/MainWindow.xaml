@@ -92,7 +92,7 @@
 
         <Label Grid.Column="1" Content="Reservation List" HorizontalAlignment="Center" FontSize="30"/>
 
-        <ListView Margin="0,50,0,0" x:Name="ReservationListView" Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" MouseLeftButtonDown="ListView_MouseLeftButtonDown" MouseDown="ListView_MouseDown">
+        <ListView Margin="0,50,0,0" x:Name="ReservationListView" Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" MouseLeftButtonDown="ListView_MouseLeftButtonDown">
             <ListView.ContextMenu>
                 <ContextMenu Name="Test" StaysOpen="True" Background="Red">
                     <MenuItem Header="Edit" Name="EditReservationListView" Click="EditReservationListView_Click"></MenuItem>
