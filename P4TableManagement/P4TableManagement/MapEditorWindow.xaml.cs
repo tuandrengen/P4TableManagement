@@ -32,6 +32,8 @@ namespace P4TableManagement
 
         }
 
+        
+
         string filePath = @"C:\P4\MapSections";
 
         private void DrawCanvas()
@@ -83,7 +85,7 @@ namespace P4TableManagement
                 Canvas.SetTop(mapSectionButton, nextY + Margin);
                 Canvas.SetLeft(mapSectionButton, nextX + Margin);
                 //nextY += squareSize;
-                nextX += squareSize+20;
+                nextX += squareSize + 20;
 
                 MapSectionsCanvas.Children.Add(mapSectionButton);
             }
@@ -120,24 +122,43 @@ namespace P4TableManagement
         // Event for creating a new map section
         private void CreateMapSection(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog dlg = new SaveFileDialog();
-            dlg.FileName = "NewMapSection";
-            dlg.DefaultExt = ".csv";
-            dlg.Filter = "Text documents(.csv)|*.csv";
-            dlg.InitialDirectory = filePath;
+            SaveFileDialog tableFile = new SaveFileDialog();
+            tableFile.FileName = "NewMapSection";
+            tableFile.DefaultExt = ".csv";
+            tableFile.Filter = "Text documents(.csv)|*.csv";
+            tableFile.InitialDirectory = filePath;
 
-            Nullable<bool> result = dlg.ShowDialog();
+            Nullable<bool> result = tableFile.ShowDialog();
 
-            if (result == true)
+            SaveFileDialog decorationelementFile = new SaveFileDialog();
+            decorationelementFile.FileName = "NewMapSection";
+            decorationelementFile.DefaultExt = ".csv";
+            decorationelementFile.Filter = "Text documents(.csv)|*.csv";
+            decorationelementFile.InitialDirectory = $@"C:\P4\DecorationElements";
+
+            Nullable<bool> yes = decorationelementFile.ShowDialog();
+
+            using (FileStream fw = File.Create(decorationelementFile.FileName))
+            {
+                fw.Close();
+            }
+
+            using (var writer = new StreamWriter(decorationelementFile.FileName))
+            {
+                writer.WriteLine("no;type;x;y");
+                writer.Close();
+            }
+
+            if (result == true && yes == true)
             {
                 this.Hide();
-                MapSectionEditor mapSectionEditor = new MapSectionEditor(Path.GetFileNameWithoutExtension(dlg.FileName));
-                using (FileStream fw = File.Create(dlg.FileName))
+                MapSectionEditor mapSectionEditor = new MapSectionEditor(Path.GetFileNameWithoutExtension(tableFile.FileName));
+                using (FileStream fw = File.Create(tableFile.FileName))
                 {
                     fw.Close();
                 }
 
-                using (var writer = new StreamWriter(dlg.FileName))
+                using (var writer = new StreamWriter(tableFile.FileName))
                 {
                     writer.WriteLine("no;category;x;y");
                     writer.Close();
