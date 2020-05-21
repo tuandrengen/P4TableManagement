@@ -6,7 +6,8 @@ namespace P4TableManagement
 {
     public class LargeTable : Table
     {
-        public LargeTable() : base(2, 1, 0, 0)
+
+        public LargeTable(double width, double height, double placementX, double placementY) : base(width, height, placementX, placementY)
         {
             seats = 4;
         }

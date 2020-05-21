@@ -139,16 +139,33 @@ namespace P4TableManagement
         {
             foreach (Button button in Area.Children.OfType<Button>())
             {
-                SmallTable smallTable = new SmallTable(button.ActualWidth, button.ActualHeight, Canvas.GetLeft(button), Canvas.GetTop(button));
+                var yes = button.Name.Split('_');
+                if (yes[0] == "S")
+                {
+                    SmallTable smallTable = new SmallTable(button.ActualWidth, button.ActualHeight, Canvas.GetLeft(button), Canvas.GetTop(button));
 
-                button.ToolTip = $"Table: { smallTable.tableNumber }" +
-                        $"\nSeats: { smallTable.seats }" +
-                        $"\nStatus: { smallTable.state }" +
-                        $"\nX: { smallTable.placementX }" +
-                        $"\nY: { smallTable.placementY }" +
-                        $"\n BookingID: {smallTable.bookingID}";
+                    button.ToolTip = $"Table: { smallTable.tableNumber }" +
+                            $"\nSeats: { smallTable.seats }" +
+                            $"\nStatus: { smallTable.state }" +
+                            $"\nX: { smallTable.placementX }" +
+                            $"\nY: { smallTable.placementY }" +
+                            $"\n BookingID: {smallTable.bookingID}";
 
-                tableManagementSystem.AddTableToList(smallTable);
+                    tableManagementSystem.AddTableToList(smallTable);
+                }
+                else if (yes[0] == "L")
+                {
+                    LargeTable largeTable = new LargeTable(button.ActualWidth, button.ActualHeight, Canvas.GetLeft(button), Canvas.GetTop(button));
+
+                    button.ToolTip = $"Table: { largeTable.tableNumber }" +
+                            $"\nSeats: { largeTable.seats }" +
+                            $"\nStatus: { largeTable.state }" +
+                            $"\nX: { largeTable.placementX }" +
+                            $"\nY: { largeTable.placementY }" +
+                            $"\n BookingID: {largeTable.bookingID}";
+
+                    tableManagementSystem.AddTableToList(largeTable);
+                }
             }
         }
         
@@ -232,13 +249,16 @@ namespace P4TableManagement
                     Background = Brushes.White,
                     BorderThickness = new Thickness(2.0)
                 };
+
                 if (table[1] == "S")
                 {
+                    button.Name = $"S_{ table[0] }";
                     button.Width = tableSize;
                     button.Height = tableSize;
                 }
                 else if (table[1] == "L")
                 {
+                    button.Name = $"L_{ table[0] }";
                     button.Width = tableSize * 2 + 20;
                     button.Height = tableSize;
                 }
@@ -314,17 +334,13 @@ namespace P4TableManagement
         private Table combineTableSecond;
         public CombinedTable<Table> currentCombinedTable;
         public Button sourceButton = default;
+        public Button secondButton = default;
 
         // Button representing a table on the map, Event handler
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             // We get the button we clicked on from the sender
             Button clickedButton = (Button)sender;
-
-
-
-
-
 
             // Assign event has been triggered
             if (assignEventActivated)
@@ -378,6 +394,7 @@ namespace P4TableManagement
                 // Sets the second table and combines it with the source table if the source table already has been set and it isn't the one we clicked on
                 if (combineTableSource != tableManagementSystem.TableList.Find(x => $"Table { x.tableNumber }" == (string)clickedButton.Content) && combineTableSource != default)
                 {
+                    secondButton = clickedButton;
                     combineTableSecond = tableManagementSystem.TableList.Find(x => $"Table { x.tableNumber }" == (string)clickedButton.Content);
                     MessageBox.Show($"Table { combineTableSecond.tableNumber } er nu Second table");
                     currentCombinedTable = tableManagementSystem.CombineTables(combineTableSource, combineTableSecond);
@@ -414,6 +431,7 @@ namespace P4TableManagement
 
         private void DrawCombinedTable(CombinedTable<Table> combinedTable)
         {
+
             double sourceX = Canvas.GetLeft(sourceButton);
             double sourceY = Canvas.GetTop(sourceButton);
             double newX = Canvas.GetLeft(_hitRectangle);
@@ -426,7 +444,11 @@ namespace P4TableManagement
             //Area.Children.Remove(combinedTable.combinedTables.Find());
             foreach (Table table in combinedTable.combinedTables)
             {
-                Area.Children.Remove(AllButtons.Find(x => (string)x.Content == $"Table { table.tableNumber }"));
+                if (Area.Children.OfType<Button>().ToList().Find(x => (string)x.Content == $"Table { table.tableNumber }") != null)
+                {
+                    Area.Children.OfType<Button>().ToList().Find(x => (string)x.Content == $"Table {table.tableNumber}").Visibility = Visibility.Hidden;
+                }
+                //Area.Children.Remove(AllButtons.Find(x => (string)x.Content == $"Table { table.tableNumber }"));
             }
 
             // Left
@@ -441,7 +463,7 @@ namespace P4TableManagement
                         $"\nStatus: Unassigned" +
                         $"\nX: { sourceX }" +
                         $"\nY: { sourceY }",
-                    Content = $"{sourceButton.Content}"
+                    Content = $"*{sourceButton.Content}"
                 };
                 button.Margin = new Thickness(10);
                 Canvas.SetTop(button, newY);
@@ -463,7 +485,7 @@ namespace P4TableManagement
                         $"\nStatus: Unassigned" +
                         $"\nX: { sourceX }" +
                         $"\nY: { sourceY }",
-                    Content = $"{ sourceButton.Content }"
+                    Content = $"*{ sourceButton.Content }"
                 };
 
                 //butt.Margin = new Thickness(5);
@@ -486,7 +508,7 @@ namespace P4TableManagement
                         $"\nStatus: Unassigned" +
                         $"\nX: { sourceX }" +
                         $"\nY: { sourceY }",
-                    Content = $"{ sourceButton.Content }"
+                    Content = $"*{ sourceButton.Content }"
                 };
 
                 //butt.Margin = new Thickness(5);
@@ -509,7 +531,7 @@ namespace P4TableManagement
                         $"\nStatus: Unassigned" +
                         $"\nX: { sourceX }" +
                         $"\nY: { sourceY }",
-                    Content = $"{sourceButton.Content}"
+                    Content = $"*{sourceButton.Content}"
                 };
 
                 button.Margin = new Thickness(10);
