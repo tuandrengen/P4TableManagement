@@ -27,6 +27,7 @@ namespace P4TableManagement
         readonly Table table = ((MainWindow)Application.Current.MainWindow).currentTable;
         readonly CombinedTable<Table> combinedTable = ((MainWindow)Application.Current.MainWindow).currentCombinedTable;
         readonly Button button = ((MainWindow)Application.Current.MainWindow).sourceButton;
+        readonly Button hitButton = ((MainWindow)Application.Current.MainWindow).HitButton;
         readonly Reservation reservation = ((MainWindow)Application.Current.MainWindow).highlightedReservation;
 
         public TableWindow()
@@ -63,6 +64,24 @@ namespace P4TableManagement
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void RadioAvailable_Checked(object sender, RoutedEventArgs e)
+        {
+            hitButton.Background = Brushes.White;
+            table.state = "Available";
+        }
+
+        private void RadioOccupied_Checked(object sender, RoutedEventArgs e)
+        {
+            hitButton.Background = Brushes.Red;
+            table.state = "Occupied";
+        }
+
+        private void RadioPaid_Checked(object sender, RoutedEventArgs e)
+        {
+            hitButton.Background = Brushes.Yellow;
+            table.state = "Paid";
         }
     }
 }
