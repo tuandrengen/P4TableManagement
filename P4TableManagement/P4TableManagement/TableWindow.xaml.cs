@@ -56,10 +56,11 @@ namespace P4TableManagement
             {
                 ((MainWindow)Application.Current.MainWindow).Area.Children.OfType<Button>().ToList().Find(x => (string)x.Content == $"Table { item.tableNumber }").Visibility = Visibility.Visible;
             }
+
             var yes = ((MainWindow)Application.Current.MainWindow).Area.Children.OfType<Button>().ToList().Find(x => (string)x.Content == $"*{button.Content}");
 
             ((MainWindow)Application.Current.MainWindow).Area.Children.Remove(yes);
-            MessageBox.Show("Seperated");
+            MessageBox.Show("Separated");
             this.Close();
 
             // Call function from mainwindow that draws the tables that were seperated
