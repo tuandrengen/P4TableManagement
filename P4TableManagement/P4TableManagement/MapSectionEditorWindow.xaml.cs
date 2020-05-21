@@ -277,7 +277,6 @@ namespace P4TableManagement
         static int _tableid = 1;
         static int _decorationElement = 1;
 
-
         private void DragElement_Event(object sender, MouseButtonEventArgs e)
         {
             Button button = (Button)sender;
@@ -310,12 +309,17 @@ namespace P4TableManagement
 
             _dropFailed = false;
 
-
             FindHit(e.GetPosition(Canvas));
 
             if (HitButton is Button)
             {
-                System.Windows.Forms.MessageBox.Show("Table cannot be placed on top of another table!");
+                System.Windows.Forms.MessageBox.Show("Cannot be placed on top of a table!");
+                _dropFailed = true;
+                return;
+            }
+            else if (HitButton is Ellipse)
+            {
+                System.Windows.Forms.MessageBox.Show("Cannot be placed on top of a decoration element!");
                 _dropFailed = true;
                 return;
             }
@@ -352,6 +356,16 @@ namespace P4TableManagement
                 if (_mouseHitType != HitType.None)
                 {
                     HitButton = button;
+                    return;
+                }
+            }
+
+            foreach (Ellipse ellipse in Canvas.Children.OfType<Ellipse>())
+            {
+                _mouseHitType = SetHitType(ellipse, point);
+                if (_mouseHitType != HitType.None)
+                {
+                    HitButton = ellipse;
                     return;
                 }
             }
@@ -403,6 +417,23 @@ namespace P4TableManagement
             return HitType.Body;
         }
 
+        private HitType SetHitType(Ellipse ellipse, Point point)
+        {
+            double left = Canvas.GetLeft(ellipse);
+            double top = Canvas.GetTop(ellipse);
+            double right = left + ellipse.Width;
+            double bottom = top + ellipse.Height;
+            if (point.X < left) return HitType.None;
+            if (point.X > right) return HitType.None;
+            if (point.Y < top) return HitType.None;
+            if (point.Y > bottom) return HitType.None;
+
+            const double GAP = 10;
+
+            if (bottom - point.Y < GAP) return HitType.B;
+            return HitType.Body;
+        }
+
         private enum HitType
         {
             None, Body, UL, UR, LR, LL, L, R, T, B
@@ -413,7 +444,7 @@ namespace P4TableManagement
         // The Rectangle that was hit.
         private Rectangle _hitRectangle = null;
 
-        public Button HitButton = null;
+        public object HitButton = null;
 
         // The Rectangles that the user can move and resize.
         private readonly List<Rectangle> Rectangles = new List<Rectangle>();
