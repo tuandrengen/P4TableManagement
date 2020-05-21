@@ -26,7 +26,10 @@
 
         </Grid.ColumnDefinitions>
 
+        <Label x:Name="OverskriftLabel" Content="Overskrift her" FontSize="15"></Label>
+        
         <DockPanel Grid.Row="0" Margin="0,0,0,0" HorizontalAlignment="Right">
+            
             <Canvas MinWidth="30" MinHeight="30" >
                 <Button BorderBrush="{x:Null}" MinWidth="30" MinHeight="30" BorderThickness="0" Opacity="1" Click="Button_Click" >
                     <Button.Style>
@@ -74,8 +77,13 @@
             </Canvas>
         </DockPanel>
 
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" >
+            <RadioButton x:Name="RadioAvailable" Content="Available" Margin="10"></RadioButton>
+            <RadioButton x:Name="RadioOccupied" Content="Occupied" Margin="10"></RadioButton>
+            <RadioButton x:Name="RadioPaid" Content="Paid" Margin="10"></RadioButton>
+        </StackPanel>
 
-        <Label Content="INSERT TABLE TEXT" Grid.Row="1" Grid.Column="1" x:Name="LabelText" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12"/>
+        <!--<Label Content="INSERT TABLE TEXT" Grid.Row="1" Grid.Column="1" x:Name="LabelText" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12"/>-->
 
         <Rectangle Grid.Row="2" Grid.ColumnSpan="2" Fill="LightGray" Opacity="0.3"></Rectangle>
 

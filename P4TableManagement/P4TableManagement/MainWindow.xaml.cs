@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -89,6 +91,8 @@ namespace P4TableManagement
         private void timer_Tick(object sender, EventArgs e)
         {
             ClockLabel.Content = DateTime.Now.ToLongTimeString();
+            // Tilføje noget med reservation hvis tiden passer til stringTime så skal bordets farve ændres...
+
         }
 
         private void ListView_MouseLeftButtonDown (object sender, MouseButtonEventArgs e)
@@ -254,6 +258,11 @@ namespace P4TableManagement
         {
             // We get the button we clicked on from the sender
             Button clickedButton = (Button)sender;
+
+
+
+
+
 
             // Assign event has been triggered
             if (assignEventActivated)
@@ -641,7 +650,22 @@ namespace P4TableManagement
 
                 TableWindow tableWindow = new TableWindow();
                 //tableWindow.Show();
-                tableWindow.LabelText.Content = $"What do you want to do with { HitButton.Content }";
+                tableWindow.OverskriftLabel.Content = $"{ HitButton.Content }";
+                
+                // Checks what state the table is in
+                if (HitButton.Background == Brushes.White)
+                {
+                    tableWindow.RadioAvailable.IsChecked = true;
+                }
+                if (HitButton.Background == Brushes.Red)
+                {
+                    tableWindow.RadioOccupied.IsChecked = true;
+                }
+                if (HitButton.Background == Brushes.Yellow)
+                {
+                    tableWindow.RadioPaid.IsChecked = true;
+                }
+
                 tableWindow.ShowDialog(); // Can't be minimized now
             }
         }
