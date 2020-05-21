@@ -135,7 +135,7 @@ namespace P4TableManagement
 
                 Canvas.Children.Add(button);
 
-                tableid++;
+                _tableid++;
             }
         }
 
@@ -186,9 +186,29 @@ namespace P4TableManagement
                     Height = 100,
                     Name = $"{ element[1] }_{ element[0] }"
                 };
-                if (element[1] == "Window")
+
+                switch (element[1])
                 {
-                    ellipse.Fill = Brushes.Aqua;
+                    case "Window":
+                        ellipse.Fill = Brushes.Aqua;
+                        break;
+                    case "Bar":
+                        ellipse.Fill = Brushes.Green;
+                        break;
+                    case "Aquarium":
+                        ellipse.Fill = Brushes.Chartreuse;
+                        break;
+                    case "Softice":
+                        ellipse.Fill = Brushes.Beige;
+                        break;
+                    case "Kitchen":
+                        ellipse.Fill = Brushes.Tomato;
+                        break;
+                    case "Buffet":
+                        ellipse.Fill = Brushes.BurlyWood;
+                        break;
+                    default:
+                        break;
                 }
 
                 Canvas.SetTop(ellipse, int.Parse(element[3]));
@@ -250,18 +270,19 @@ namespace P4TableManagement
         {
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
-            SaveMapElements();
             mainWindow.Closed += (s, args) => this.Close();
             this.Hide();
         }
 
-        static int tableid = 1;
+        static int _tableid = 1;
+        static int _decorationElement = 1;
+
 
         private void DragElement_Event(object sender, MouseButtonEventArgs e)
         {
             Button button = (Button)sender;
             Button newButton = new Button() { 
-                Content = $"Table { tableid }", 
+                Content = $"Table { _tableid }", 
                 Width = tableSize, 
                 Height = tableSize, 
                 BorderThickness = new Thickness(2), 
@@ -269,7 +290,7 @@ namespace P4TableManagement
             newButton.MouseDown += MoveExistingTable_Event;
             DataObject dataObj = new DataObject(newButton);
             DragDrop.DoDragDrop(button, dataObj, DragDropEffects.Move);
-            tableid++;
+            _tableid++;
         }
 
         bool _dropFailed = false;
@@ -404,7 +425,7 @@ namespace P4TableManagement
             _isEllipse = false;
             Button newButton = new Button()
             {
-                Content = $"S;Table { tableid }",
+                Content = $"S;Table { _tableid }",
                 Width = tableSize,
                 Height = tableSize,
                 BorderThickness = new Thickness(2),
@@ -413,7 +434,7 @@ namespace P4TableManagement
             newButton.MouseDown += MoveExistingTable_Event;
             DataObject dataObj = new DataObject(newButton);
             DragDrop.DoDragDrop(button, dataObj, DragDropEffects.Copy);
-            tableid++;
+            _tableid++;
         }
 
         private void LargeTable_MouseDown(object sender, MouseButtonEventArgs e)
@@ -423,8 +444,8 @@ namespace P4TableManagement
             _isEllipse = false;
             Button newButton = new Button()
             {
-                Content = $"L;Table { tableid }",
-                Width = tableSize+tableSize+20,
+                Content = $"L;Table { _tableid }",
+                Width = tableSize + tableSize + 20,
                 Height = tableSize,
                 BorderThickness = new Thickness(2),
                 Background = Brushes.White
@@ -432,10 +453,8 @@ namespace P4TableManagement
             newButton.MouseDown += MoveExistingTable_Event;
             DataObject dataObj = new DataObject(newButton);
             DragDrop.DoDragDrop(button, dataObj, DragDropEffects.Copy);
-            tableid++;
+            _tableid++;
         }
-
-        static int _decorationElement = 1;
 
         private void Button_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -453,6 +472,101 @@ namespace P4TableManagement
             DataObject dataObj = new DataObject(newButton);
             DragDrop.DoDragDrop(button, dataObj, DragDropEffects.Copy);
             _decorationElement++;
+        }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            SaveMapElements();
+            System.Windows.Forms.MessageBox.Show("The map section has been saved.");
+        }
+
+        private void ClearDecorationElements_Click(object sender, RoutedEventArgs e)
+        {
+            string text = "Do you want to clear ALL decoration elements?";
+            string caption = "Are you sure?";
+            MessageBoxResult result = MessageBox.Show(text, caption, MessageBoxButton.YesNo);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                ClearDE();
+            }
+        }
+
+        private void ClearTables_Click(object sender, RoutedEventArgs e)
+        {
+            string text = "Do you want to clear ALL tables?";
+            string caption = "Are you sure?";
+            MessageBoxResult result = MessageBox.Show(text, caption, MessageBoxButton.YesNo);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                ClearTableElements();
+            }
+        }
+
+        private void ClearAll_Click(object sender, RoutedEventArgs e)
+        {
+            string text = "Do you want to clear everything?";
+            string caption = "Are you sure?";
+            MessageBoxResult result = MessageBox.Show(text, caption, MessageBoxButton.YesNo);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                ClearTableElements();
+                ClearDE();
+            }
+        }
+
+        void ClearDE()
+        {
+            foreach (Ellipse item in Canvas.Children.OfType<Ellipse>().ToList())
+            {
+                Canvas.Children.Remove(item);
+            }
+            _decorationElement = 1;
+        }
+
+        void ClearTableElements()
+        {
+            foreach (Button item in Canvas.Children.OfType<Button>().ToList())
+            {
+                Canvas.Children.Remove(item);
+            }
+            _tableid = 1;
+        }
+
+        private void ResetTableNo_Click(object sender, RoutedEventArgs e)
+        {
+            string text = "Do you want to reset the table numbers?";
+            string caption = "Are you sure?";
+            MessageBoxResult result = MessageBox.Show(text, caption, MessageBoxButton.YesNo);
+            
+            if (result == MessageBoxResult.Yes)
+            {
+                List<Button> tables = new List<Button>();
+                foreach (var item in Canvas.Children.OfType<Button>())
+                {
+                    tables.Add(item);
+                }
+
+                ClearTableElements();
+
+                foreach (var item in tables)
+                {
+                    if (item.Content.ToString().Contains("L"))
+                    {
+                        item.Content = $"L;Table { _tableid }";
+                    }
+                    else if (item.Content.ToString().Contains("S"))
+                    {
+                        item.Content = $"S;Table { _tableid }";
+                    }
+
+                    Canvas.Children.Add(item);
+                    _tableid++;
+                }
+            }
+
         }
     }
 }

@@ -46,10 +46,21 @@
                     </MenuItem>
                 </Menu>
                 <Label x:Name="LabelTitle" FontSize="45" Margin="5"/>
-                <Button Content="Combine" Width="100" Height="25"/>
             </StackPanel>
         </DockPanel>
 
+        <DockPanel Grid.Row="1" HorizontalAlignment="Left">
+            <Button x:Name="Save" Content="Save" Width="100" Height="25" Margin="20,0,0,0" Click="Save_Click"/>
+            
+        </DockPanel>
+        
+        <DockPanel Grid.Row="1" HorizontalAlignment="Right">
+            <Button x:Name="ResetTableNo" Content="Reset Table No" Width="100" Height="25" Margin="0,0,20,0" Click="ResetTableNo_Click"/>
+            <Button x:Name="ClearAll" Content="Clear Everything" Width="100" Height="25" Margin="0,0,20,0" Click="ClearAll_Click"/>
+            <Button x:Name="ClearTables" Content="Clear Tables" Width="100" Height="25" Margin="0,0,20,0" Click="ClearTables_Click"/>
+            <Button x:Name="ClearDecorationElements" Content="Clear Decoration" Width="100" Height="25" Margin="0,0,20,0" Click="ClearDecorationElements_Click"/>
+        </DockPanel>
+        
         <Canvas x:Name="Canvas" ClipToBounds="True" Margin="18,13" Grid.Column="0" 
                 Grid.Row="2" Grid.RowSpan="2" AllowDrop="true" Drop="CanvasDrop_Event"/>
 
@@ -63,17 +74,17 @@
 
                 <StackPanel Height="auto" Margin="25,10,25,0" Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button Template="{ StaticResource roundButton }" Background="Aqua" Height="100" Width="100" Content="Window" Margin="5" MouseDown="Button_MouseDown"/>
-                    <Button Template="{ StaticResource roundButton }" Background="Green" Height="100" Width="100" Content="Bar" Margin="5"/>
+                    <Button Template="{ StaticResource roundButton }" Background="Green" Height="100" Width="100" Content="Bar" Margin="5" MouseDown="Button_MouseDown"/>
                 </StackPanel>
 
                 <StackPanel Height="auto" Margin="25,10,25,0" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Template="{ StaticResource roundButton }" Background="Chartreuse" Height="100" Width="100" Content="Aquarium" Margin="5"/>
-                    <Button Template="{ StaticResource roundButton }" Background="Beige" Height="100" Width="100" Content="Softice" Margin="5"/>
+                    <Button Template="{ StaticResource roundButton }" Background="Chartreuse" Height="100" Width="100" Content="Aquarium" Margin="5" MouseDown="Button_MouseDown"/>
+                    <Button Template="{ StaticResource roundButton }" Background="Beige" Height="100" Width="100" Content="Softice" Margin="5" MouseDown="Button_MouseDown"/>
                 </StackPanel>
 
                 <StackPanel Height="auto" Margin="25,10,25,0" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Template="{ StaticResource roundButton }" Background="Tomato" Height="100" Width="100" Content="Kitchen" Margin="5"/>
-                    <Button Template="{ StaticResource roundButton }" Background="BurlyWood" Height="100" Width="100" Content="Buffet" Margin="5"/>
+                    <Button Template="{ StaticResource roundButton }" Background="Tomato" Height="100" Width="100" Content="Kitchen" Margin="5" MouseDown="Button_MouseDown"/>
+                    <Button Template="{ StaticResource roundButton }" Background="BurlyWood" Height="100" Width="100" Content="Buffet" Margin="5" MouseDown="Button_MouseDown"/>
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>
@@ -83,7 +94,5 @@
                 <Image Source="C:\P4\plus.png"/>
             </Button>
         </DockPanel>
-        
-
     </Grid>
 </Window>

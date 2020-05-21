@@ -148,7 +148,6 @@ namespace P4TableManagement
             }
         }
         
-
         private void DrawGrid()
         {
             bool doneDrawingBackground = false;
@@ -275,9 +274,29 @@ namespace P4TableManagement
                     Height = 100,
                     Name = $"{ element[1] }_{ element[0] }"
                 };
-                if (element[1] == "Window")
+
+                switch (element[1])
                 {
-                    ellipse.Fill = Brushes.Aqua;
+                    case "Window":
+                        ellipse.Fill = Brushes.Aqua;
+                        break;
+                    case "Bar":
+                        ellipse.Fill = Brushes.Green;
+                        break;
+                    case "Aquarium":
+                        ellipse.Fill = Brushes.Chartreuse;
+                        break;
+                    case "Softice":
+                        ellipse.Fill = Brushes.Beige;
+                        break;
+                    case "Kitchen":
+                        ellipse.Fill = Brushes.Tomato;
+                        break;
+                    case "Buffet":
+                        ellipse.Fill = Brushes.BurlyWood;
+                        break;
+                    default:
+                        break;
                 }
 
                 Canvas.SetTop(ellipse, int.Parse(element[3]));
