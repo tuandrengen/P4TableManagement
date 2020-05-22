@@ -109,7 +109,8 @@ namespace P4TableManagement
                                 $"\nStatus: { table.state }" +
                                 $"\nX: { table.placementX }" +
                                 $"\nY: { table.placementY }" +
-                                $"\n BookingID: {table.bookingID}";
+                                $"\nBookingID: { table.bookingID }" +
+                                $"\nEstimation: { datenowtime.AddHours(2).ToShortTimeString() }";
                         }
                     }
                 }
