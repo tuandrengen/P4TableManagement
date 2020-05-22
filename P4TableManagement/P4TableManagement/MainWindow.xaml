@@ -96,6 +96,23 @@
         <Label Grid.Column="1" Content="Reservation List" HorizontalAlignment="Center" FontSize="30"/>
 
         <ListView Margin="0,50,0,0" x:Name="ReservationListView" Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" MouseLeftButtonUp="ListView_MouseLeftButtonUp">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="ToolTip">
+                        <Setter.Value>
+                            <UniformGrid Columns="1">
+                                <TextBlock Text="Name"></TextBlock>
+                                <TextBlock Text="ID"></TextBlock>
+                                <TextBlock Text="Number of guest"></TextBlock>
+                                <TextBlock Text="Time"></TextBlock>
+                                <TextBlock Text="Phonenumber"></TextBlock>
+                                <TextBlock Text="Parameter"></TextBlock>
+                            </UniformGrid>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+            
             <ListView.ContextMenu>
                 <ContextMenu Name="Test" StaysOpen="True" Background="Red">
                     <MenuItem Header="Edit" Name="EditReservationListView" Click="EditReservationListView_Click"/>
