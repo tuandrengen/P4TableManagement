@@ -39,15 +39,14 @@
             </StackPanel>
         </DockPanel>
 
-        <Label Grid.Row="0" x:Name="ClockLabel" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Top"></Label>
+        <Label Grid.Row="0" x:Name="ClockLabel" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
         <DockPanel Grid.Row="0" HorizontalAlignment="Right">
-            <Button BorderThickness="1,1,2,2" Content="Restart system" Width="100" Height="35" Margin="18,0" Click="RestartSystem_Click"/>
             <Button BorderThickness="1,1,2,2" Content="Reset Tables" Width="100" Height="35" Margin="18,0" Click="ResetTables_Click"/>
         </DockPanel>
 
         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right">
-            <Button x:Name="assignbtn" Content="Assign" Width="100" Height="35" Margin="0,10" VerticalAlignment="Bottom" HorizontalAlignment="Center" Click="AssignButton_Click">
+            <Button x:Name="assignbtn" Content="Assign" Width="100" Height="35" Margin="0,10" Click="AssignButton_Click">
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="Background" Value="White"/>
@@ -68,7 +67,7 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <Button x:Name="combinebtn" Content="Combine" Width="100" Height="35" Margin="18,10" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="CombineButton_Click">
+            <Button x:Name="combinebtn" Content="Combine" Width="100" Height="35" Margin="18,10" Click="CombineButton_Click">
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="Background" Value="White"/>

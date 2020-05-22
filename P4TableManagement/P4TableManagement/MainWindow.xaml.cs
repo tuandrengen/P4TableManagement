@@ -81,7 +81,6 @@ namespace P4TableManagement
             Button foundButton;
 
             ClockLabel.Content = DateTime.Now.ToString("HH:mm");
-            
 
             // Tilføje noget med reservation hvis tiden passer til stringTime så skal bordets farve ændres...
             foreach (Table table in tableManagementSystem.TableList.Where(x => x.state == "Assigned"))
@@ -110,7 +109,7 @@ namespace P4TableManagement
                                 $"\nX: { table.placementX }" +
                                 $"\nY: { table.placementY }" +
                                 $"\nBookingID: { table.bookingID }" +
-                                $"\nEstimation: { datenowtime.AddHours(2).ToShortTimeString() }";
+                                $"\nEstimated leave: { datenowtime.AddHours(2).ToShortTimeString() }";
                         }
                     }
                 }
@@ -804,14 +803,6 @@ namespace P4TableManagement
             combineTableSecond = default;
         }
 
-        //Reset Tables button
-        private void RestartSystem_Click(object sender, RoutedEventArgs e)
-        {
-            //Do some reset tables
-            System.Windows.Forms.Application.Restart();
-            System.Windows.Application.Current.Shutdown();
-        }
-
         // Help
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -882,35 +873,40 @@ namespace P4TableManagement
 
         private void ResetTables_Click(object sender, RoutedEventArgs e)
         {
-            tableManagementSystem.ReservationList.Clear();
-            tableManagementSystem.AssignedReservationList.Clear();
+            MessageBoxResult result = MessageBox.Show("Do you want to reset the tables?", "Are you sure?", MessageBoxButton.YesNo);
 
-            tableManagementSystem.ReservationList = list.PopulateReservationList(path, 1);
-
-            foreach (Reservation reservation in tableManagementSystem.ReservationList)
+            if (result == MessageBoxResult.Yes)
             {
-                reservation.stringTime = reservation.timeStart.ToShortTimeString();
+                tableManagementSystem.ReservationList.Clear();
+                tableManagementSystem.AssignedReservationList.Clear();
+
+                tableManagementSystem.ReservationList = list.PopulateReservationList(path, 1);
+
+                foreach (Reservation reservation in tableManagementSystem.ReservationList)
+                {
+                    reservation.stringTime = reservation.timeStart.ToShortTimeString();
+                }
+
+                tableManagementSystem.AssignedReservationList = new List<Reservation>();
+
+                ReservationListView.ItemsSource = tableManagementSystem.ReservationList;
+                AssignedReservationListView.ItemsSource = tableManagementSystem.AssignedReservationList;
+
+                foreach (var table in Area.Children.OfType<Button>().ToList())
+                {
+                    Area.Children.Remove(table);
+                }
+                AllCombinedTables.Clear();
+
+                foreach (var de in Area.Children.OfType<Ellipse>().ToList())
+                {
+                    Area.Children.Remove(de);
+                }
+
+                LoadTables();
+                CreateTables();
+                LoadDecorationElements(); 
             }
-
-            tableManagementSystem.AssignedReservationList = new List<Reservation>();
-
-            ReservationListView.ItemsSource = tableManagementSystem.ReservationList;
-            AssignedReservationListView.ItemsSource = tableManagementSystem.AssignedReservationList;
-
-            foreach (var table in Area.Children.OfType<Button>().ToList())
-            {
-                Area.Children.Remove(table);
-            }
-            AllCombinedTables.Clear();
-
-            foreach (var de in Area.Children.OfType<Ellipse>().ToList())
-            {
-                Area.Children.Remove(de);
-            }
-
-            LoadTables();
-            CreateTables();
-            LoadDecorationElements();
         }
     }
 }
