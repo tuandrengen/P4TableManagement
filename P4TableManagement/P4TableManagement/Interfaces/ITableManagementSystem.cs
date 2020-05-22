@@ -23,7 +23,6 @@ namespace P4TableManagement
         List<Table> GetTableList(Predicate<Table> searchCriteria);
         void PayTable(Table table);
         void RemoveMapSection(int id);
-        void ReserveTable(Table table, Booking booking);
         void SeparateTables(CombinedTable<Table> combinedTable);
         void ToggleMapSectionVisibility(MapSection mapSection);
         void UnassignTable(Table table);

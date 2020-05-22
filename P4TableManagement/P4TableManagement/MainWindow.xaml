@@ -39,12 +39,15 @@
             </StackPanel>
         </DockPanel>
 
-        <Label Grid.Row="0" Content=" " x:Name="ClockLabel" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Top"></Label>
+        <Label Grid.Row="0" x:Name="ClockLabel" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Top"></Label>
 
-        <Button BorderThickness="1,1,2,2" Content="Restart system" Width="100" Height="35" HorizontalAlignment="Right" Margin="18,0" VerticalAlignment="Bottom" Click="Button_Click_3"/>
+        <DockPanel Grid.Row="0" HorizontalAlignment="Right">
+            <Button BorderThickness="1,1,2,2" Content="Restart system" Width="100" Height="35" Margin="18,0" Click="RestartSystem_Click"/>
+            <Button BorderThickness="1,1,2,2" Content="Reset Tables" Width="100" Height="35" Margin="18,0" Click="ResetTables_Click"/>
+        </DockPanel>
 
         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right">
-            <Button x:Name="assignbtn" Content="Assign" Width="100" Height="35" Margin="0,10" VerticalAlignment="Bottom" HorizontalAlignment="Center" Click="Button_Click_1">
+            <Button x:Name="assignbtn" Content="Assign" Width="100" Height="35" Margin="0,10" VerticalAlignment="Bottom" HorizontalAlignment="Center" Click="AssignButton_Click">
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="Background" Value="White"/>
@@ -65,7 +68,7 @@
                     </Style>
                 </Button.Style>
             </Button>
-            <Button x:Name="combinebtn" Content="Combine" Width="100" Height="35" Margin="18,10" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="Button_Click_2">
+            <Button x:Name="combinebtn" Content="Combine" Width="100" Height="35" Margin="18,10" HorizontalAlignment="Right" VerticalAlignment="Bottom" Click="CombineButton_Click">
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="Background" Value="White"/>
@@ -92,11 +95,11 @@
 
         <Label Grid.Column="1" Content="Reservation List" HorizontalAlignment="Center" FontSize="30"/>
 
-        <ListView Margin="0,50,0,0" x:Name="ReservationListView" Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" MouseLeftButtonDown="ListView_MouseLeftButtonDown">
+        <ListView Margin="0,50,0,0" x:Name="ReservationListView" Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" MouseLeftButtonUp="ListView_MouseLeftButtonUp">
             <ListView.ContextMenu>
                 <ContextMenu Name="Test" StaysOpen="True" Background="Red">
-                    <MenuItem Header="Edit" Name="EditReservationListView" Click="EditReservationListView_Click"></MenuItem>
-                    <MenuItem Header="Delete" Name="DeleteReservationListView" Click="DeleteReservationListView_Click"></MenuItem>
+                    <MenuItem Header="Edit" Name="EditReservationListView" Click="EditReservationListView_Click"/>
+                    <MenuItem Header="Delete" Name="DeleteReservationListView" Click="DeleteReservationListView_Click"/>
                 </ContextMenu>
             </ListView.ContextMenu>
             <ListView.View>
@@ -118,7 +121,7 @@
 
         <StackPanel Orientation="Vertical" Grid.Row="4" Grid.Column="1">
             <Label Content="Assigned reservations" HorizontalAlignment="Center" FontSize="20"/>
-            <ListView MinHeight="190" Margin="10" x:Name="AssignedReservationListView">
+            <ListView MinHeight="190" x:Name="AssignedReservationListView">
                 <ListView.View>
                     <GridView>
                         <GridView.ColumnHeaderContainerStyle>
@@ -135,7 +138,7 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <Menu Height="50" x:Name="AddBookingMenu" Margin="10,0">
+            <Menu Height="50" x:Name="AddBookingMenu">
                 <MenuItem Padding="0">
                     <MenuItem.Header>
                         <Image Source="C:\P4\plus.png" Height="{Binding ActualHeight, ElementName=AddBookingMenu}" Width="{Binding ActualWidth, ElementName=AddBookingMenu}"></Image>

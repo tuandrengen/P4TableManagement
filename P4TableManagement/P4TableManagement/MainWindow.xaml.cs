@@ -31,10 +31,7 @@ namespace P4TableManagement
         const int SquareSize = 100;
         int tableSize = 80;
         int tableCoordinate = 10;
-        public List<Rectangle> AllRectangles = new List<Rectangle>();
-        public List<Button> AllButtons = new List<Button>();
         public List<CombinedTable<Table>> AllCombinedTables = new List<CombinedTable<Table>>();
-        //public TableManagementSystem tableManagementSystem = new TableManagementSystem();
         
         public TableManagementSystem tableManagementSystem { get; set; } = new TableManagementSystem();
         public Table currentTable;
@@ -45,19 +42,14 @@ namespace P4TableManagement
 
         ReservationList list = new ReservationList();
         string path = @"C:\P4\test.xlsx";
-
-        //public List<Reservation> reservationList = new List<Reservation>();
         
 
         public MainWindow()
         {
             InitializeComponent();
 
-            //ReservationList list = new ReservationList();
-            //string path = @"C:\P4\test.xlsx";
-            //List<Reservation> reservationList = list.PopulateReservationList(path, 1);
-
             tableManagementSystem.ReservationList = list.PopulateReservationList(path, 1);
+
             foreach (Reservation reservation in tableManagementSystem.ReservationList)
             {
                 reservation.stringTime = reservation.timeStart.ToShortTimeString();
@@ -78,14 +70,7 @@ namespace P4TableManagement
         private void Window_ContentRendered(object sender, EventArgs e)
         {
             DrawGrid();
-            CreateTables();
         }
-
-        //partial Table ReturnTable(Button clickedButton)
-        //{
-
-        //    return tableManagementSystem.TableList.Find(x => $"Table {x.tableNumber}" == (string)clickedButton.Content);
-        //}
 
         // Tik Tok
         private void timer_Tick(object sender, EventArgs e)
@@ -93,7 +78,6 @@ namespace P4TableManagement
             var dateNow = DateTime.Now;
             int hour = dateNow.Hour;
             int min = dateNow.Minute;
-            string[] seperator = { ":"};
             Button foundButton;
 
             ClockLabel.Content = DateTime.Now.ToString("HH:mm");
@@ -117,42 +101,38 @@ namespace P4TableManagement
 
                         if (compareStart <= 0)
                         {
-                            foundButton = AllButtons.Find(x => (string)x.Content == $"Table { table.tableNumber }");
+                            foundButton = Area.Children.OfType<Button>().ToList().Find(x => (string)x.Content == $"Table { table.tableNumber }");
                             foundButton.Background = Brushes.Red;
                             table.state = "Occupied";
                             foundButton.ToolTip = $"Table: { table.tableNumber }" +
-                            $"\nSeats: { table.seats }" +
-                            $"\nStatus: { table.state }" +
-                            $"\nX: { table.placementX }" +
-                            $"\nY: { table.placementY }" +
-                            $"\n BookingID: {table.bookingID}";
+                                $"\nSeats: { table.seats }" +
+                                $"\nStatus: { table.state }" +
+                                $"\nX: { table.placementX }" +
+                                $"\nY: { table.placementY }" +
+                                $"\n BookingID: {table.bookingID}";
                         }
                     }
                 }
             }
         }
 
-        private void ListView_MouseLeftButtonDown (object sender, MouseButtonEventArgs e)
+        private void ListView_MouseLeftButtonUp (object sender, MouseButtonEventArgs e)
         {
-
             ListView listView = sender as ListView;
             var selecteditem = listView.SelectedItem;
-            //ListViewItem item = (ListViewItem)listView.ItemContainerGenerator.ContainerFromItem(selecteditem);
             
-
             if (selecteditem is Reservation)
             {   
                 Reservation selectedBooking = (Reservation)selecteditem;
 
                 // find the reservation from the reservationList
                 highlightedReservation = tableManagementSystem.ReservationList.Find(x => x.id == selectedBooking.id);
-                //helper_headline.Content = highlightedReservation.ToString();
                 
                 // Umiddelbar måde til at opdatere listview
                 ICollectionView view = CollectionViewSource.GetDefaultView(tableManagementSystem.ReservationList); // tror dette er overflødigt
                 view.Refresh();
 
-                MessageBox.Show("SelectedItem from list is: " + selectedBooking.id);
+                //MessageBox.Show("SelectedItem from list is: " + selectedBooking.id);
             }
         }
 
@@ -217,7 +197,6 @@ namespace P4TableManagement
                 x++;
 
                 Area.Children.Add(rectangle);
-                AllRectangles.Add(rectangle);
                 Canvas.SetTop(rectangle, nextY);
                 Canvas.SetLeft(rectangle, nextX);
 
@@ -241,6 +220,7 @@ namespace P4TableManagement
             }
             // Drawing tables
             LoadTables();
+            CreateTables();
             LoadDecorationElements();
         }
 
@@ -288,7 +268,6 @@ namespace P4TableManagement
                 Canvas.SetLeft(button, int.Parse(table[2]));
 
                 Area.Children.Add(button);
-                AllButtons.Add(button);
                 button.Click += new RoutedEventHandler(Button_Click);
             }
         }
@@ -459,17 +438,15 @@ namespace P4TableManagement
             double newY = Canvas.GetTop(_hitRectangle);
             bool tableLocation = false;
 
-            // Vi tegner det nye kombinerede bord - kræver en position hvor vi kan tegne det
-            // Vi skal fjerne secondTable og sourceTable
-            // Vi skal lave et nyt bord (button) der har størrelsen på sourceTable + secondTable (Width og Height er afhængig af hvad der bliver valgt)
-            //Area.Children.Remove(combinedTable.combinedTables.Find());
+            // Before the new, combined table is being drawn we hide the tables being combined.
+            // This way, when we separate the tables again we change the visibility of the tables back to show,
+            // and they're back to their original position.
             foreach (Table table in combinedTable.combinedTables)
             {
                 if (Area.Children.OfType<Button>().ToList().Find(x => (string)x.Content == $"Table { table.tableNumber }") != null)
                 {
                     Area.Children.OfType<Button>().ToList().Find(x => (string)x.Content == $"Table {table.tableNumber}").Visibility = Visibility.Hidden;
                 }
-                //Area.Children.Remove(AllButtons.Find(x => (string)x.Content == $"Table { table.tableNumber }"));
             }
 
             // Left
@@ -491,7 +468,6 @@ namespace P4TableManagement
                 Canvas.SetLeft(button, newX);
 
                 Area.Children.Add(button);
-                AllButtons.Add(button);
                 button.Click += new RoutedEventHandler(Button_Click);
             }
             // Right
@@ -514,7 +490,6 @@ namespace P4TableManagement
                 Canvas.SetLeft(button, sourceX);
 
                 Area.Children.Add(button);
-                AllButtons.Add(button);
                 button.Click += new RoutedEventHandler(Button_Click);
             }
             // Bottom
@@ -537,7 +512,6 @@ namespace P4TableManagement
                 Canvas.SetLeft(button, sourceX);
 
                 Area.Children.Add(button);
-                AllButtons.Add(button);
                 button.Click += new RoutedEventHandler(Button_Click);
             }
             // Top
@@ -560,7 +534,6 @@ namespace P4TableManagement
                 Canvas.SetLeft(button, newX);
 
                 Area.Children.Add(button);
-                AllButtons.Add(button);
                 button.Click += new RoutedEventHandler(Button_Click);
             }
         }
@@ -665,7 +638,7 @@ namespace P4TableManagement
             HitButton = null;
             _mouseHitType = HitType.None;
 
-            foreach (Button button in AllButtons)
+            foreach (Button button in Area.Children.OfType<Button>())
             {
                 _mouseHitType = SetHitType(button, point);
                 if (_mouseHitType != HitType.None)
@@ -675,7 +648,7 @@ namespace P4TableManagement
                 }
             }
 
-            foreach (Rectangle rectangle in AllRectangles)
+            foreach (Rectangle rectangle in Area.Children.OfType<Rectangle>())
             {
                 _mouseHitType = SetHitType(rectangle, point);
                 if (_mouseHitType != HitType.None)
@@ -741,9 +714,7 @@ namespace P4TableManagement
                         rect.Fill = Brushes.White;
                     }
                 }
-                //MessageBox.Show("ik grøn");
             }
-
 
             if (_mouseHitType == HitType.None) return;
 
@@ -754,7 +725,6 @@ namespace P4TableManagement
                 currentTable = tableManagementSystem.TableList.Find(x => $"Table { x.tableNumber }" == (string)HitButton.Content); // Lave en kontrolstruktur der tjekker om currentTable ikke er null VIGTIGT
 
                 TableWindow tableWindow = new TableWindow();
-                //tableWindow.Show();
                 tableWindow.OverskriftLabel.Content = $"{ HitButton.Content }";
                 
                 // Checks what state the table is in
@@ -775,42 +745,8 @@ namespace P4TableManagement
             }
         }
 
-        //private void ListView_MouseDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    MessageBox.Show("MOUSEDOWNEVENT: you pressed something");
-            
-        //}
-
-        private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            //ListViewItem item = sender as ListViewItem;
-            //object obj = item.Content;
-
-
-            //MessageBox.Show($"you pressed double click and selected {0}", (string)obj);
-
-
-            //XmlElement item = ((ListViewItem)sender).Content as XmlElement;
-
-            //MessageBox.Show("Time to order more copies of _" + item.GetType() +"_");
-
-            ListView listView = sender as ListView;
-            var selecteditem = listView.SelectedItem;
-            //ListViewItem item = (ListViewItem)listView.ItemContainerGenerator.ContainerFromItem(selecteditem);
-
-            if (selecteditem is Rectangle)
-            {
-                Rectangle selectedRectangle = selecteditem as Rectangle;
-
-                selectedRectangle.Fill = Brushes.Red;
-                
-                MessageBox.Show("Time to order more copies of: " + selectedRectangle.Name);
-            }
-            
-        }
-
         // Assign button
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void AssignButton_Click(object sender, RoutedEventArgs e)
         {
             Button clickedButton = (Button)sender;
             
@@ -839,7 +775,7 @@ namespace P4TableManagement
         }
 
         // Combine button
-        private void Button_Click_2(object sender, RoutedEventArgs e)
+        private void CombineButton_Click(object sender, RoutedEventArgs e)
         {
             Button clickedButton = (Button)sender;
             if (!combineEventActivated)
@@ -868,7 +804,7 @@ namespace P4TableManagement
         }
 
         //Reset Tables button
-        private void Button_Click_3(object sender, RoutedEventArgs e)
+        private void RestartSystem_Click(object sender, RoutedEventArgs e)
         {
             //Do some reset tables
             System.Windows.Forms.Application.Restart();
@@ -941,6 +877,39 @@ namespace P4TableManagement
 
             // Vil nok gerne lukke MainWindow og starte det igen når mapEditorWindow lukkes igen, så mappet tegnes ud fra hvad der blev valgt i mapEditorWindow.
             this.Hide();
+        }
+
+        private void ResetTables_Click(object sender, RoutedEventArgs e)
+        {
+            tableManagementSystem.ReservationList.Clear();
+            tableManagementSystem.AssignedReservationList.Clear();
+
+            tableManagementSystem.ReservationList = list.PopulateReservationList(path, 1);
+
+            foreach (Reservation reservation in tableManagementSystem.ReservationList)
+            {
+                reservation.stringTime = reservation.timeStart.ToShortTimeString();
+            }
+
+            tableManagementSystem.AssignedReservationList = new List<Reservation>();
+
+            ReservationListView.ItemsSource = tableManagementSystem.ReservationList;
+            AssignedReservationListView.ItemsSource = tableManagementSystem.AssignedReservationList;
+
+            foreach (var table in Area.Children.OfType<Button>().ToList())
+            {
+                Area.Children.Remove(table);
+            }
+            AllCombinedTables.Clear();
+
+            foreach (var de in Area.Children.OfType<Ellipse>().ToList())
+            {
+                Area.Children.Remove(de);
+            }
+
+            LoadTables();
+            CreateTables();
+            LoadDecorationElements();
         }
     }
 }

@@ -53,6 +53,8 @@ namespace P4TableManagement
             ((MainWindow)Application.Current.MainWindow).ReservationListView.Items.Refresh();
             ((MainWindow)Application.Current.MainWindow).AssignedReservationListView.Items.Refresh();
 
+            MessageBox.Show($"Table #{ table.tableNumber } has been unassigned!");
+
             this.Close();
         }
 
@@ -101,7 +103,8 @@ namespace P4TableManagement
         private void RadioPaid_Checked(object sender, RoutedEventArgs e)
         {
             hitButton.Background = Brushes.Yellow;
-            table.state = "Paid";
+            tableManagementSystem.PayTable(table);
+            MessageBox.Show($"Table #{ table.tableNumber } has been paid! Booking ID: { table.bookingID }");
         }
     }
 }
