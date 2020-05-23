@@ -132,7 +132,7 @@
             <RichTextBox x:Name="RichComment" Height="50"></RichTextBox>
         </StackPanel>
 
-        <Button Grid.Row="3" Width="100" Height="50" Content="Confirm" BorderThickness="1,1,2,2" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10,10,20,20"></Button>
+        <Button Grid.Row="3" Width="100" Height="50" Content="Confirm" BorderThickness="1,1,2,2" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10,10,20,20" Click="Button_Click_1"></Button>
 
 
 

@@ -835,10 +835,12 @@ namespace P4TableManagement
         // Edit selected item from ReservationListView
         private void EditReservationListView_Click(object sender, RoutedEventArgs e)
         {
-            //ListView listView = sender as ListView;
-            //var selecteditem = listView.SelectedItem;
             Reservation selectedBooking = (Reservation)ReservationListView.SelectedItem;
+            highlightedReservation = tableManagementSystem.ReservationList.Find(x => x.id == selectedBooking.id);
+
             EditReservationWindow editReservationWindow = new EditReservationWindow();
+
+
 
             // Fill up the textboxes in the window with the reservation data
             editReservationWindow.RichGuest.Selection.Text = selectedBooking.numberOfGuests.ToString();
@@ -851,7 +853,36 @@ namespace P4TableManagement
             string[] splitString = selectedBooking.parameter.Split(',');
             foreach (string item in splitString)
             {
-                MessageBox.Show(item);
+                if (item == "aquarium")
+                {
+                    editReservationWindow.CheckAquarium.IsChecked = true;
+                }
+                if (item == "window")
+                {
+                    editReservationWindow.CheckWindow.IsChecked = true;
+                }
+                if (item == "flag")
+                {
+                    editReservationWindow.CheckFlag.IsChecked = true;
+                }
+                if (item == "buffet")
+                {
+                    editReservationWindow.CheckBuffet.IsChecked = true;
+                }
+                if (item == "playroom")
+                {
+                    editReservationWindow.CheckPlayroom.IsChecked = true;
+                }
+                if (item == "babychair")
+                {
+                    editReservationWindow.CheckBabychair.IsChecked = true;
+                }
+            }
+
+            // Checking Gap
+            if (selectedBooking.isGap)
+            {
+                editReservationWindow.CheckGap.IsChecked = true;
             }
 
             editReservationWindow.ShowDialog();
