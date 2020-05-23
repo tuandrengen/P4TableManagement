@@ -926,7 +926,8 @@ namespace P4TableManagement
             Reservation selectedBooking = (Reservation)ReservationListView.SelectedItem;
             EditReservationWindow editReservationWindow = new EditReservationWindow();
 
-            //MessageBox.Show($"EDIT: We want to edit {selectedBooking.id} call edit window...");
+            // Fill up the textboxes in the window with the reservation data
+
             editReservationWindow.ShowDialog();
             
             // Indsæt variabler fra selectedBooking editReservationWindow
