@@ -100,12 +100,18 @@
                     <Setter Property="ToolTip">
                         <Setter.Value>
                             <UniformGrid Columns="1">
-                                <TextBlock Text="Name"></TextBlock>
-                                <TextBlock Text="ID"></TextBlock>
-                                <TextBlock Text="Number of guest"></TextBlock>
-                                <TextBlock Text="Time"></TextBlock>
-                                <TextBlock Text="Phonenumber"></TextBlock>
-                                <TextBlock Text="Parameter"></TextBlock>
+                                <TextBlock Text="{Binding Path=name, 
+                                                    StringFormat='Name: {0}'}"></TextBlock>
+                                <TextBlock Text="{Binding Path=id, 
+                                                    StringFormat='ID: {0}'}"></TextBlock>
+                                <TextBlock Text="{Binding Path=numberOfGuests, 
+                                                    StringFormat='Guests: {0}'}"></TextBlock>
+                                <TextBlock Text="{Binding Path=stringTime, 
+                                                    StringFormat='Time: {0}'}"></TextBlock>
+                                <TextBlock Text="{Binding Path=phoneNumber, 
+                                                    StringFormat='Phone number: {0}'}"></TextBlock>
+                                <TextBlock Text="{Binding Path=parameter, 
+                                                    StringFormat='Parameter: {0}'}"></TextBlock>
                             </UniformGrid>
                         </Setter.Value>
                     </Setter>
