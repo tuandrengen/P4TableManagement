@@ -113,9 +113,17 @@
             </ListView.ItemContainerStyle>
             
             <ListView.ContextMenu>
-                <ContextMenu Name="Test" StaysOpen="True" Background="Red">
-                    <MenuItem Header="Edit" Name="EditReservationListView" Click="EditReservationListView_Click"/>
-                    <MenuItem Header="Delete" Name="DeleteReservationListView" Click="DeleteReservationListView_Click"/>
+                <ContextMenu Name="Test" StaysOpen="True" Background="White">
+                    <MenuItem Header="Edit" Height="50" Background="White" Name="EditReservationListView" Click="EditReservationListView_Click">
+                        <MenuItem.Icon>
+                            <Image Source="C:\P4\edit_icon.png"></Image>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Header="Delete" Height="50" Background="White" Name="DeleteReservationListView" Click="DeleteReservationListView_Click">
+                        <MenuItem.Icon>
+                            <Image Source="C:\P4\delete_icon.jpg"></Image>
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </ContextMenu>
             </ListView.ContextMenu>
             <ListView.View>
