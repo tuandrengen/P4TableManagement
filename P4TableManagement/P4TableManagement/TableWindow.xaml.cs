@@ -40,12 +40,22 @@ namespace P4TableManagement
         {
             tableManagementSystem.UnassignTable(table);
             button.Background = Brushes.White;
+            button.ToolTip = $"Table: { table.tableNumber }" +
+                            $"\nSeats: { table.seats }" +
+                            $"\nStatus: { table.state }" +
+                            $"\nX: { table.placementX }" +
+                            $"\nY: { table.placementY }" +
+                            $"\n BookingID: {table.bookingID}";
             //Updates the ListViews
             tableManagementSystem.ReservationList.Add(reservation);
             tableManagementSystem.AssignedReservationList.Remove(tableManagementSystem.ReservationList.Find(x => x.id == reservation.id));
 
             ((MainWindow)Application.Current.MainWindow).ReservationListView.Items.Refresh();
             ((MainWindow)Application.Current.MainWindow).AssignedReservationListView.Items.Refresh();
+
+            MessageBox.Show($"Table #{ table.tableNumber } has been unassigned!");
+
+            this.Close();
         }
 
         private void btnSeperate_Click(object sender, RoutedEventArgs e)
@@ -61,6 +71,7 @@ namespace P4TableManagement
 
             ((MainWindow)Application.Current.MainWindow).Area.Children.Remove(yes);
             MessageBox.Show("Separated");
+
             this.Close();
 
             // Call function from mainwindow that draws the tables that were seperated
@@ -92,7 +103,8 @@ namespace P4TableManagement
         private void RadioPaid_Checked(object sender, RoutedEventArgs e)
         {
             hitButton.Background = Brushes.Yellow;
-            table.state = "Paid";
+            tableManagementSystem.PayTable(table);
+            MessageBox.Show($"Table #{ table.tableNumber } has been paid! Booking ID: { table.bookingID }");
         }
     }
 }

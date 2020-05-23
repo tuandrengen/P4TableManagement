@@ -104,11 +104,11 @@ namespace P4TableManagement
             string[] seperator = { ", ", ", "};
 
             string[] list = s.Split(seperator, 4, StringSplitOptions.None);
+            DateTime startTime = DateTime.Parse("30/12/1899 " + list[1]);
 
             // DateTime skal ikke være Now xD og ID er bare sat til den næste umiddelbart
-            Reservation reservation = new Reservation(8 ,list[2], DateTime.Now, IsGap, Int32.Parse(list[0]), Int32.Parse(list[3]), Parameters, comment);
+            Reservation reservation = new Reservation(0 ,list[2], startTime, IsGap, Int32.Parse(list[0]), Int32.Parse(list[3]), Parameters, comment);
             reservation.stringTime = list[1];
-
             tableManagementSystem.ReservationList.Add(reservation);
             ((MainWindow)Application.Current.MainWindow).ReservationListView.Items.Refresh();
             this.Close();
