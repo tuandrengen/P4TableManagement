@@ -73,19 +73,19 @@
              <!--Instead of 1 textbox we could also divide them into several.-->
             <StackPanel Orientation="Vertical" Margin="20,10">
                 <Label Content="Number of guests" FontWeight="Bold" Padding="0,5,0,1"></Label>
-                <RichTextBox x:Name="NumberOfGuestText" MinWidth="100" MinHeight="20" HorizontalAlignment="Left" HorizontalScrollBarVisibility="Auto"></RichTextBox>
+                <RichTextBox x:Name="RichGuest" MinWidth="100" MinHeight="20" HorizontalAlignment="Left" HorizontalScrollBarVisibility="Auto"></RichTextBox>
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="20,10">
                 <Label Content="Time" FontWeight="Bold" Padding="0,5,0,1"></Label>
-                <RichTextBox MinWidth="50" MinHeight="20" HorizontalAlignment="Left" HorizontalScrollBarVisibility="Auto"></RichTextBox>
+                <RichTextBox x:Name="RichTime" MinWidth="50" MinHeight="20" HorizontalAlignment="Left" HorizontalScrollBarVisibility="Auto"></RichTextBox>
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="20,10">
                 <Label Content="Name" FontWeight="Bold" Padding="0,5,0,1"></Label>
-                <RichTextBox MinWidth="100" MinHeight="20" HorizontalAlignment="Left" HorizontalScrollBarVisibility="Auto"></RichTextBox>
+                <RichTextBox x:Name="RichName" MinWidth="100" MinHeight="20" HorizontalAlignment="Left" HorizontalScrollBarVisibility="Auto"></RichTextBox>
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="20,10">
                 <Label Content="Telephone number" FontWeight="Bold" Padding="0,5,0,1"></Label>
-                <RichTextBox MinWidth="100" MinHeight="20" HorizontalAlignment="Left" HorizontalScrollBarVisibility="Auto"></RichTextBox>
+                <RichTextBox x:Name="RichTelephoneNumber" MinWidth="100" MinHeight="20" HorizontalAlignment="Left" HorizontalScrollBarVisibility="Auto"></RichTextBox>
             </StackPanel>
 
         </StackPanel>
@@ -110,15 +110,15 @@
         <StackPanel  Orientation="Vertical" Grid.Row="2">
             <Label Content="Parameters" FontWeight="Bold" Padding="0" Margin="20,15,20,5"></Label>
             <StackPanel Orientation="Horizontal" Margin="20,5">
-                <CheckBox Content="Close to aquarium" Margin="0,0,20,0" Padding="4,0,0,0"></CheckBox>
-                <CheckBox Content="Next to window" Margin="0,0,20,0"></CheckBox>
-                <CheckBox Content="Flag" Margin="13,0,20,0"></CheckBox>
-                <CheckBox Content="Gap Booking" Margin="25,0,20,0"></CheckBox>
+                <CheckBox x:Name="CheckAquarium" Content="Close to aquarium" Margin="0,0,20,0" Padding="4,0,0,0"></CheckBox>
+                <CheckBox x:Name="CheckWindow" Content="Next to window" Margin="0,0,20,0"></CheckBox>
+                <CheckBox x:Name="CheckFlag" Content="Flag" Margin="13,0,20,0"></CheckBox>
+                <CheckBox x:Name="CheckGap" Content="Gap Booking" Margin="25,0,20,0"></CheckBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="20,5">
-                <CheckBox Content="Close to buffet" Margin="0,0,39,0" Padding="4,0,0,0"></CheckBox>
-                <CheckBox Content="Close to playroom" Margin="0,0,20,0"></CheckBox>
-                <CheckBox Content="Babychair" Margin="0,0,20,0"></CheckBox>
+                <CheckBox x:Name="CheckBuffet" Content="Close to buffet" Margin="0,0,39,0" Padding="4,0,0,0"></CheckBox>
+                <CheckBox x:Name="CheckPlayroom" Content="Close to playroom" Margin="0,0,20,0"></CheckBox>
+                <CheckBox x:Name="CheckBabychair" Content="Babychair" Margin="0,0,20,0"></CheckBox>
             </StackPanel>
         </StackPanel>
 
@@ -129,7 +129,7 @@
 
         <StackPanel Orientation="Vertical" Margin="20" Width="250" Grid.Row="3" HorizontalAlignment="Left">
             <Label Content="Comments" FontWeight="Bold" Padding="0,5,0,1"></Label>
-            <RichTextBox Height="50"></RichTextBox>
+            <RichTextBox x:Name="RichComment" Height="50"></RichTextBox>
         </StackPanel>
 
         <Button Grid.Row="3" Width="100" Height="50" Content="Confirm" BorderThickness="1,1,2,2" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10,10,20,20"></Button>

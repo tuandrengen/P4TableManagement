@@ -841,6 +841,18 @@ namespace P4TableManagement
             EditReservationWindow editReservationWindow = new EditReservationWindow();
 
             // Fill up the textboxes in the window with the reservation data
+            editReservationWindow.RichGuest.Selection.Text = selectedBooking.numberOfGuests.ToString();
+            editReservationWindow.RichTime.Selection.Text = selectedBooking.stringTime;
+            editReservationWindow.RichName.Selection.Text = selectedBooking.name;
+            editReservationWindow.RichTelephoneNumber.Selection.Text = selectedBooking.phoneNumber.ToString();
+            editReservationWindow.RichComment.Selection.Text = selectedBooking.comment;
+
+            // Fills out the checkboxes (Parameters)
+            string[] splitString = selectedBooking.parameter.Split(',');
+            foreach (string item in splitString)
+            {
+                MessageBox.Show(item);
+            }
 
             editReservationWindow.ShowDialog();
             
