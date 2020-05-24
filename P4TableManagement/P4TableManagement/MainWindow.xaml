@@ -29,7 +29,7 @@
                         <MenuItem.Header>
                             <Image Width="50" Height="60" Source="C:\P4\hamburger1.png"/>
                         </MenuItem.Header>
-                        <MenuItem Header="Map Editor" Click="MenuItem_Click_2"/>
+                        <MenuItem Header="Map Editor" Click="MapEditor_Click"/>
                         <MenuItem Header="Help" Click="MenuItem_Click"/>
                         <MenuItem Header="Settings"/>
                         <MenuItem Header="Contact us"/>

@@ -6,7 +6,7 @@ namespace P4TableManagement
 {
 	public abstract class Table : MapElement, IComparable<Table>
     {
-		private static int _tableID = 0;
+		public static int _tableID = 0;
 		public int seats { get; set; }
 		// tableNumber has been changed from private set; to protected set; 
 		// as sub classes should be able to set this value as well

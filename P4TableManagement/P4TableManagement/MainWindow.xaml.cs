@@ -156,7 +156,7 @@ namespace P4TableManagement
                             $"\nStatus: { table.state }" +
                             $"\nX: { table.placementX }" +
                             $"\nY: { table.placementY }" +
-                            $"\n BookingID: {table.bookingID}";
+                            $"\nBookingID: {table.bookingID}";
                 
                 tableManagementSystem.AddTableToList(table);
 
@@ -377,7 +377,7 @@ namespace P4TableManagement
                             $"\nStatus: { table.state }" +
                             $"\nX: { table.placementX }" +
                             $"\nY: { table.placementY }" +
-                            $"\n BookingID: { table.bookingID }";
+                            $"\nBookingID: { table.bookingID }";
 
                         clickedButton.Background = Brushes.Orange;
                         sourceButton = clickedButton;
@@ -822,11 +822,6 @@ namespace P4TableManagement
             addReservationWindow.ShowDialog();
         }
 
-        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         // Add new Walk-in
         private void Walk_in_Click(object sender, RoutedEventArgs e)
         {
@@ -907,7 +902,7 @@ namespace P4TableManagement
         }
 
         // Map Editor click event
-        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
+        private void MapEditor_Click(object sender, RoutedEventArgs e)
         {
             MapEditorWindow mapEditorWindow = new MapEditorWindow();
             mapEditorWindow.Show();
@@ -923,8 +918,9 @@ namespace P4TableManagement
 
             if (result == MessageBoxResult.Yes)
             {
-                tableManagementSystem.ReservationList.Clear();
-                tableManagementSystem.AssignedReservationList.Clear();
+                Area.Children.Clear();
+                tableManagementSystem = new TableManagementSystem();
+
 
                 tableManagementSystem.ReservationList = list.PopulateReservationList(path, 1);
 
@@ -937,21 +933,15 @@ namespace P4TableManagement
 
                 ReservationListView.ItemsSource = tableManagementSystem.ReservationList;
                 AssignedReservationListView.ItemsSource = tableManagementSystem.AssignedReservationList;
+                Table._tableID = 0;
+                
+                DrawGrid();
 
-                foreach (var table in Area.Children.OfType<Button>().ToList())
-                {
-                    Area.Children.Remove(table);
-                }
-                AllCombinedTables.Clear();
-
-                foreach (var de in Area.Children.OfType<Ellipse>().ToList())
-                {
-                    Area.Children.Remove(de);
-                }
-
-                LoadTables();
-                CreateTables();
-                LoadDecorationElements(); 
+                // Clock
+                DispatcherTimer timer = new DispatcherTimer();
+                timer.Interval = TimeSpan.FromSeconds(1);
+                timer.Tick += timer_Tick;
+                timer.Start();
             }
         }
 
