@@ -236,9 +236,9 @@ namespace P4TableManagement
 
                 foreach (Button button in Canvas.Children.OfType<Button>())
                 {
-                    string[] yes = button.Content.ToString().Split(';');
-                    string category = yes[0];
-                    string id = yes[1].Replace("Table ", "");
+                    string[] values = button.Content.ToString().Split(';');
+                    string category = values[0];
+                    string id = values[1].Replace("Table ", "");
                     string log = $"{ id };{ category };{ Canvas.GetLeft(button) };{ Canvas.GetTop(button) }";
 
                     writer.WriteLine(log);
