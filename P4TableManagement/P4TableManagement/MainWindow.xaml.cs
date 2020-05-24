@@ -126,12 +126,9 @@ namespace P4TableManagement
 
                 // find the reservation from the reservationList
                 highlightedReservation = tableManagementSystem.ReservationList.Find(x => x.id == selectedBooking.id);
-                
-                // Umiddelbar måde til at opdatere listview
-                ICollectionView view = CollectionViewSource.GetDefaultView(tableManagementSystem.ReservationList); // tror dette er overflødigt
-                view.Refresh();
 
-                //MessageBox.Show("SelectedItem from list is: " + selectedBooking.id);
+                // Umiddelbar måde til at opdatere listview
+                ReservationListView.Items.Refresh();
             }
         }
 
@@ -270,7 +267,6 @@ namespace P4TableManagement
                 button.Click += new RoutedEventHandler(Button_Click);
             }
         }
-
         void LoadDecorationElements()
         {
             string path = $@"C:\P4\DecorationElements\Section1.csv";
@@ -400,13 +396,7 @@ namespace P4TableManagement
                     AllCombinedTables.Add(currentCombinedTable);
                     
                     // Hjælpefunktion der tjekker SourceTable's naboer (rektangler) og farver dem som er ledige
-                    CheckNeighbours(sourceButton);
-                    
-                    //foreach (var item in currentCombinedTable.combinedTables)
-                    //{
-                    //    MessageBox.Show($"Combined Table exist of Table {item.tableNumber}");
-                    //}
-                    
+                    CheckNeighbours(sourceButton);                  
                 }
                 else // Setting the Source table
                 {
@@ -421,11 +411,6 @@ namespace P4TableManagement
                     MessageBox.Show($"Table { combineTableSource.tableNumber } er nu source table");
                 }
             }
-            //else
-            //{
-            //    MessageBox.Show("No event has been triggered...");
-            //}
-
         }
 
         private void DrawCombinedTable(CombinedTable<Table> combinedTable)
@@ -727,8 +712,6 @@ namespace P4TableManagement
 
             if (HitButton is Button)
             {
-                //HitButton.Background = Brushes.Red;
-
                 currentTable = tableManagementSystem.TableList.Find(x => $"Table { x.tableNumber }" == (string)HitButton.Content); // Lave en kontrolstruktur der tjekker om currentTable ikke er null VIGTIGT
 
                 TableWindow tableWindow = new TableWindow();
@@ -893,12 +876,6 @@ namespace P4TableManagement
             }
 
             editReservationWindow.ShowDialog();
-            
-            // Indsæt variabler fra selectedBooking editReservationWindow
-            //editReservationWindow.NumberOfGuestText...
-
-
-            //ReservationListView.Items.Refresh();
         }
 
         // Delete selected item from ReservationListView
