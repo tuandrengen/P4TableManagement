@@ -94,6 +94,20 @@
 
         <Label Grid.Column="1" Content="Reservation List" HorizontalAlignment="Center" FontSize="30"/>
 
+
+        <Menu x:Name="MenuFilter" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,10,10,30">
+            <MenuItem Header="Filter by">
+                <MenuItem x:Name="FilterReset" Header="Reset" Click="FilterReset_Click"></MenuItem>
+                <MenuItem x:Name="FilterSpecificNumberOfGuests" Header="Specific guest" Click="FilterSpecificNumberOfGuests_Click"></MenuItem>
+                <MenuItem x:Name="FilterRangeNumberOfGuests" Header="Range of guests" Click="FilterRangeNumberOfGuests_Click"></MenuItem>
+                <MenuItem x:Name="FilterSpecificTimeStart" Header="Specific time" Click="FilterSpecificTimeStart_Click"></MenuItem>
+                <MenuItem x:Name="FilterRangeTimeStart" Header="Range of times" Click="FilterRangeTimeStart_Click"></MenuItem>
+                <MenuItem x:Name="FilterSpecificParameter" Header="Specific parameter" Click="FilterSpecificParameter_Click"></MenuItem>
+                <MenuItem x:Name="FilterMoreParameters" Header="Range of parameters" Click="FilterMoreParameters_Click"></MenuItem>
+                <MenuItem x:Name="FilterGap" Header="Gap" Click="FilterGap_Click"></MenuItem>
+            </MenuItem>
+        </Menu>
+
         <ListView Margin="0,50,0,0" x:Name="ReservationListView" Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" MouseLeftButtonUp="ListView_MouseLeftButtonUp">
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">

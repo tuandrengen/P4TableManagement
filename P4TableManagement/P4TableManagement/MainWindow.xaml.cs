@@ -18,7 +18,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
-// Known bugs: Hvis du scroller for hurtigt når du starter programmet så crasher det, da alle elementer i listen ikker nået at "loade".
 // Anh Tuan (13-05-2020 22:17): Køb en hurtigere computer
 
 namespace P4TableManagement
@@ -951,6 +950,62 @@ namespace P4TableManagement
                 CreateTables();
                 LoadDecorationElements(); 
             }
+        }
+
+        private void FilterSpecificNumberOfGuests_Click(object sender, RoutedEventArgs e)
+        {
+            
+            // 8 skal vælges af brugeren...
+            ReservationListView.ItemsSource = list.FilterBySpecificNumberOfGuests(tableManagementSystem.ReservationList,8);
+            ReservationListView.Items.Refresh();
+        }
+
+        private void FilterRangeNumberOfGuests_Click(object sender, RoutedEventArgs e)
+        {
+            ReservationListView.ItemsSource = list.FilterByRangeNumberOfGuests(tableManagementSystem.ReservationList, 10,4);
+            ReservationListView.Items.Refresh();
+        }
+
+        private void FilterSpecificTimeStart_Click(object sender, RoutedEventArgs e)
+        {
+            ReservationListView.ItemsSource = list.FilterBySpecificTimeStart(tableManagementSystem.ReservationList, "19:00");
+            ReservationListView.Items.Refresh();
+        }
+
+        private void FilterRangeTimeStart_Click(object sender, RoutedEventArgs e)
+        {
+            ReservationListView.ItemsSource = list.FilterByRangeTimeStart(tableManagementSystem.ReservationList, "18:00","16:30");
+            ReservationListView.Items.Refresh();
+        }
+
+        private void FilterSpecificParameter_Click(object sender, RoutedEventArgs e)
+        {
+            ReservationListView.ItemsSource = list.FilterBySpecificParameter(tableManagementSystem.ReservationList, "window");
+            ReservationListView.Items.Refresh();
+        }
+
+        private void FilterMoreParameters_Click(object sender, RoutedEventArgs e)
+        {
+            List<string> parameterList = new List<string>();
+            parameterList.Add("window");
+            parameterList.Add("flag");
+            parameterList.Add("babychair");
+
+            ReservationListView.ItemsSource = list.FilterByMoreParameters(tableManagementSystem.ReservationList, parameterList);
+            ReservationListView.Items.Refresh();
+        }
+
+        private void FilterGap_Click(object sender, RoutedEventArgs e)
+        {
+            ReservationListView.ItemsSource = list.FilterByisgap(tableManagementSystem.ReservationList, true);
+            ReservationListView.Items.Refresh();
+        }
+
+        // Back to normal
+        private void FilterReset_Click(object sender, RoutedEventArgs e)
+        {
+            ReservationListView.ItemsSource = tableManagementSystem.ReservationList;
+            ReservationListView.Items.Refresh();
         }
     }
 }
