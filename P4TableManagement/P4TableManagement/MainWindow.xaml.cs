@@ -455,6 +455,8 @@ namespace P4TableManagement
                 {
                     Width = tableSize + 100,
                     Height = tableSize,
+                    Background = Brushes.White,
+                    BorderThickness = new Thickness(2),
                     ToolTip = $"{ sourceButton.Content }" +
                         $"\nSeats: { combinedTable.seats }" +
                         $"\nStatus: { combinedTable.state }" +
@@ -476,6 +478,8 @@ namespace P4TableManagement
                 {
                     Width = tableSize + 100,
                     Height = tableSize,
+                    Background = Brushes.White,
+                    BorderThickness = new Thickness(2),
                     ToolTip = $"{ sourceButton.Content }" +
                         $"\nSeats: { combinedTable.seats }" +
                         $"\nStatus: { combinedTable.state }" +
@@ -498,6 +502,8 @@ namespace P4TableManagement
                 {
                     Width = tableSize,
                     Height = tableSize + 100,
+                    Background = Brushes.White,
+                    BorderThickness = new Thickness(2),
                     ToolTip = $"{ sourceButton.Content }" +
                         $"\nSeats: { combinedTable.seats }" +
                         $"\nStatus: { combinedTable.state }" +
@@ -520,6 +526,8 @@ namespace P4TableManagement
                 {
                     Width = tableSize,
                     Height = tableSize + 100,
+                    Background = Brushes.White,
+                    BorderThickness = new Thickness(2),
                     ToolTip = $"{ sourceButton.Content }" +
                         $"\nSeats: { combinedTable.seats }" +
                         $"\nStatus: { combinedTable.state }" +
