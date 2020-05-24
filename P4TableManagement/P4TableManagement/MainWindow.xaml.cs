@@ -139,33 +139,27 @@ namespace P4TableManagement
         {
             foreach (Button button in Area.Children.OfType<Button>())
             {
-                var yes = button.Name.Split('_');
-                if (yes[0] == "S")
+                var values = button.Name.Split('_');
+                Table table;
+                if (values[0] == "S")
                 {
-                    SmallTable smallTable = new SmallTable(button.ActualWidth, button.ActualHeight, Canvas.GetLeft(button), Canvas.GetTop(button));
+                    table = new SmallTable(button.ActualWidth, button.ActualHeight, Canvas.GetLeft(button), Canvas.GetTop(button));
 
-                    button.ToolTip = $"Table: { smallTable.tableNumber }" +
-                            $"\nSeats: { smallTable.seats }" +
-                            $"\nStatus: { smallTable.state }" +
-                            $"\nX: { smallTable.placementX }" +
-                            $"\nY: { smallTable.placementY }" +
-                            $"\n BookingID: {smallTable.bookingID}";
-
-                    tableManagementSystem.AddTableToList(smallTable);
                 }
-                else if (yes[0] == "L")
+                else
                 {
-                    LargeTable largeTable = new LargeTable(button.ActualWidth, button.ActualHeight, Canvas.GetLeft(button), Canvas.GetTop(button));
-
-                    button.ToolTip = $"Table: { largeTable.tableNumber }" +
-                            $"\nSeats: { largeTable.seats }" +
-                            $"\nStatus: { largeTable.state }" +
-                            $"\nX: { largeTable.placementX }" +
-                            $"\nY: { largeTable.placementY }" +
-                            $"\n BookingID: {largeTable.bookingID}";
-
-                    tableManagementSystem.AddTableToList(largeTable);
+                    table = new LargeTable(button.ActualWidth, button.ActualHeight, Canvas.GetLeft(button), Canvas.GetTop(button));
                 }
+
+                button.ToolTip = $"Table: { table.tableNumber }" +
+                            $"\nSeats: { table.seats }" +
+                            $"\nStatus: { table.state }" +
+                            $"\nX: { table.placementX }" +
+                            $"\nY: { table.placementY }" +
+                            $"\n BookingID: {table.bookingID}";
+                
+                tableManagementSystem.AddTableToList(table);
+
             }
         }
         
@@ -347,8 +341,20 @@ namespace P4TableManagement
                 // If highlightedReservation hasn't been set its value is null, so we try to catch it
                 try
                 {
+                    Table table = tableManagementSystem.TableList.Find(x => $"Table { x.tableNumber }" == (string)clickedButton.Content);
+
+                    if (table == null)
+                    {
+                        table = tableManagementSystem.TableList.Find(x => $"*Table { x.tableNumber }" == (string)clickedButton.Content);
+                        if (table == null)
+                        {
+                            MessageBox.Show("Error: Could not find table");
+                            return;
+                        }
+                    }
+                    //tableManagementSystem.TableList.Find(x => $"*Table { x.tableNumber }" == (string)clickedButton.Content).state == "Occupied"
                     // Checks if the table is already occupied
-                    if (tableManagementSystem.TableList.Find(x => $"Table { x.tableNumber }" == (string)clickedButton.Content).state == "Occupied")
+                    if (table.state == "Occupied")
                     {
                         //throw new TableAlreadyAssignedException("Error: Cannot assign an occupied table!");
                         MessageBox.Show("The table is already occupied and could not be assigned");
@@ -357,7 +363,7 @@ namespace P4TableManagement
                     // We assign the table with AssignTable 
                     else
                     {
-                        tableManagementSystem.AssignTable(tableManagementSystem.TableList.Find(x => $"Table { x.tableNumber }" == (string)clickedButton.Content), highlightedReservation);
+                        tableManagementSystem.AssignTable(table, highlightedReservation);
                         tableManagementSystem.AssignedReservationList.Add(highlightedReservation);
                         tableManagementSystem.ReservationList.Remove(tableManagementSystem.ReservationList.Find(x => x.id == highlightedReservation.id));
 
@@ -365,13 +371,13 @@ namespace P4TableManagement
                         AssignedReservationListView.Items.Refresh();
 
                         // Updates the button to now display it's updated state
-                        Table updateTable = tableManagementSystem.TableList.Find(x => $"Table { x.tableNumber }" == (string)clickedButton.Content);
-                        clickedButton.ToolTip = $"Table: { updateTable.tableNumber }" +
-                            $"\nSeats: { updateTable.seats }" +
-                            $"\nStatus: { updateTable.state }" +
-                            $"\nX: { updateTable.placementX }" +
-                            $"\nY: { updateTable.placementY }" +
-                            $"\n BookingID: { updateTable.bookingID }";
+                        
+                        clickedButton.ToolTip = $"Table: { table.tableNumber }" +
+                            $"\nSeats: { table.seats }" +
+                            $"\nStatus: { table.state }" +
+                            $"\nX: { table.placementX }" +
+                            $"\nY: { table.placementY }" +
+                            $"\n BookingID: { table.bookingID }";
 
                         clickedButton.Background = Brushes.Orange;
                         sourceButton = clickedButton;
@@ -391,7 +397,7 @@ namespace P4TableManagement
             else if (combineEventActivated)
             {                      
                 // Sets the second table and combines it with the source table if the source table already has been set and it isn't the one we clicked on
-                if (combineTableSource != tableManagementSystem.TableList.Find(x => $"Table { x.tableNumber }" == (string)clickedButton.Content) && combineTableSource != default)
+                if (combineTableSource != tableManagementSystem.TableList.Find(x => $"*Table { x.tableNumber }" == (string)clickedButton.Content) && combineTableSource != default)
                 {
                     secondButton = clickedButton;
                     combineTableSecond = tableManagementSystem.TableList.Find(x => $"Table { x.tableNumber }" == (string)clickedButton.Content);
@@ -401,12 +407,7 @@ namespace P4TableManagement
                     
                     // Hjælpefunktion der tjekker SourceTable's naboer (rektangler) og farver dem som er ledige
                     CheckNeighbours(sourceButton);
-                    
-                    //foreach (var item in currentCombinedTable.combinedTables)
-                    //{
-                    //    MessageBox.Show($"Combined Table exist of Table {item.tableNumber}");
-                    //}
-                    
+                    tableManagementSystem.AddTableToList(currentCombinedTable);
                 }
                 else // Setting the Source table
                 {
@@ -421,11 +422,6 @@ namespace P4TableManagement
                     MessageBox.Show($"Table { combineTableSource.tableNumber } er nu source table");
                 }
             }
-            //else
-            //{
-            //    MessageBox.Show("No event has been triggered...");
-            //}
-
         }
 
         private void DrawCombinedTable(CombinedTable<Table> combinedTable)
@@ -436,7 +432,6 @@ namespace P4TableManagement
             double newX = Canvas.GetLeft(_hitRectangle);
             double newY = Canvas.GetTop(_hitRectangle);
             bool tableLocation = false;
-
             // Before the new, combined table is being drawn we hide the tables being combined.
             // This way, when we separate the tables again we change the visibility of the tables back to show,
             // and they're back to their original position.
@@ -453,16 +448,16 @@ namespace P4TableManagement
             {
                 Button button = new Button()
                 {
+                    Content = $"*Table { combinedTable.tableNumber }",
                     Width = tableSize + 100,
                     Height = tableSize,
                     Background = Brushes.White,
                     BorderThickness = new Thickness(2),
-                    ToolTip = $"{ sourceButton.Content }" +
+                    ToolTip = $"{ Content }" +
                         $"\nSeats: { combinedTable.seats }" +
                         $"\nStatus: { combinedTable.state }" +
                         $"\nX: { sourceX }" +
                         $"\nY: { sourceY }",
-                    Content = $"*{sourceButton.Content}"
                 };
                 button.Margin = new Thickness(10);
                 Canvas.SetTop(button, newY);
@@ -476,16 +471,16 @@ namespace P4TableManagement
             {
                 Button button = new Button()
                 {
+                    Content = $"*Table { combinedTable.tableNumber }",
                     Width = tableSize + 100,
                     Height = tableSize,
                     Background = Brushes.White,
                     BorderThickness = new Thickness(2),
-                    ToolTip = $"{ sourceButton.Content }" +
+                    ToolTip = $"{ Content }" +
                         $"\nSeats: { combinedTable.seats }" +
                         $"\nStatus: { combinedTable.state }" +
                         $"\nX: { sourceX }" +
                         $"\nY: { sourceY }",
-                    Content = $"*{ sourceButton.Content }"
                 };
 
                 //butt.Margin = new Thickness(5);
@@ -500,16 +495,16 @@ namespace P4TableManagement
             {
                 Button button = new Button()
                 {
+                    Content = $"*Table { combinedTable.tableNumber }",
                     Width = tableSize,
                     Height = tableSize + 100,
                     Background = Brushes.White,
                     BorderThickness = new Thickness(2),
-                    ToolTip = $"{ sourceButton.Content }" +
+                    ToolTip = $"{ Content }" +
                         $"\nSeats: { combinedTable.seats }" +
                         $"\nStatus: { combinedTable.state }" +
                         $"\nX: { sourceX }" +
                         $"\nY: { sourceY }",
-                    Content = $"*{ sourceButton.Content }"
                 };
 
                 //butt.Margin = new Thickness(5);
@@ -524,16 +519,16 @@ namespace P4TableManagement
             {
                 Button button = new Button()
                 {
+                    Content = $"*Table { combinedTable.tableNumber }",
                     Width = tableSize,
                     Height = tableSize + 100,
                     Background = Brushes.White,
                     BorderThickness = new Thickness(2),
-                    ToolTip = $"{ sourceButton.Content }" +
+                    ToolTip = $"{ Content }" +
                         $"\nSeats: { combinedTable.seats }" +
                         $"\nStatus: { combinedTable.state }" +
                         $"\nX: { sourceX }" +
                         $"\nY: { sourceY }",
-                    Content = $"*{sourceButton.Content}"
                 };
 
                 button.Margin = new Thickness(10);
