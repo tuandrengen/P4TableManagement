@@ -13,7 +13,7 @@ namespace P4TableManagement
         public T1 tableOne { get; set; }
         public T1 tableTwo { get; set; }
 
-        public CombinedTable(T1 tableOne, T1 tableTwo) : base(tableOne.width + tableTwo.width, tableOne.height + tableTwo.height, 0, 0)
+        public CombinedTable(T1 tableOne, T1 tableTwo) : base(tableOne.width + tableTwo.width, tableOne.height + tableTwo.height, tableOne.placementX, tableOne.placementY)
         {
             combinedTables.Add(tableTwo);
             combinedTables.Add(tableOne);

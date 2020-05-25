@@ -18,7 +18,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
-// Anh Tuan (13-05-2020 22:17): Køb en hurtigere computer
 
 namespace P4TableManagement
 {
@@ -370,17 +369,16 @@ namespace P4TableManagement
                         ReservationListView.Items.Refresh();
                         AssignedReservationListView.Items.Refresh();
 
-                        // Updates the button to now display it's updated state
-                        
-                        clickedButton.ToolTip = $"Table: { table.tableNumber }" +
-                            $"\nSeats: { table.seats }" +
-                            $"\nStatus: { table.state }" +
-                            $"\nX: { table.placementX }" +
-                            $"\nY: { table.placementY }" +
-                            $"\nBookingID: { table.bookingID }";
-
                         clickedButton.Background = Brushes.Orange;
                         sourceButton = clickedButton;
+
+                        // Updates the button to now display it's updated state
+                        sourceButton.ToolTip = $"Table: { table.tableNumber }" +
+                            $"\nSeats: { table.seats }" +
+                            $"\nStatus: { table.state }" +
+                            $"\nX: { Canvas.GetLeft(sourceButton) }" +
+                            $"\nY: { Canvas.GetTop(sourceButton) }" +
+                            $"\nBookingID: { table.bookingID }";
 
                         // Reset...
                         assignEventActivated = false;
@@ -426,9 +424,8 @@ namespace P4TableManagement
 
         private void DrawCombinedTable(CombinedTable<Table> combinedTable)
         {
-
-            double sourceX = Canvas.GetLeft(sourceButton);
-            double sourceY = Canvas.GetTop(sourceButton);
+            combinedTable.placementX = Canvas.GetLeft(sourceButton);
+            combinedTable.placementY = Canvas.GetTop(sourceButton);
             double newX = Canvas.GetLeft(_hitRectangle);
             double newY = Canvas.GetTop(_hitRectangle);
             bool tableLocation = false;
@@ -444,7 +441,7 @@ namespace P4TableManagement
             }
 
             // Left
-            if (sourceX > newX && sourceY == newY + 10)
+            if (combinedTable.placementX > newX && combinedTable.placementY == newY + 10)
             {
                 Button button = new Button()
                 {
@@ -456,9 +453,10 @@ namespace P4TableManagement
                     ToolTip = $"{ Content }" +
                         $"\nSeats: { combinedTable.seats }" +
                         $"\nStatus: { combinedTable.state }" +
-                        $"\nX: { sourceX }" +
-                        $"\nY: { sourceY }",
+                        $"\nX: { newX + 10 }" +
+                        $"\nY: { newY + 10 }",
                 };
+
                 button.Margin = new Thickness(10);
                 Canvas.SetTop(button, newY);
                 Canvas.SetLeft(button, newX);
@@ -467,7 +465,7 @@ namespace P4TableManagement
                 button.Click += new RoutedEventHandler(Button_Click);
             }
             // Right
-            else if (sourceX < newX && sourceY == newY + 10)
+            else if (combinedTable.placementX < newX && combinedTable.placementY == newY + 10)
             {
                 Button button = new Button()
                 {
@@ -479,19 +477,18 @@ namespace P4TableManagement
                     ToolTip = $"{ Content }" +
                         $"\nSeats: { combinedTable.seats }" +
                         $"\nStatus: { combinedTable.state }" +
-                        $"\nX: { sourceX }" +
-                        $"\nY: { sourceY }",
+                        $"\nX: { combinedTable.placementX }" +
+                        $"\nY: { combinedTable.placementY }",
                 };
 
-                //butt.Margin = new Thickness(5);
-                Canvas.SetTop(button, sourceY);
-                Canvas.SetLeft(button, sourceX);
+                Canvas.SetTop(button, combinedTable.placementY);
+                Canvas.SetLeft(button, combinedTable.placementX);
 
                 Area.Children.Add(button);
                 button.Click += new RoutedEventHandler(Button_Click);
             }
             // Bottom
-            else if (sourceY < newY && sourceX == newX + 10)
+            else if (combinedTable.placementY < newY && combinedTable.placementX == newX + 10)
             {
                 Button button = new Button()
                 {
@@ -503,19 +500,18 @@ namespace P4TableManagement
                     ToolTip = $"{ Content }" +
                         $"\nSeats: { combinedTable.seats }" +
                         $"\nStatus: { combinedTable.state }" +
-                        $"\nX: { sourceX }" +
-                        $"\nY: { sourceY }",
+                        $"\nX: { combinedTable.placementX }" +
+                        $"\nY: { combinedTable.placementY }",
                 };
 
-                //butt.Margin = new Thickness(5);
-                Canvas.SetTop(button, sourceY);
-                Canvas.SetLeft(button, sourceX);
+                Canvas.SetTop(button, combinedTable.placementY);
+                Canvas.SetLeft(button, combinedTable.placementX);
 
                 Area.Children.Add(button);
                 button.Click += new RoutedEventHandler(Button_Click);
             }
             // Top
-            else if (sourceY > newY && sourceX == newX + 10)
+            else if (combinedTable.placementY > newY && combinedTable.placementX == newX + 10)
             {
                 Button button = new Button()
                 {
@@ -527,8 +523,8 @@ namespace P4TableManagement
                     ToolTip = $"{ Content }" +
                         $"\nSeats: { combinedTable.seats }" +
                         $"\nStatus: { combinedTable.state }" +
-                        $"\nX: { sourceX }" +
-                        $"\nY: { sourceY }",
+                        $"\nX: { newX + 10 }" +
+                        $"\nY: { newY + 10 }",
                 };
 
                 button.Margin = new Thickness(10);
